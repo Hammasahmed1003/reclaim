@@ -371,7 +371,8 @@ class _SurveyQuestionsState extends State<SurveyQuestions> {
     return Obx(() {
       if (surveyController.isLoading.value) {
         return const Center(
-            child: SpinKitDoubleBounce(
+            child:
+             SpinKitDoubleBounce(
           color: Reclaimcolors.BasicWhite,
           size: 20.0,
         ));

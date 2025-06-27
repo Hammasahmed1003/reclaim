@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import 'package:reclaim/CommonScreens/BottomNavBarView.dart';
 import 'package:reclaim/MVC/Controllers/EveningRecollectControllers/EveningRecollectController.dart';
+import 'package:reclaim/MVC/Models/CommunityPostModel.dart';
 import 'package:reclaim/MVC/Views/AuthScreen/InAppPurchaseScreen.dart';
 import 'package:reclaim/MVC/Views/AuthScreen/LoginScreen.dart';
 import 'package:reclaim/MVC/Views/AuthScreen/OtpScreen.dart';
@@ -12,6 +13,7 @@ import 'package:reclaim/MVC/Views/Badges/BadgeScreen.dart';
 import 'package:reclaim/MVC/Views/CommitmentScreen/AddCommitments.dart';
 import 'package:reclaim/MVC/Views/CommitmentScreen/CommitmentScreen.dart';
 import 'package:reclaim/MVC/Views/CommitmentScreen/CreateCommunityScreen.dart';
+import 'package:reclaim/MVC/Views/CommitmentScreen/PostDetailScreen.dart';
 import 'package:reclaim/MVC/Views/EditProfile/EditProfile.dart';
 import 'package:reclaim/MVC/Views/HomeScreens/DetailLessonScreen.dart';
 import 'package:reclaim/MVC/Views/MessageScreen/MessageScreen.dart';
@@ -140,6 +142,17 @@ class AppPages {
     GetPage(
       name: GetRouteNames.Eveningrecollect,
       page: () => EveningRecollectScreen(),
+    ),
+    // GetPage(
+    //   name: GetRouteNames.PostDetailScreen,
+    //   page: () => PostDetailScreen(post: CommunityPostModel(),),
+    // ),
+    
+    GetPage(
+      name: GetRouteNames.PostDetailScreen,
+      transition: Transition.rightToLeft,
+      
+      page: () => const PostDetailScreen(), // No need to pass model here
     ),
   ];
 }

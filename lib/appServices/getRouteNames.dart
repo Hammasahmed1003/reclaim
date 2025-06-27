@@ -23,6 +23,10 @@ class GetRouteNames {
   static const String InAppPurchasesScreen = "/InAppPurchasesScreen";
   static const String WelcomeScreen = "/WelcomeScreen";
   static const String Eveningrecollect = "/Eveningrecollect";
+  static const String PostDetailScreen = "/PostDetailScreen";
+
+
+
 
   // static const String Progresscreen = "/Progresscreen";
 

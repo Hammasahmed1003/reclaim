@@ -25,7 +25,7 @@ class Commitmentscreen extends StatelessWidget {
       ),
       child: Scaffold(
         floatingActionButton: FloatingActionButton(
-            child: Icon(
+            child:  Icon(
               Icons.add,
               color: Reclaimcolors.BasicBlue,
               size: 25,

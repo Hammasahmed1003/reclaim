@@ -13,12 +13,11 @@ class Bottomnavcontroller extends GetxController {
   }
 
   Future<void> fetchPanicTask(context) async {
-    final body = {""};
+    // final body = {""};
 
     try {
       final token = await SharedPrefService.getUserToken();
-      final response = await ApiService()
-          .postRequestWithToken("generate", body as Map<String, dynamic>);
+      final response = await ApiService().postRequestWithToken("generate", {});
 
       if (response != null &&
           response.statusCode == 200 &&

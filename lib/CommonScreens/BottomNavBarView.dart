@@ -16,8 +16,8 @@ class BottomnavbarView extends StatelessWidget {
   final Bottomnavcontroller controller = Get.put(Bottomnavcontroller());
 
   final List<Widget> _pages = [
-    Homescreen(),
-    ProgressScreen(),
+  const  Homescreen(),
+  const  ProgressScreen(),
     //  Homescreen(),
     ResourceScreen(),
     const CommunityScreen()
@@ -48,16 +48,17 @@ class BottomnavbarView extends StatelessWidget {
           //   ),
           // ),
           floatingActionButton: FloatingActionButton(
-  onPressed: () async {
-    await controller.fetchPanicTask(context);
-  },
-  backgroundColor: Reclaimcolors.BasicBlue,
-  shape: const CircleBorder(),
-  child: SvgPicture.asset(
-    ReclaimIcon.NewLOGO,
-  ),
-),
-floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+            onPressed: () async {
+              await controller.fetchPanicTask(context);
+            },
+            backgroundColor: Reclaimcolors.BasicBlue,
+            shape: const CircleBorder(),
+            child: SvgPicture.asset(
+              ReclaimIcon.NewLOGO,
+            ),
+          ),
+          floatingActionButtonLocation:
+              FloatingActionButtonLocation.centerDocked,
 
           // floatingActionButtonLocation:
           //     FloatingActionButtonLocation.centerDocked,
