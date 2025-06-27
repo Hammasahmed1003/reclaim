@@ -22,36 +22,10 @@ class GetRouteNames {
   static const String Addcommitments = "/Addcommitments";
   static const String InAppPurchasesScreen = "/InAppPurchasesScreen";
   static const String WelcomeScreen = "/WelcomeScreen";
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+  static const String Eveningrecollect = "/Eveningrecollect";
 
   // static const String Progresscreen = "/Progresscreen";
 
-
-
-
-
-
-
-// this is how we are going to Navigate 
-                  // Get.toNamed(GetRouteNames.Detaillessonscreen);
-
-
-
-
-
+// this is how we are going to Navigate
+  // Get.toNamed(GetRouteNames.Detaillessonscreen);
 }

@@ -7,4 +7,8 @@ class Comitmentscontroller extends GetxController{
   void changeTab(int index) {
     selectedTabIndex.value = index;
   }
+
+
+
+  
 }

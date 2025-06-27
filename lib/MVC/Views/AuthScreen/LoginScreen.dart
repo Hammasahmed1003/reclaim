@@ -109,16 +109,22 @@ class Loginscreen extends StatelessWidget {
                 SizedBox(
                   height: 30.sp,
                 ),
-                ReclaimButton(
-                    titleColor: Reclaimcolors.BasicWhite,
-                    width: 370.w,
-                    height: 48.h,
-                    backgroundColor: Reclaimcolors.BasicBlue,
-                    title: "Log In",
-                    fontWeight: FontWeight.w600,
-                    onPressed: () {
-                      Get.toNamed(GetRouteNames.BottomnavbarView);
-                    }),
+                Obx(
+                  () =>
+                   ReclaimButton(
+                      isLoading: logincontroller.isLoading.value,
+                      titleColor: Reclaimcolors.BasicWhite,
+                      width: 370.w,
+                      height: 48.h,
+                      backgroundColor: Reclaimcolors.BasicBlue,
+                      title: "Log In",
+                      fontWeight: FontWeight.w600,
+                      onPressed: () {
+                        // Get.toNamed(GetRouteNames.BottomnavbarView);
+
+                        logincontroller.login();
+                      }),
+                ),
                 const SizedBox(
                   height: 20,
                 ),

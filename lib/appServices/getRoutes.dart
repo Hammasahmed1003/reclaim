@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:reclaim/CommonScreens/BottomNavBarView.dart';
+import 'package:reclaim/MVC/Controllers/EveningRecollectControllers/EveningRecollectController.dart';
 import 'package:reclaim/MVC/Views/AuthScreen/InAppPurchaseScreen.dart';
 import 'package:reclaim/MVC/Views/AuthScreen/LoginScreen.dart';
 import 'package:reclaim/MVC/Views/AuthScreen/OtpScreen.dart';
@@ -16,6 +17,7 @@ import 'package:reclaim/MVC/Views/HomeScreens/DetailLessonScreen.dart';
 import 'package:reclaim/MVC/Views/MessageScreen/MessageScreen.dart';
 import 'package:reclaim/MVC/Views/Notifications/NotificationScreen.dart';
 import 'package:reclaim/MVC/Views/ProgressScreens/progresScreen.dart';
+import 'package:reclaim/MVC/Views/RecollectFlowView/EveningRecollect.dart';
 import 'package:reclaim/MVC/Views/SavedLesson/savedLesson.dart';
 import 'package:reclaim/MVC/Views/SettingScreens/SettingScreen.dart';
 import 'package:reclaim/MVC/Views/SplashScreen/SplashScreen.dart';
@@ -24,14 +26,13 @@ import 'package:reclaim/MVC/Views/onboardingScreen/onBoardingScreen.dart';
 import 'package:reclaim/appServices/getRouteNames.dart';
 
 class AppPages {
-
   static final pages = [
-GetPage(
+    GetPage(
       name: GetRouteNames.onBoardingScreen,
       transition: Transition.rightToLeft,
-      page: () =>  OnboardingScreen(),
+      page: () => OnboardingScreen(),
     ),
-  GetPage(
+    GetPage(
       name: GetRouteNames.LoginRoute,
       transition: Transition.rightToLeft,
       page: () => const Loginscreen(),
@@ -46,103 +47,100 @@ GetPage(
       transition: Transition.rightToLeft,
       page: () => const Otpscreen(),
     ),
-
- GetPage(
+    GetPage(
       name: GetRouteNames.Profilesetup,
       transition: Transition.rightToLeft,
       page: () => const Profilesetup(),
     ),
-
- GetPage(
+    GetPage(
       name: GetRouteNames.BottomnavbarView,
       transition: Transition.rightToLeft,
-      page: () =>  BottomnavbarView(),
+      page: () => BottomnavbarView(),
     ),
-GetPage(
+    GetPage(
       name: GetRouteNames.SurveyQuestions,
       transition: Transition.rightToLeft,
-      page: () =>  SurveyQuestions(),
+      page: () => SurveyQuestions(),
     ),
-GetPage(
+    GetPage(
       name: GetRouteNames.MessageScreen,
       transition: Transition.rightToLeft,
-      page: () =>  MessageScreen(),
+      page: () => MessageScreen(),
     ),
     GetPage(
       name: GetRouteNames.SplashScreen,
       transition: Transition.rightToLeft,
-      page: () => const  SplashScreen(),
+      page: () => const SplashScreen(),
     ),
-     GetPage(
+    GetPage(
       name: GetRouteNames.Settingscreen,
       transition: Transition.rightToLeft,
-      page: () => const  Settingscreen(),
+      page: () => const Settingscreen(),
     ),
-  GetPage(
+    GetPage(
       name: GetRouteNames.Editprofile,
       transition: Transition.rightToLeft,
-      page: () => const  EditProfile(),
+      page: () => const EditProfile(),
     ),
-GetPage(
+    GetPage(
       name: GetRouteNames.Commitmentscreen,
       transition: Transition.rightToLeft,
-      page: () => const  Commitmentscreen(),
+      page: () => const Commitmentscreen(),
     ),
-GetPage(
+    GetPage(
       name: GetRouteNames.Notificationscreen,
       transition: Transition.rightToLeft,
-      page: () => const  Notificationscreen(),
+      page: () => const Notificationscreen(),
     ),
-GetPage(
+    GetPage(
       name: GetRouteNames.Detaillessonscreen,
       transition: Transition.rightToLeft,
-      page: () => const  Detaillessonscreen(),
+      page: () => const Detaillessonscreen(),
     ),
     GetPage(
       name: GetRouteNames.Helpscreen,
       transition: Transition.rightToLeft,
-      page: () => const  Helpscreen(),
+      page: () => const Helpscreen(),
     ),
-GetPage(
+    GetPage(
       name: GetRouteNames.Badgescreen,
       transition: Transition.rightToLeft,
-      page: () => const  Badgescreen(),
+      page: () => const Badgescreen(),
     ),
-GetPage(
+    GetPage(
       name: GetRouteNames.Createcommunityscreen,
       transition: Transition.rightToLeft,
-      page: () => const  Createcommunityscreen(),
+      page: () => const Createcommunityscreen(),
     ),
-GetPage(
+    GetPage(
       name: GetRouteNames.Savedlesson,
       transition: Transition.rightToLeft,
-      page: () =>   Savedlesson(),
+      page: () => Savedlesson(),
     ),
-
-GetPage(
+    GetPage(
       name: GetRouteNames.Addcommitments,
       transition: Transition.rightToLeft,
-      page: () =>   Addcommitments(),
+      page: () => Addcommitments(),
     ),
-
-GetPage(
+    GetPage(
       name: GetRouteNames.InAppPurchasesScreen,
       transition: Transition.rightToLeft,
-      page: () =>   InAppPurchasesScreen(),
+      page: () => InAppPurchasesScreen(),
     ),
-
-
-GetPage(
+    GetPage(
       name: GetRouteNames.WelcomeScreen,
       transition: Transition.rightToLeft,
-      page: () =>   WelcomeScreen(),
+      page: () => WelcomeScreen(),
     ),
-
-
-
-
-
-
+    // GetPage(
+    //   name: GetRouteNames.Eveningrecollect,
+    //   transition: Transition.rightToLeft,
+    //   page: () => EveningRecollectScreen(),
+    // ),
+    GetPage(
+      name: GetRouteNames.Eveningrecollect,
+      page: () => EveningRecollectScreen(),
+    ),
   ];
 }
-
+//

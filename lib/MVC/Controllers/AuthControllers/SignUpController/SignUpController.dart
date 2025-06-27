@@ -5,11 +5,10 @@ import 'package:reclaim/appServices/ApiServices.dart';
 import 'package:reclaim/appServices/getRouteNames.dart';
 
 class Signupcontroller extends GetxController {
-
-final TextEditingController emailController = TextEditingController();
+  final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   final RxBool isLoading = false.obs;
-  String? deviceToken;  
+  String? deviceToken;
 
   @override
   void onInit() {
@@ -24,59 +23,116 @@ final TextEditingController emailController = TextEditingController();
     print("📱 Device Token: $deviceToken");
   }
 
- Future<void> signup() async {
-  if (emailController.text.isEmpty || passwordController.text.isEmpty) {
-    Get.snackbar("Error", "Please enter all fields",
-        backgroundColor: Colors.red, colorText: Colors.white);
-    return;
-  }
+  // Future<void> signup() async {
+  //   final email = emailController.text.trim();
+  //   final password = passwordController.text.trim();
 
-  isLoading.value = true;
-  try {
-    final response = await ApiService().postRequest("register", data: {
-      "email": emailController.text.trim(),
-      "password": passwordController.text.trim(),
-      "device_token": deviceToken,
-    });
+  //   // Validation
+  //   if (email.isEmpty || password.isEmpty) {
+  //     Get.snackbar("Error", "Please enter all fields",
+  //         backgroundColor: Colors.red, colorText: Colors.white);
+  //     return;
+  //   }
 
-    if (response != null) {
-      print("🔄 Response received: ${response.data}");
+  //   if (!GetUtils.isEmail(email)) {
+  //     Get.snackbar("Invalid Email", "Please enter a valid email address",
+  //         backgroundColor: Colors.red, colorText: Colors.white);
+  //     return;
+  //   }
 
-      final data = response.data;
-      if (data != null && data["success"] == true && data.containsKey("otp")) {
-        final otp = data["otp"];
-        print("✅ Signup Successful: OTP - $otp");
+  //   if (password.length < 6) {
+  //     Get.snackbar("Weak Password", "Password must be at least 6 characters",
+  //         backgroundColor: Colors.red, colorText: Colors.white);
+  //     return;
+  //   }
 
-        Get.toNamed(GetRouteNames.Otpscreen, arguments: {
-          "email": emailController.text.trim(),
-         
-        });
-        return;
-      } else if (data != null && data["success"] == false && data.containsKey("errors")) {
-        // Handling validation errors from API
-        final errors = data["errors"];
-        String errorMessage = "Signup failed";
+  //   if (password != passwordController.text.trim()) {
+  //     Get.snackbar("Password Mismatch", "Passwords do not match",
+  //         backgroundColor: Colors.red, colorText: Colors.white);
+  //     return;
+  //   }
 
-        if (errors.containsKey("email") && errors["email"].isNotEmpty) {
-          errorMessage = errors["email"][0]; // Showing specific error
-        }
+  //   isLoading.value = true;
+  //   try {
+  //     final response = await ApiService().postRequest("register", data: {
+  //       "email": email,
+  //       "password": password,
+  //       "device_token": deviceToken,
+  //     });
 
-        // Get.snackbar("Signup Failed", errorMessage,
-        //     backgroundColor: Colors.red, colorText: Colors.white);
-        return;
-      }
+  //     if (response != null) {
+  //       final data = response.data;
+  //       if (data["success"] == true && data.containsKey("otp")) {
+  //         Get.toNamed(GetRouteNames.Otpscreen, arguments: {"email": email});
+  //         return;
+  //       } else if (data["success"] == false && data.containsKey("errors")) {
+  //         final errors = data["errors"];
+  //         String errorMessage = errors["email"]?[0] ?? "Signup failed";
+  //         Get.snackbar("Signup Failed", errorMessage,
+  //             backgroundColor: Colors.red, colorText: Colors.white);
+  //         return;
+  //       }
+  //     }
+
+  //     Get.snackbar("Error", "Unexpected response from server",
+  //         backgroundColor: Colors.red, colorText: Colors.white);
+  //   } finally {
+  //     isLoading.value = false;
+  //   }
+  // }
+
+  Future<void> signup() async {
+    final email = emailController.text.trim();
+    final password = passwordController.text.trim();
+
+    // Validation
+    if (email.isEmpty || password.isEmpty) {
+      Get.snackbar("Error", "Please enter all fields",
+          backgroundColor: Colors.red, colorText: Colors.white);
+      return;
     }
 
-    // Default error when response is unexpected
-    Get.snackbar("Error", "Unexpected response from server",
-        backgroundColor: Colors.red, colorText: Colors.white);
+    if (!GetUtils.isEmail(email)) {
+      Get.snackbar("Invalid Email", "Please enter a valid email address",
+          backgroundColor: Colors.red, colorText: Colors.white);
+      return;
+    }
 
-  } 
-   finally {
-    isLoading.value = false;
+    if (password.length < 6) {
+      Get.snackbar("Weak Password", "Password must be at least 6 characters",
+          backgroundColor: Colors.red, colorText: Colors.white);
+      return;
+    }
+
+    isLoading.value = true;
+    try {
+      final response = await ApiService().postRequest("register", data: {
+        "email": email,
+        "password": password,
+        "device_token": deviceToken,
+      });
+
+      if (response != null) {
+        final data = response.data;
+
+        if (data["error"] == false && data["data"]?["otp"] != null) {
+          final otp = data["data"]["otp"];
+          print("✅ OTP: $otp");
+
+          Get.toNamed(GetRouteNames.Otpscreen, arguments: {"email": email});
+          return;
+        } else {
+          final message = data["message"] ?? "Signup failed";
+          Get.snackbar("Signup Failed", message,
+              backgroundColor: Colors.red, colorText: Colors.white);
+          return;
+        }
+      }
+
+      Get.snackbar("Error", "Unexpected response from server",
+          backgroundColor: Colors.red, colorText: Colors.white);
+    } finally {
+      isLoading.value = false;
+    }
   }
-}
-
-
-
 }

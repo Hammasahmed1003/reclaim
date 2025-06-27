@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:reclaim/appServices/SharedPrefService.dart';
 import 'package:reclaim/appServices/getRouteNames.dart';
 
 class SplashController extends GetxController with GetTickerProviderStateMixin {
@@ -28,7 +29,8 @@ class SplashController extends GetxController with GetTickerProviderStateMixin {
       vsync: this,
       duration: const Duration(seconds: 1),
     );
-    scaleAnimation = Tween<double>(begin: 0.5, end: 1.0).animate(scaleController);
+    scaleAnimation =
+        Tween<double>(begin: 0.5, end: 1.0).animate(scaleController);
 
     // Initialize slide animation
     slideController = AnimationController(
@@ -41,6 +43,22 @@ class SplashController extends GetxController with GetTickerProviderStateMixin {
     startAnimation();
   }
 
+  // void startAnimation() async {
+  //   await Future.delayed(const Duration(seconds: 0));
+  //   fadeController.forward();
+
+  //   await Future.delayed(const Duration(seconds: 2));
+  //   scaleController.forward();
+
+  //   await Future.delayed(const Duration(seconds: 1));
+  //   slideController.forward();
+
+  //   // Navigate to Home after animation completes
+  //   await Future.delayed(const Duration(seconds: 3));
+  //   Get.offNamed(GetRouteNames
+  //       .onBoardingScreen); // Change this to your actual home route
+  // }
+
   void startAnimation() async {
     await Future.delayed(const Duration(seconds: 0));
     fadeController.forward();
@@ -51,9 +69,16 @@ class SplashController extends GetxController with GetTickerProviderStateMixin {
     await Future.delayed(const Duration(seconds: 1));
     slideController.forward();
 
-    // Navigate to Home after animation completes
-    await Future.delayed(const Duration(seconds: 3));
-    Get.offNamed(GetRouteNames.onBoardingScreen); // Change this to your actual home route
+    // Check for token
+    await Future.delayed(const Duration(seconds: 2));
+
+    final token = await SharedPrefService.getUserToken();
+
+    if (token != null && token.isNotEmpty) {
+      Get.offNamed(GetRouteNames.BottomnavbarView);
+    } else {
+      Get.offNamed(GetRouteNames.onBoardingScreen);
+    }
   }
 
   @override

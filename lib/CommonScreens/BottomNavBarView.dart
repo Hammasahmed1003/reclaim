@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
@@ -17,13 +16,11 @@ class BottomnavbarView extends StatelessWidget {
   final Bottomnavcontroller controller = Get.put(Bottomnavcontroller());
 
   final List<Widget> _pages = [
-     Homescreen(),
-     ProgressScreen(),
-    //  Homescreen(), 
-const ResourceScreen(),
-   const  CommunityScreen()
-
-
+    Homescreen(),
+    ProgressScreen(),
+    //  Homescreen(),
+    ResourceScreen(),
+    const CommunityScreen()
 
     // const Savingscreen(),
     // const Profilescreen(),
@@ -33,120 +30,137 @@ const ResourceScreen(),
   Widget build(BuildContext context) {
     return AnnotatedRegion<SystemUiOverlayStyle>(
       value: const SystemUiOverlayStyle(systemNavigationBarColor: Colors.white),
-      child: Scaffold(
-        floatingActionButton: FloatingActionButton(
-          onPressed: () {
-            panicDailog(context);
-            // Define action here
-          },
-          backgroundColor: Reclaimcolors.BasicBlue,
-          shape: const CircleBorder(),
-          child: SvgPicture.asset(
-            ReclaimIcon.NewLOGO, // Your custom SVG icon
-            // height: 30,
-            // width: 30,
-            // color: Colors.white,
-          ),
-        ),
-        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-        body: Obx(() => _pages[controller.currentIndex.value]),
-        bottomNavigationBar: Obx(
-          () => Container(
-            decoration: BoxDecoration(
-              color: Colors.white,
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.grey.withOpacity(0.3),
-                  spreadRadius: 2,
-                  blurRadius: 10,
-                  offset: const Offset(0, -2),
-                ),
-              ],
-            ),
-            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-            child: GNav(
-            // mainAxisAlignment: MainAxisAlignment.spaceAround,
-              gap: 7,
-              backgroundColor: Colors.white,
-              color: Colors.grey,
-              activeColor: Reclaimcolors.BasicBlack,
-              tabBackgroundColor: Colors.grey.shade200,
-              padding: const EdgeInsets.all(16),
-              selectedIndex: controller.currentIndex.value,
-              onTabChange: (index) => controller.changeIndex(index),
-              tabs: [
-                GButton(
-                  padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
-                  backgroundColor: Reclaimcolors.BlueSecondary,
-                  icon: Icons.home,
-                  iconColor: Colors.grey,
-                  text: 'Home'.tr,
-                  leading: SvgPicture.asset(
-                    controller.currentIndex.value == 0
-                        ? ReclaimIcon.homeIcon
-                        : ReclaimIcon.homeIcon,
-                    // height: 20,
-                    // width: 20,
-                  ),
-                ),
-                GButton(
-                  padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
-                  backgroundColor: Reclaimcolors.BlueSecondary,
-                  icon: Icons.savings,
-                  text: 'Progress'.tr,
-                  leading: SvgPicture.asset(
-                    controller.currentIndex.value == 1
-                         ? ReclaimIcon.progressIcon
-                        : ReclaimIcon.progressIcon,
-                    height: 20,
-                    width: 20,
-                  ),
-                ),
-                
-                GButton(
-                  padding: EdgeInsets.symmetric(horizontal: 10, vertical: 15),
-
-                  backgroundColor: Reclaimcolors.BlueSecondary,
-
-                  icon: Icons.person,
-                  text: 'Resources'.tr,
-                  leading: SvgPicture.asset(
-                    controller.currentIndex.value == 2
-                     ? ReclaimIcon.resources
-                        : ReclaimIcon.resources,
-                    height: 20,
-                    width: 20,
-                  ),
-                ),
-                // GButton(
-                //   padding:const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
-
-                //   backgroundColor: Reclaimcolors.BlueSecondary,
-                //   icon: Icons.person,
-                //   text: 'Community'.tr,
-                //   leading: SvgPicture.asset(
-                //     controller.currentIndex.value == 2
-                //      ? ReclaimIcon.community
-                //         : ReclaimIcon.community,
-                //     height: 20,
-                //     width: 20,
-                //   ),
-                // ),
-
-                GButton(
-  padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
-  backgroundColor: Reclaimcolors.BlueSecondary,
-  icon: Icons.person,
-  text: 'Community'.tr,
-  leading: SvgPicture.asset(
-    controller.currentIndex.value == 3
-      ? ReclaimIcon.community
-      : ReclaimIcon.community,
-    height: 20,
-    width: 20,
+      child: PopScope(
+        canPop: true,
+        child: Scaffold(
+          // floatingActionButton: FloatingActionButton(
+          //   onPressed: () {
+          //     panicDailog(context);
+          //     // Define action here
+          //   },
+          //   backgroundColor: Reclaimcolors.BasicBlue,
+          //   shape: const CircleBorder(),
+          //   child: SvgPicture.asset(
+          //     ReclaimIcon.NewLOGO, // Your custom SVG icon
+          //     // height: 30,
+          //     // width: 30,
+          //     // color: Colors.white,
+          //   ),
+          // ),
+          floatingActionButton: FloatingActionButton(
+  onPressed: () async {
+    await controller.fetchPanicTask(context);
+  },
+  backgroundColor: Reclaimcolors.BasicBlue,
+  shape: const CircleBorder(),
+  child: SvgPicture.asset(
+    ReclaimIcon.NewLOGO,
   ),
 ),
-              ],
+floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+
+          // floatingActionButtonLocation:
+          //     FloatingActionButtonLocation.centerDocked,
+          body: Obx(() => _pages[controller.currentIndex.value]),
+          bottomNavigationBar: Obx(
+            () => Container(
+              decoration: BoxDecoration(
+                color: Colors.white,
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.withOpacity(0.3),
+                    spreadRadius: 2,
+                    blurRadius: 10,
+                    offset: const Offset(0, -2),
+                  ),
+                ],
+              ),
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+              child: GNav(
+                // mainAxisAlignment: MainAxisAlignment.spaceAround,
+                gap: 7,
+                backgroundColor: Colors.white,
+                color: Colors.grey,
+                activeColor: Reclaimcolors.BasicBlack,
+                tabBackgroundColor: Colors.grey.shade200,
+                padding: const EdgeInsets.all(16),
+                selectedIndex: controller.currentIndex.value,
+                onTabChange: (index) => controller.changeIndex(index),
+                tabs: [
+                  GButton(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 10, vertical: 15),
+                    backgroundColor: Reclaimcolors.BlueSecondary,
+                    icon: Icons.home,
+                    iconColor: Colors.grey,
+                    text: 'Home'.tr,
+                    leading: SvgPicture.asset(
+                      controller.currentIndex.value == 0
+                          ? ReclaimIcon.homeIcon
+                          : ReclaimIcon.homeIcon,
+                      // height: 20,
+                      // width: 20,
+                    ),
+                  ),
+                  GButton(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 10, vertical: 15),
+                    backgroundColor: Reclaimcolors.BlueSecondary,
+                    icon: Icons.savings,
+                    text: 'Progress'.tr,
+                    leading: SvgPicture.asset(
+                      controller.currentIndex.value == 1
+                          ? ReclaimIcon.progressIcon
+                          : ReclaimIcon.progressIcon,
+                      height: 20,
+                      width: 20,
+                    ),
+                  ),
+
+                  GButton(
+                    padding: EdgeInsets.symmetric(horizontal: 10, vertical: 15),
+                    backgroundColor: Reclaimcolors.BlueSecondary,
+                    icon: Icons.person,
+                    text: 'Resources'.tr,
+                    leading: SvgPicture.asset(
+                      controller.currentIndex.value == 2
+                          ? ReclaimIcon.resources
+                          : ReclaimIcon.resources,
+                      height: 20,
+                      width: 20,
+                    ),
+                  ),
+                  // GButton(
+                  //   padding:const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
+
+                  //   backgroundColor: Reclaimcolors.BlueSecondary,
+                  //   icon: Icons.person,
+                  //   text: 'Community'.tr,
+                  //   leading: SvgPicture.asset(
+                  //     controller.currentIndex.value == 2
+                  //      ? ReclaimIcon.community
+                  //         : ReclaimIcon.community,
+                  //     height: 20,
+                  //     width: 20,
+                  //   ),
+                  // ),
+
+                  GButton(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 10, vertical: 15),
+                    backgroundColor: Reclaimcolors.BlueSecondary,
+                    icon: Icons.person,
+                    text: 'Community'.tr,
+                    leading: SvgPicture.asset(
+                      controller.currentIndex.value == 3
+                          ? ReclaimIcon.community
+                          : ReclaimIcon.community,
+                      height: 20,
+                      width: 20,
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         ),

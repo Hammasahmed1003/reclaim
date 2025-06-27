@@ -18,7 +18,7 @@ class Createcommunityscreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final AddCommunityController controller = Get.put(AddCommunityController());
     return  AnnotatedRegion<SystemUiOverlayStyle>(
-         value:  SystemUiOverlayStyle(
+         value:   const SystemUiOverlayStyle(
         statusBarColor: Reclaimcolors.BasicBlue,
         systemNavigationBarColor: Reclaimcolors.BasicWhite,
 

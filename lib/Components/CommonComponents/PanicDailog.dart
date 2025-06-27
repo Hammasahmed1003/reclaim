@@ -10,81 +10,76 @@ import 'package:reclaim/Components/CommonComponents/ReclaimButton.dart';
 import 'package:reclaim/appConstants/ReclaimColors.dart';
 import 'package:reclaim/appConstants/ReclaimIcons.dart';
 
-void panicDailog(BuildContext context) {
+void panicDialog(BuildContext context, Map<String, dynamic> task) {
+  final TextEditingController answerController = TextEditingController();
+
   showCupertinoDialog(
     context: context,
     builder: (BuildContext context) {
       return Stack(
         children: [
-          // Blurred Background
           BackdropFilter(
-            filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5), // Blur effect
+            filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
             child: Container(
-              color: Reclaimcolors.BlueSecondary.withOpacity(0.9), // Semi-transparent overlay
+              color: Reclaimcolors.BlueSecondary.withOpacity(0.9),
             ),
           ),
-          
-          // Cupertino Alert Dialog
           Center(
             child: CupertinoAlertDialog(
-
-              
               content: Column(
                 children: [
                   const SizedBox(height: 10),
-                  // Icon(
-                  //   CupertinoIcons.sportscourt, // Running Icon
-                  //   size: 40,
-                  //   color: Colors.white,
-                  // ),
-              
-                    Lottie.asset(
-              'assets/animations/alertLottie.json',
-              width: 70,
-              height: 90,
-               // Replace with your actual Lottie file path
-                        
-              
-              fit: BoxFit.cover,
-                          ),
+                  Lottie.asset(
+                    'assets/animations/alertLottie.json',
+                    width: 70,
+                    height: 90,
+                    fit: BoxFit.cover,
+                  ),
                   const SizedBox(height: 10),
-                  const Text(
-                    "Running 2 Minutes",
-                    style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
+                  Text(
+                    "Type: ${task['type']}\nIntensity: ${task['intensity']}",
+                    style: const TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w600,
+                      color: Reclaimcolors.BasicBlack,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                  const SizedBox(height: 10),
+                  Text(
+                    task['description'] ?? '',
+                    textAlign: TextAlign.center,
+                    style: const TextStyle(
+                      fontSize: 14,
                       color: Reclaimcolors.BasicBlack,
                     ),
                   ),
-                  const SizedBox(height: 8),
-                  const Text(
-                    "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor ut labore et dolore magna aliqua.",
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      fontSize: 14,
-                      color: Reclaimcolors.BasicBlack,
-                      
-                    ),
+                  const SizedBox(height: 10),
+                  CupertinoTextField(
+                    controller: answerController,
+                    placeholder: "Your answer here...",
+                    maxLines: 3,
+                    padding: const EdgeInsets.all(12),
                   ),
                   const SizedBox(height: 15),
                   CupertinoButton(
                     color: Reclaimcolors.Red,
                     onPressed: () {
-                    Get.back();
-                      // Navigator.pop(context); // Close dialog
+                      print("User answer: \${answerController.text}");
+                      Get.back();
                     },
                     child: Row(
-                      // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-
                         SvgPicture.asset(ReclaimIcon.Done),
-                        SizedBox(width: 10.w,),
-                        Text("Done", style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 20.sp,
-
-                        ),)
-                        ,
+                        SizedBox(width: 10.w),
+                        Text(
+                          "Submit",
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 20.sp,
+                          ),
+                        ),
                       ],
                     ),
                   ),

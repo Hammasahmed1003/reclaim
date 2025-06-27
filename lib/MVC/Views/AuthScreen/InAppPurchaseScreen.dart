@@ -19,7 +19,7 @@ class InAppPurchasesScreen extends StatelessWidget {
     {
       'title': 'Yearly',
       'price': '\$49.17/Mo',
-    }, 
+    },
   ];
 
   @override
@@ -133,7 +133,7 @@ class InAppPurchasesScreen extends StatelessWidget {
                                               fontWeight: FontWeight.w600)),
                                       if (isSelected)
                                         // SvgPicture.asset(ReclaimIcon.check),
-                                     const   Icon(Icons.check_circle,
+                                        const Icon(Icons.check_circle,
                                             color: Reclaimcolors.BasicBlue)
                                       else
                                         const Icon(Icons.radio_button_unchecked,
@@ -180,14 +180,14 @@ class InAppPurchasesScreen extends StatelessWidget {
                 height: 55.h,
                 child: ElevatedButton(
                   onPressed: () {
-                    Get.toNamed(GetRouteNames.WelcomeScreen);
+                    Get.toNamed(GetRouteNames.LoginRoute);
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Reclaimcolors.BasicBlue,
                     minimumSize: const Size(double.infinity, 50),
                   ),
                   child: Text(
-                    "Continue",
+                    "Lets Started",
                     style: TextStyle(
                       fontSize: 20.sp,
                       color: Reclaimcolors.BasicWhite,

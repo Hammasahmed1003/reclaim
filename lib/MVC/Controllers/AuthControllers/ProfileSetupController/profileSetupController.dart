@@ -1,43 +1,3 @@
-// import 'dart:io';
-
-// import 'package:flutter/material.dart';
-// import 'package:get/get.dart';
-// import 'package:intl/intl.dart';
-
-// class Profilesetupcontroller extends GetxController{
-//   final TextEditingController FullNameController = TextEditingController();
-//    TextEditingController dateOfBirthController = TextEditingController();
-   
-//   RxInt age = 0.obs;
-//   TextEditingController genderController = TextEditingController();
-// RxString selectedGender = 'Male'.obs;
-
-
-
-//   var selectedImage = Rx<File?>(null);
-
-
-
-//   void updateDateOfBirth(DateTime selectedDate) {
-//     dateOfBirthController.text = DateFormat('yyyy-MM-dd').format(selectedDate);
-    
-//     // Calculate Age
-//     final currentDate = DateTime.now();
-//     int calculatedAge = currentDate.year - selectedDate.year;
-//     if (currentDate.month < selectedDate.month ||
-//         (currentDate.month == selectedDate.month && currentDate.day < selectedDate.day)) {
-//       calculatedAge--;
-//     }
-
-//     age.value = calculatedAge;
-//   }
-
-//   void updateGender(String gender) {
-//     selectedGender.value = gender;
-//     genderController.text = gender;
-//   }
-
-// }
 
 
 import 'dart:io';
@@ -98,4 +58,8 @@ class Profilesetupcontroller extends GetxController {
     }
     return true;
   }
+
+
+
+
 }

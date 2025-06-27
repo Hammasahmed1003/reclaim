@@ -7,7 +7,6 @@ class ApiEndpoints {
   static const String editProfile = "auth/editProfile";
   static const String deleteUser = "auth/deleteUser";
 
-
   static const String addPot = "pot/addPot";
   static const String getPot = "pot/getPot";
   static const String deletePot = "pot/deletePot";

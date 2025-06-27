@@ -22,7 +22,7 @@ class ReclaimButton extends StatelessWidget {
     required this.height,
     required this.backgroundColor,
     required this.title,
-    this.titleColor =  Reclaimcolors.BasicBlack,
+    this.titleColor = Reclaimcolors.BasicBlack,
     required this.fontWeight,
     this.titleSize = 16,
     this.iconPath,
@@ -39,10 +39,10 @@ class ReclaimButton extends StatelessWidget {
         height: height.h,
         decoration: BoxDecoration(
           border: Border.all(
-                    color: Reclaimcolors.BasicBlack.withOpacity(0.1),
-                    style: BorderStyle.solid,
-                    width: 1.0,
-                ),
+            color: Reclaimcolors.BasicBlack.withOpacity(0.1),
+            style: BorderStyle.solid,
+            width: 1.0,
+          ),
           color: backgroundColor,
           borderRadius: BorderRadius.circular(30),
           boxShadow: [
@@ -62,14 +62,14 @@ class ReclaimButton extends StatelessWidget {
                 width: 20.w,
                 height: 20.h,
                 child:
-                //  CircularProgressIndicator(
-                //   strokeWidth: 2,
-                //   color: Colors.black,
-                // ),
-               const   SpinKitDoubleBounce(
-              color:Reclaimcolors.BasicWhite,
-              size: 20.0,
-),
+                    //  CircularProgressIndicator(
+                    //   strokeWidth: 2,
+                    //   color: Colors.black,
+                    // ),
+                    const SpinKitDoubleBounce(
+                  color: Reclaimcolors.BasicWhite,
+                  size: 20.0,
+                ),
               )
             else ...[
               if (iconPath != null) ...[
@@ -79,12 +79,12 @@ class ReclaimButton extends StatelessWidget {
               Text(
                 title,
                 style: TextStyle(
-                  fontSize: titleSize.sp,
-                  fontWeight: fontWeight,
-                  // FontWeight.bold,
-                  color: titleColor
-                  // Colors.black,
-                ),
+                    fontSize: titleSize.sp,
+                    fontWeight: fontWeight,
+                    // FontWeight.bold,
+                    color: titleColor
+                    // Colors.black,
+                    ),
               ),
             ],
           ],

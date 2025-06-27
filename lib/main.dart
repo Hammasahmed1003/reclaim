@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:reclaim/MVC/Views/onboardingScreen/onBoardingScreen.dart';
+import 'package:reclaim/MVC/Controllers/UserController/userController.dart';
 import 'package:reclaim/appServices/getRouteNames.dart';
 import 'package:reclaim/appServices/getRoutes.dart';
 
@@ -15,6 +15,8 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    Get.put(UserController());
+
     return ScreenUtilInit(
         designSize: const Size(360, 690),
         minTextAdapt: true,
@@ -39,4 +41,3 @@ class MyApp extends StatelessWidget {
         });
   }
 }
-  

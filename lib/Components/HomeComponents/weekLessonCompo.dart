@@ -16,68 +16,83 @@ class WeekLessonComponent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      
-      width: 300, // Ensures consistency in horizontal scrolling
-      margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(12),
-        boxShadow: [
-          BoxShadow(
-            color: Reclaimcolors.BasicBlue.withOpacity(0.1),
-            blurRadius: 10,
-            spreadRadius: 1,
-            offset: const Offset(0, 4),
-          ),
-        ],
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          // Image Section
-          ClipRRect(
-            borderRadius: const BorderRadius.only(
-              topLeft: Radius.circular(12),
-              topRight: Radius.circular(12),
+    return SingleChildScrollView(
+      child: Container(
+        width: 280.w,
+        margin: EdgeInsets.symmetric(horizontal: 12.w, vertical: 10.h),
+        padding: EdgeInsets.all(12.w),
+        decoration: BoxDecoration(
+          color: Reclaimcolors.BasicWhite,
+          borderRadius: BorderRadius.circular(16),
+          boxShadow: [
+            BoxShadow(
+              color: Reclaimcolors.BasicBlue.withOpacity(0.1),
+              blurRadius: 10,
+              spreadRadius: 1,
+              offset: const Offset(0, 4),
             ),
-            child: Image.network(
-              imageUrl,
-              // height: 150,
-              width: double.infinity,
-              fit: BoxFit.cover,
+          ],
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // Image
+            ClipRRect(
+              borderRadius: BorderRadius.circular(12),
+              child: Image.network(
+                imageUrl,
+                width: double.infinity,
+                height: 130.h,
+                fit: BoxFit.cover,
+                loadingBuilder: (context, child, loadingProgress) {
+                  if (loadingProgress == null) return child;
+                  return SizedBox(
+                    height: 130.h,
+                    child: const Center(
+                      child: CircularProgressIndicator(
+                        color: Reclaimcolors.BasicBlue,
+                      ),
+                    ),
+                  );
+                },
+                errorBuilder: (context, error, stackTrace) {
+                  return SizedBox(
+                    height: 130.h,
+                    child: const Center(
+                      child: Icon(Icons.image_not_supported,
+                          size: 40, color: Colors.grey),
+                    ),
+                  );
+                },
+              ),
             ),
-          ),
 
-          // Content Section
-          Padding(
-            padding: const EdgeInsets.all(12),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                // Title
-                Text(
-                  title,
-                  style:  TextStyle(
-                    fontSize: 20.sp,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black,
-                  ),
-                ),
-                const SizedBox(height: 4),
+            SizedBox(height: 8.h),
 
-                // Description
-                Text(
-                  description,
-                  style: TextStyle(
-                    fontSize: 13.sp,
-                    color: Colors.grey.shade700,
-                  ),
-                ),
-              ],
+            // Title
+            Text(
+              title,
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 16.sp,
+                color: Colors.black,
+              ),
             ),
-          ),
-        ],
+
+            SizedBox(height: 4.h),
+
+            // Description
+            Text(
+              description,
+              style: TextStyle(
+                fontSize: 12.sp,
+                color: Colors.black54,
+              ),
+              maxLines: 3,
+              overflow: TextOverflow.ellipsis,
+            ),
+          ],
+        ),
       ),
     );
   }
