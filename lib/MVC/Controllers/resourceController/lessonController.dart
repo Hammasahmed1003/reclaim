@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:reclaim/MVC/Models/lessionModel.dart';
+import 'package:reclaim/appConstants/ReclaimColors.dart';
 import 'package:reclaim/appServices/ApiServices.dart';
 import 'package:reclaim/appServices/SharedPrefService.dart';
 
@@ -57,6 +58,8 @@ class LessonController extends GetxController {
         "Success",
         lesson.isSave.value == 1 ? "Lesson bookmarked!" : "Bookmark removed.",
         snackPosition: SnackPosition.BOTTOM,
+        backgroundColor: Reclaimcolors.DisableText,
+        colorText: Reclaimcolors.BasicWhite,
         duration: const Duration(seconds: 2),
       );
     } else {

@@ -147,12 +147,12 @@ class AppPages {
     //   name: GetRouteNames.PostDetailScreen,
     //   page: () => PostDetailScreen(post: CommunityPostModel(),),
     // ),
-    
+
     GetPage(
       name: GetRouteNames.PostDetailScreen,
       transition: Transition.rightToLeft,
-      
-      page: () => const PostDetailScreen(), // No need to pass model here
+
+      page: () => PostDetailScreen(), // No need to pass model here
     ),
   ];
 }
