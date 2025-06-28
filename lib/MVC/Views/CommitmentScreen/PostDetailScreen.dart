@@ -1,5 +1,4 @@
 import 'dart:io';
-import 'package:emoji_picker_flutter/emoji_picker_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -254,29 +253,29 @@ class PostDetailScreen extends StatelessWidget {
           ),
 
           // EMOJI PICKER
-          Obx(() => Offstage(
-                offstage: !_showEmoji.value,
-                child: SizedBox(
-                  height: 250,
-                  child: EmojiPicker(
-                    onEmojiSelected: (category, emoji) {
-                      controller.commentController.text += emoji.emoji;
-                      _isButtonEnabled.value =
-                          controller.commentController.text.trim().isNotEmpty;
-                    },
-                    config: Config(
-                      columns: 7,
-                      emojiSizeMax: 24 * (Platform.isIOS ? 1.30 : 1.0),
-                      bgColor: Colors.white,
-                      indicatorColor: Colors.blue,
-                      iconColor: Colors.grey,
-                      iconColorSelected: Colors.blue,
-                      backspaceColor: Colors.red,
-                      enableSkinTones: true,
-                    ),
-                  ),
-                ),
-              )),
+          // Obx(() => Offstage(
+          //       offstage: !_showEmoji.value,
+          //       child: SizedBox(
+          //         height: 250,
+          //         child: EmojiPicker(
+          //           onEmojiSelected: (category, emoji) {
+          //             controller.commentController.text += emoji.emoji;
+          //             _isButtonEnabled.value =
+          //                 controller.commentController.text.trim().isNotEmpty;
+          //           },
+          //           config: Config(
+          //             columns: 7,
+          //             emojiSizeMax: 24 * (Platform.isIOS ? 1.30 : 1.0),
+          //             bgColor: Colors.white,
+          //             indicatorColor: Colors.blue,
+          //             iconColor: Colors.grey,
+          //             iconColorSelected: Colors.blue,
+          //             backspaceColor: Colors.red,
+          //             enableSkinTones: true,
+          //           ),
+          //         ),
+          //       ),
+          //     )),
         ],
       ),
     );
