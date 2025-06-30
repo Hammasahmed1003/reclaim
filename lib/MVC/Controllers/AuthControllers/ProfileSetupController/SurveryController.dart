@@ -1,7 +1,7 @@
 import 'dart:io';
-import 'package:dio/dio.dart';
+import 'package:dio/dio.dart' as _dio;
 // import 'package:get/get.dart';
-import 'package:get/get.dart' hide FormData, MultipartFile;
+import 'package:get/get.dart';
 import 'package:reclaim/MVC/Controllers/UserController/userController.dart';
 import 'package:reclaim/appConstants/ReclaimColors.dart';
 
@@ -321,13 +321,19 @@ class SurveyController extends GetxController {
     };
 
     if (avatar != null) {
-      formMap["avatar"] = await MultipartFile.fromFile(
+      formMap["avatar"] = await _dio.MultipartFile.fromFile(
         avatar.path,
         filename: avatar.path.split('/').last,
       );
     }
+    String? token = await SharedPrefService.getUserToken();
 
-    final formData = FormData.fromMap(formMap);
+    var headers = {
+      'Accept': 'application/json',
+      'Authorization': 'Bearer $token',
+    };
+
+    final formData = _dio.FormData.fromMap(formMap);
 
     // 🪵 Debug log
     print("📝 Sending FormData to create-profile:");
@@ -340,9 +346,17 @@ class SurveyController extends GetxController {
         print("📎 File Field: ${file.key}, File Name: ${file.value.filename}");
       }
     }
+    final dio = _dio.Dio();
 
-    final response =
-        await ApiService().postMultipartRequest("create-profile", formData);
+    final response = await dio.request(
+      "https://reclaim.hboxdigital.website/api/create-profile",
+      options: _dio.Options(
+        method: 'POST',
+        headers: headers,
+      ),
+      data: formData,
+    );
+    // ApiService().postMultipartRequest("create-profile", formData);
 
     isLoading.value = false;
 

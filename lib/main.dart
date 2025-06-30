@@ -28,7 +28,7 @@ class MyApp extends StatelessWidget {
             theme: ThemeData(
               fontFamily: "Poppins",
               useMaterial3: true,
-            ), 
+            ),
             // home: OnboardingScreen()
             getPages: AppPages.pages,
             initialRoute:

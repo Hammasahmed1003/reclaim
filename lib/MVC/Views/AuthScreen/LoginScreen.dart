@@ -107,11 +107,30 @@ class Loginscreen extends StatelessWidget {
                   controller: logincontroller.passwordController,
                 ),
                 SizedBox(
+                  height: 15.sp,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    SpringWidget(
+                      onTap: () {
+                        Get.toNamed(GetRouteNames.Forgetpasswordscreen);
+                      },
+                      child: Text(
+                        "Forget Password",
+                        style: TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w500,
+                            color: Reclaimcolors.BasicBlue),
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(
                   height: 30.sp,
                 ),
                 Obx(
-                  () =>
-                   ReclaimButton(
+                  () => ReclaimButton(
                       isLoading: logincontroller.isLoading.value,
                       titleColor: Reclaimcolors.BasicWhite,
                       width: 370.w,

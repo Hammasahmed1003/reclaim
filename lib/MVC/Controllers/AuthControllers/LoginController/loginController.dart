@@ -22,55 +22,6 @@ class Logincontroller extends GetxController {
   final RxBool isLoading = false.obs;
   final UserController controller = Get.put(UserController());
 
-  // final userController = Get.find<UserController>();
-
-  // Future<void> login() async {
-  //   final email = emailController.text.trim();
-  //   final password = passwordController.text.trim();
-
-  //   if (email.isEmpty || password.isEmpty) {
-  //     Get.snackbar("Error", "Email and password are required",
-  //         backgroundColor: Reclaimcolors.Red, colorText: Colors.white);
-  //     return;
-  //   }
-
-  //   isLoading.value = true;
-
-  //   try {
-  //     final response = await ApiService().postRequest("login", data: {
-  //       "email": email,
-  //       "password": password,
-  //     });
-
-  //     isLoading.value = false;
-
-  //     if (response != null && response.data["error"] == false) {
-  //       final userData = response.data["data"]["user"];
-  //       final token = response.data["data"]["token"];
-
-  //       await SharedPrefService.saveUserData(
-  //         id: userData["id"].toString(),
-  //         email: userData["email"],
-  //         deviceToken: userData["device_token"],
-  //         Name: userData["profile_name"],
-  //         token: token,
-  //         gender: userData["profile_gender"],
-  //          image: userData["profile_image"],
-  //       );
-
-  //       Get.toNamed(GetRouteNames.BottomnavbarView);
-  //     } else {
-  //       Get.snackbar(
-  //           "Login Failed", response!.data["message"] ?? "Invalid credentials",
-  //           backgroundColor: Reclaimcolors.Red, colorText: Colors.white);
-  //     }
-  //   } catch (e) {
-  //     isLoading.value = false;
-  //     Get.snackbar("Error", "An error occurred",
-  //         backgroundColor: Reclaimcolors.Red, colorText: Colors.white);
-  //   }
-  // }
-
   // new Controller
 
   Future<void> login() async {
@@ -128,7 +79,7 @@ class Logincontroller extends GetxController {
       }
     } catch (e) {
       isLoading.value = false;
-      Get.snackbar("Error", "An error occurred",
+      Get.snackbar("Invalid credentials", "",
           backgroundColor: Reclaimcolors.Red, colorText: Colors.white);
       print("Login Exception: $e");
     }

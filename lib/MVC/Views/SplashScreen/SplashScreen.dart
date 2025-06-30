@@ -15,16 +15,18 @@ class SplashScreen extends StatelessWidget {
       builder: (controller) {
         return AnnotatedRegion<SystemUiOverlayStyle>(
           value: const SystemUiOverlayStyle(
-             statusBarColor: Color(0xff3A6FA0),
-             systemNavigationBarColor: Color(0xFF3882C7)
-          ),
+              statusBarColor: Color(0xff3A6FA0),
+              systemNavigationBarColor: Color(0xFF3882C7)),
           child: Scaffold(
             body: Container(
               width: double.infinity,
               height: double.infinity,
               decoration: const BoxDecoration(
                 gradient: LinearGradient(
-                  colors: [Color(0xFF3A6FA0), Color(0xFF3882C7)], // Blue gradient
+                  colors: [
+                    Color(0xFF3A6FA0),
+                    Color(0xFF3882C7)
+                  ], // Blue gradient
                   begin: Alignment.topCenter,
                   end: Alignment.bottomCenter,
                 ),
@@ -32,10 +34,8 @@ class SplashScreen extends StatelessWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                
-          
                   const SizedBox(height: 20),
-          
+
                   // Logo scale effect
                   // ScaleTransition(
                   //   scale: controller.scaleAnimation,
@@ -45,22 +45,23 @@ class SplashScreen extends StatelessWidget {
                   //     height: 100,
                   //   ),
                   // ),
-          
+
                   const SizedBox(height: 20),
-          
+
                   // Logo slides up, then text appears
                   SlideTransition(
                     position: controller.slideAnimation,
                     child: Column(
                       children: [
                         Image.asset(
-                     Reclaimimages.SplashWithCircle, // Change path if needed
-                         
+                          Reclaimimages
+                              .SplashWithCircle, // Change path if needed
+
                           width: 200,
                           height: 200,
                         ),
                         const SizedBox(height: 10),
-                         Text(
+                        Text(
                           "Reclaim",
                           style: TextStyle(
                             fontSize: 30.sp,

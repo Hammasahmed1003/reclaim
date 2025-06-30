@@ -188,4 +188,50 @@ class Editprofilecontroller extends GetxController {
       isLoading.value = false;
     }
   }
+
+//
+
+  var isDeleteLoading = false.obs;
+
+  Future<void> deleteAccount(BuildContext context) async {
+    isDeleteLoading.value = true;
+
+    try {
+      final token = await SharedPrefService.getUserToken();
+
+      if (token == null) {
+        Get.snackbar("Error", "No token found, please log in again.");
+        return;
+      }
+
+      final response =
+          await ApiService().postRequestWithToken("delete-account", {}
+
+              // headers: {},
+              // data: {},
+              // You can send any required data here, if necessary
+              // headers: {
+              //   "Authorization": "Bearer $token",
+              // },
+              );
+
+      if (response != null &&
+          response.statusCode == 200 &&
+          response.data["error"] == false) {
+        // Successfully deleted the account
+        await SharedPrefService.clearAll(); // Clear shared preferences
+
+        Get.snackbar("Success", "Your account has been deleted.");
+        Get.offAllNamed('/login'); // Redirect to login screen
+      } else {
+        Get.snackbar(
+            "Error", response?.data['message'] ?? "Failed to delete account.");
+      }
+    } catch (e) {
+      print("Error deleting account: $e");
+      Get.snackbar("Error", "Something went wrong.");
+    } finally {
+      isDeleteLoading.value = false;
+    }
+  }
 }

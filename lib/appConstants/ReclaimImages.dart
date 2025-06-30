@@ -10,4 +10,10 @@ class Reclaimimages {
   static const String SplashIcon = "assets/images/SplashIcon.png";
   static const String SplashWithCircle = "assets/images/SplashWithCircle.png";
   static const String recollect = "assets/images/recollect.png";
+  static const String fire = "assets/images/fire.png";
+  static const String iconwithtm = "assets/images/iconwithtm.png";
+
+
+
+  
 }

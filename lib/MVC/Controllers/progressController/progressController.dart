@@ -5,6 +5,7 @@ import 'package:reclaim/appServices/ApiServices.dart';
 class ProgressController extends GetxController {
   RxBool isLoading = true.obs;
   RxInt currentLevel = 1.obs;
+  RxInt streak = 1.obs;
   RxInt totalLevels = 5.obs; // you can update this dynamically if needed
 
   @override
@@ -19,7 +20,10 @@ class ProgressController extends GetxController {
 
       if (response != null && response.statusCode == 200) {
         final data = response.data["data"];
-        currentLevel.value = int.tryParse(data["level"] ?? "1") ?? 1;
+        currentLevel.value = int.tryParse(data["level"] ?? "1",
+      
+        ) ?? 1;
+        streak.value = int.tryParse(data["Streak"] ?? "1") ?? 1 ;
         // optionally: totalLevels.value = computeFromPoints(data["points"]);
       }
     } catch (e) {

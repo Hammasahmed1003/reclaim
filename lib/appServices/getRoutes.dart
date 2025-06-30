@@ -2,6 +2,7 @@ import 'package:get/get.dart';
 import 'package:reclaim/CommonScreens/BottomNavBarView.dart';
 import 'package:reclaim/MVC/Controllers/EveningRecollectControllers/EveningRecollectController.dart';
 import 'package:reclaim/MVC/Models/CommunityPostModel.dart';
+import 'package:reclaim/MVC/Views/AuthScreen/ForgetPasswordScreen.dart';
 import 'package:reclaim/MVC/Views/AuthScreen/InAppPurchaseScreen.dart';
 import 'package:reclaim/MVC/Views/AuthScreen/LoginScreen.dart';
 import 'package:reclaim/MVC/Views/AuthScreen/OtpScreen.dart';
@@ -153,6 +154,12 @@ class AppPages {
       transition: Transition.rightToLeft,
 
       page: () => PostDetailScreen(), // No need to pass model here
+    ),
+    GetPage(
+      name: GetRouteNames.Forgetpasswordscreen,
+      transition: Transition.rightToLeft,
+
+      page: () => Forgetpasswordscreen(), // No need to pass model here
     ),
   ];
 }

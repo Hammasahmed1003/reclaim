@@ -3,6 +3,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:reclaim/MVC/Controllers/UserController/userController.dart';
+import 'package:reclaim/appConstants/ReclaimColors.dart';
 import 'package:reclaim/appServices/ApiServices.dart';
 import '../../../appServices/getRouteNames.dart';
 
@@ -35,160 +36,57 @@ class OtpController extends GetxController {
     });
   }
 
-  // Future<void> verifyOtp(String email) async {
-  //   if (otp.value.isEmpty || otp.value.length < 4) {
-  //     errorMessage.value = "Please enter a valid 4-digit OTP.";
-  //     return;
-  //   }
+// with user id
+  Future<void> verifyOtp(String email) async {
+    if (otp.value.isEmpty || otp.value.length < 4) {
+      errorMessage.value = "Please enter a valid 4-digit OTP.";
+      return;
+    }
 
-  //   isLoading.value = true;
-  //   errorMessage.value = "";
+    isLoading.value = true;
+    errorMessage.value = "";
 
-  //   final response = await _apiService.postRequest(
-  //     "verify-otp",
-  //     data: {
-  //       "email": email,
-  //       "otp": otp.value,
-  //     },
-  //   );
-
-  //   isLoading.value = false;
-
-  //   if (response != null && response.statusCode == 200) {
-  //     if (response.data["success"]) {
-  //       Get.offNamed(GetRouteNames.Profilesetup);
-  //     } else {
-  //       errorMessage.value = response.data["message"];
-  //     }
-  //   } else {
-  //     errorMessage.value = "Something went wrong. Please try again.";
-  //   }
-  // }
-
-// new
-
-  // Future<void> verifyOtp(String email) async {
-  //   if (otp.value.isEmpty || otp.value.length < 4) {
-  //     errorMessage.value = "Please enter a valid 4-digit OTP.";
-  //     return;
-  //   }
-
-  //   isLoading.value = true;
-  //   errorMessage.value = "";
-
-  //   try {
-  //     final response = await _apiService.postRequest(
-  //       "verify-otp",
-  //       data: {
-  //         "email": email,
-  //         "otp": otp.value,
-  //       },
-  //     );
-
-  //     isLoading.value = false;
-
-  //     if (response != null && response.statusCode == 200) {
-  //       final data = response.data;
-
-  //       // Always show server message
-  //       Get.snackbar(
-  //         "Verification",
-  //         data["message"] ?? "Verification complete",
-  //         backgroundColor: Colors.green,
-  //         colorText: Colors.white,
-  //       );
-
-  //       if (data["error"] == false) {
-  //         Get.offNamed(GetRouteNames.Profilesetup);
-  //       } else {
-  //         errorMessage.value = data["message"];
-  //       }
-  //     } else {
-  //       errorMessage.value = "Something went wrong. Please try again.";
-  //     }
-  //   } catch (e) {
-  //     isLoading.value = false;
-  //     errorMessage.value = "Unexpected error occurred.";
-  //   }
-  // }
-
-// with user id 
-Future<void> verifyOtp(String email) async {
-  if (otp.value.isEmpty || otp.value.length < 4) {
-    errorMessage.value = "Please enter a valid 4-digit OTP.";
-    return;
-  }
-
-  isLoading.value = true;
-  errorMessage.value = "";
-
-  try {
-    final response = await _apiService.postRequest(
-      "verify-otp",
-      data: {
-        "email": email,
-        "otp": otp.value,
-      },
-    );
-
-    isLoading.value = false;
-
-    if (response != null && response.statusCode == 200) {
-      final data = response.data;
-
-      // Always show server message
-      Get.snackbar(
-        "Verification",
-        data["message"] ?? "Verification complete",
-        backgroundColor: Colors.green,
-        colorText: Colors.white,
+    try {
+      final response = await _apiService.postRequest(
+        "verify-otp",
+        data: {
+          "email": email,
+          "otp": otp.value,
+        },
       );
 
-      if (data["error"] == false) {
-        // ✅ Set user ID in shared UserController
-        final userId = data["data"]?["user"]?["id"]?.toString();
-        if (userId != null) {
-          Get.find<UserController>().setUserId(userId);
+      isLoading.value = false;
+
+      if (response != null && response.statusCode == 200) {
+        final data = response.data;
+
+        // Always show server message
+        Get.snackbar(
+          "Verification",
+          data["message"] ?? "Verification complete",
+          backgroundColor: Colors.green,
+          colorText: Colors.white,
+        );
+
+        if (data["error"] == false) {
+          // ✅ Set user ID in shared UserController
+          final userId = data["data"]?["user"]?["id"]?.toString();
+          if (userId != null) {
+            Get.find<UserController>().setUserId(userId);
+          }
+
+          Get.offNamed(GetRouteNames.Profilesetup);
+        } else {
+          errorMessage.value = data["message"];
         }
-
-        Get.offNamed(GetRouteNames.Profilesetup);
       } else {
-        errorMessage.value = data["message"];
+        errorMessage.value = "Something went wrong. Please try again.";
       }
-    } else {
-      errorMessage.value = "Something went wrong. Please try again.";
+    } catch (e) {
+      isLoading.value = false;
+      errorMessage.value = "Unexpected error occurred.";
     }
-  } catch (e) {
-    isLoading.value = false;
-    errorMessage.value = "Unexpected error occurred.";
   }
-}
-
-
-
-  // Future<void> resendOtp(String email) async {
-  //   if (!canResend.value) return;
-
-  //   isLoading.value = true;
-  //   errorMessage.value = "";
-
-  //   final response = await _apiService.postRequest(
-  //     "resend-otp",
-  //     data: {"email": email},
-  //   );
-
-  //   isLoading.value = false;
-
-  //   if (response != null && response.statusCode == 200) {
-  //     if (response.data["success"]) {
-  //       startTimer();
-  //     } else {
-  //       errorMessage.value = response.data["message"];
-  //     }
-  //   } else {
-  //     errorMessage.value = "Failed to resend OTP. Try again.";
-  //   }
-  // }
 
   Future<void> resendOtp(String email) async {
     if (!canResend.value) return;
@@ -208,12 +106,11 @@ Future<void> verifyOtp(String email) async {
         final data = response.data;
 
         // Show message always
-        Get.snackbar(
-          "OTP Sent",
-          data["message"] ?? "OTP resent successfully",
-          backgroundColor: Colors.green,
-          colorText: Colors.white,
-        );
+        Get.snackbar("OTP Re-Sent",
+            data["message"] ?? "OTP Re-Sent Successfully- checkOut your Email",
+            snackPosition: SnackPosition.BOTTOM,
+            backgroundColor: Reclaimcolors.DisableText,
+            colorText: Colors.white);
 
         if (data["error"] == false) {
           startTimer();

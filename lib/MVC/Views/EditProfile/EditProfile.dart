@@ -55,42 +55,6 @@ class EditProfile extends StatelessWidget {
                           controller.EmailController,
                           isEnabled: false),
                     ),
-                    // Padding(
-                    //   padding: const EdgeInsets.symmetric(horizontal: 20),
-                    //   child: Column(
-                    //     crossAxisAlignment: CrossAxisAlignment.start,
-                    //     children: [
-                    //       Text(
-                    //         "Email",
-                    //         style: TextStyle(
-                    //           fontSize: 14.sp,
-                    //           color: Colors.grey[700],
-                    //           fontWeight: FontWeight.w500,
-                    //         ),
-                    //       ),
-                    //       SizedBox(height: 8.h),
-                    //       Obx(
-                    //         () => Container(
-                    //           width: double.infinity,
-                    //           padding: EdgeInsets.symmetric(
-                    //               horizontal: 16.w, vertical: 16.h),
-                    //           decoration: BoxDecoration(
-                    //             color: Reclaimcolors.BasicWhite,
-                    //             borderRadius: BorderRadius.circular(25),
-                    //             border: Border.all(color: Colors.grey.shade300),
-                    //           ),
-                    //           child: Text(
-                    //             controller.userEmail.value,
-                    //             style: TextStyle(
-                    //               fontSize: 14.sp,
-                    //               color: Colors.grey.shade800,
-                    //             ),
-                    //           ),
-                    //         ),
-                    //       ),
-                    //     ],
-                    //   ),
-                    // ),
 
                     SizedBox(
                       height: 10,
@@ -107,35 +71,53 @@ class EditProfile extends StatelessWidget {
                         children: [
                           // Delete Account Button
                           Expanded(
-                            child: GestureDetector(
-                              onTap: () {
-                                // TODO: Add delete account logic here
-                              },
-                              child: Container(
-                                height: 47.h,
-                                decoration: BoxDecoration(
-                                  color: Reclaimcolors.Red.withOpacity(0.15),
-                                  borderRadius: BorderRadius.circular(12),
-                                ),
-                                padding: EdgeInsets.symmetric(horizontal: 16.w),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Icon(Icons.delete,
-                                        color: Reclaimcolors.Red, size: 20),
-                                    SizedBox(width: 8.w),
-                                    Text(
-                                      "Delete Account",
-                                      style: TextStyle(
-                                        color: Reclaimcolors.Red,
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 11.sp,
+                            child: Obx(() {
+                              if (controller.isLoading.value) {
+                                return const Center(
+                                  child:
+                                      CircularProgressIndicator(), // Show loader when deleting
+                                );
+                              }
+
+                              return GestureDetector(
+                                onTap: () async {
+                                  // Show confirmation dialog before deleting the account
+                                  bool? deleteConfirmed =
+                                      await _showDeleteConfirmationDialog(
+                                          context);
+
+                                  if (deleteConfirmed == true) {
+                                    // Proceed to delete the account
+                                    controller.deleteAccount(context);
+                                  }
+                                },
+                                child: Container(
+                                  height: 47,
+                                  decoration: BoxDecoration(
+                                    color: Colors.red.withOpacity(0.15),
+                                    borderRadius: BorderRadius.circular(12),
+                                  ),
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 16),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: const [
+                                      Icon(Icons.delete,
+                                          color: Colors.red, size: 20),
+                                      SizedBox(width: 8),
+                                      Text(
+                                        "Delete",
+                                        style: TextStyle(
+                                          color: Colors.red,
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 14,
+                                        ),
                                       ),
-                                    ),
-                                  ],
+                                    ],
+                                  ),
                                 ),
-                              ),
-                            ),
+                              );
+                            }),
                           ),
 
                           SizedBox(width: 16.w),
@@ -482,4 +464,34 @@ class EditProfile extends StatelessWidget {
       ),
     );
   }
+}
+
+Future<bool?> _showDeleteConfirmationDialog(BuildContext context) {
+  return showDialog<bool>(
+    context: context,
+    barrierDismissible: false, // User has to confirm
+    builder: (context) {
+      return AlertDialog(
+        title: const Text('Confirm Account Deletion'),
+        content: const Text(
+          'Are you sure you want to delete your account? This action cannot be undone.',
+          style: TextStyle(fontSize: 14),
+        ),
+        actions: <Widget>[
+          TextButton(
+            child: const Text('Cancel'),
+            onPressed: () {
+              Navigator.of(context).pop(false); // Do nothing
+            },
+          ),
+          TextButton(
+            child: const Text('Delete'),
+            onPressed: () {
+              Navigator.of(context).pop(true); // Proceed to delete
+            },
+          ),
+        ],
+      );
+    },
+  );
 }
