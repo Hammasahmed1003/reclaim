@@ -214,15 +214,20 @@ class _SurveyQuestionsState extends State<SurveyQuestions> {
           ),
         ),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.center,
+          // crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             SizedBox(height: 20),
-            Lottie.asset('assets/animations/ProfileDoneInimation.json'),
+            Lottie.asset(
+              'assets/animations/ProfileDoneInimation.json',
+              width: 100,
+              height: 110,
+            ),
             Text("Profile Completed 🎉",
                 style: TextStyle(fontSize: 25.sp, fontWeight: FontWeight.bold)),
             SizedBox(height: 10),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 10),
+              padding: const EdgeInsets.symmetric(horizontal: 25),
               // child: Text(
               //   "You're in good hands. Based on your responses, we'll create a journey tailored for you.",
               //   style: TextStyle(fontSize: 16, color: Colors.grey[600]),
@@ -237,15 +242,18 @@ class _SurveyQuestionsState extends State<SurveyQuestions> {
                     textAlign: TextAlign.center,
                   )),
             ),
-            const Spacer(),
+            // const Spacer(),
+            SizedBox(
+              height: 20,
+            ),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 15),
+              padding: const EdgeInsets.symmetric(horizontal: 40),
               child: Obx(() => ReclaimButton(
                     titleColor: Reclaimcolors.BasicWhite,
                     width: 370.w,
                     height: 48.h,
                     backgroundColor: Reclaimcolors.BasicBlue,
-                    title: "Log In",
+                    title: "Get Started",
                     fontWeight: FontWeight.w600,
                     isLoading: surveyController.isLoading.value,
                     onPressed: () {

@@ -368,7 +368,8 @@ class SurveyController extends GetxController {
 
       if (data["error"] == false && data["data"]?["welcome_message"] != null) {
         welcomeMessage.value = data["data"]["welcome_message"];
-        Get.toNamed(GetRouteNames.InAppPurchasesScreen);
+        // Get.toNamed(GetRouteNames.InAppPurchasesScreen);
+        Get.toNamed(GetRouteNames.LoginRoute);
       } else {
         Get.snackbar("Error", data["message"] ?? "Profile creation failed",
             backgroundColor: Reclaimcolors.Red,

@@ -82,7 +82,8 @@ class Profilesetup extends StatelessWidget {
                           ),
                           child:
                               profilesetupcontroller.selectedImage.value == null
-                                  ? Center(
+                                  ? 
+                                  Center(
                                       child: SvgPicture.asset(
                                         ReclaimIcon.userIcon,
                                         color: Reclaimcolors.BasicBlue,

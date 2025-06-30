@@ -41,15 +41,18 @@ class PostDetailModel {
 class UserModel {
   final int id;
   final String avatar;
+  final String name;
 
   UserModel({
     required this.id,
     required this.avatar,
+    required this.name
   });
 
   factory UserModel.fromJson(Map<String, dynamic> json) {
     return UserModel(
       id: json['id'],
+      name: json["name"],
       avatar: json['avatar'],
     );
   }

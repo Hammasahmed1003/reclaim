@@ -31,12 +31,10 @@
 
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:reclaim/appConstants/ReclaimColors.dart';
-import 'package:reclaim/appServices/ApiServices.dart';
 import 'package:dio/dio.dart' as _dio;
 import 'package:reclaim/appServices/SharedPrefService.dart';
 
@@ -106,8 +104,6 @@ class AddCommunityController extends GetxController {
         return;
       }
 
-      final dio = _dio.Dio();
-
       final headers = {
         'Accept': 'application/json',
         'Authorization': 'Bearer $token',
@@ -121,6 +117,8 @@ class AddCommunityController extends GetxController {
             filename: imageFile.path.split('/').last,
           ),
       });
+
+      final dio = _dio.Dio();
 
       final response = await dio.request(
         'https://reclaim.hboxdigital.website/api/create',

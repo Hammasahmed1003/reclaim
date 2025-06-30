@@ -7,6 +7,9 @@ import 'package:reclaim/appServices/getRouteNames.dart';
 class Signupcontroller extends GetxController {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
+  final TextEditingController ConfirmPasswordController =
+      TextEditingController();
+
   final RxBool isLoading = false.obs;
   String? deviceToken;
 
@@ -84,9 +87,10 @@ class Signupcontroller extends GetxController {
   Future<void> signup() async {
     final email = emailController.text.trim();
     final password = passwordController.text.trim();
+    final confirmPassword = ConfirmPasswordController.text.trim();
 
-    // Validation
-    if (email.isEmpty || password.isEmpty) {
+// Validation
+    if (email.isEmpty || password.isEmpty || confirmPassword.isEmpty) {
       Get.snackbar("Error", "Please enter all fields",
           backgroundColor: Colors.red, colorText: Colors.white);
       return;
@@ -104,11 +108,17 @@ class Signupcontroller extends GetxController {
       return;
     }
 
+    if (password != confirmPassword) {
+      Get.snackbar("Password Mismatch", "Passwords do not match",
+          backgroundColor: Colors.red, colorText: Colors.white);
+      return;
+    }
+
     isLoading.value = true;
     try {
       final response = await ApiService().postRequest("register", data: {
         "email": email,
-        "password": password,
+        "password": confirmPassword,
         "device_token": deviceToken,
       });
 

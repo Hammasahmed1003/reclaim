@@ -54,16 +54,18 @@ class PostDetailController extends GetxController {
       );
 
       if (response != null && response.data['error'] == false) {
-        commentController.clear();
+        // commentController.clear();
         // Get.snackbar("Success", response.data['message']);
-        await fetchPostDetail(postId); // Refresh the post details after comment
+        await fetchPostDetail(postId);
+        commentController.clear();
+        // Refresh the post details after comment
       } else {
-        Get.snackbar(
-            snackPosition: SnackPosition.BOTTOM,
-            backgroundColor: Reclaimcolors.DisableText,
-            colorText: Reclaimcolors.BasicWhite,
-            "Failed",
-            response?.data['message'] ?? "Something went wrong");
+        // Get.snackbar(
+        //     snackPosition: SnackPosition.BOTTOM,
+        //     backgroundColor: Reclaimcolors.DisableText,
+        //     colorText: Reclaimcolors.BasicWhite,
+        //     "Failed",
+        //     response?.data['message'] ?? "Something went wrong");
       }
     } catch (e) {
       Get.snackbar("Error", "Could not send comment");

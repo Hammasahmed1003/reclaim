@@ -79,8 +79,11 @@ class Logincontroller extends GetxController {
       }
     } catch (e) {
       isLoading.value = false;
-      Get.snackbar("Invalid credentials", "",
-          backgroundColor: Reclaimcolors.Red, colorText: Colors.white);
+      Get.snackbar("Invalid credentials",
+          "In case of lost credential use Forget Password",
+          backgroundColor: Reclaimcolors.DisableText,
+          colorText: Colors.white,
+          snackPosition: SnackPosition.BOTTOM);
       print("Login Exception: $e");
     }
   }

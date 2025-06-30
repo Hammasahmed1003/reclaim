@@ -12,6 +12,8 @@ class Reclaimimages {
   static const String recollect = "assets/images/recollect.png";
   static const String fire = "assets/images/fire.png";
   static const String iconwithtm = "assets/images/iconwithtm.png";
+  static const String iconTm = "assets/images/iconTm.png";
+
 
 
 

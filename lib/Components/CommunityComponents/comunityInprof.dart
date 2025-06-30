@@ -189,63 +189,63 @@ class communityInprog extends StatelessWidget {
           ),
         ],
       ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          // Profile Row with 3 dots
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              CircleAvatar(
-                backgroundColor: Reclaimcolors.BlueSecondary,
-                radius: 25,
-                child: ClipOval(
-                  child: Image.network(
-                    imageUrl,
-                    fit: BoxFit.cover,
-                    width: 50,
-                    height: 50,
-                    errorBuilder: (_, __, ___) =>
-                        const Icon(Icons.person, color: Colors.white),
+      child: GestureDetector(
+        onTap: onTap,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // Profile Row with 3 dots
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                CircleAvatar(
+                  backgroundColor: Reclaimcolors.BlueSecondary,
+                  radius: 25,
+                  child: ClipOval(
+                    child: Image.network(
+                      imageUrl,
+                      fit: BoxFit.cover,
+                      width: 50,
+                      height: 50,
+                      errorBuilder: (_, __, ___) =>
+                          const Icon(Icons.person, color: Colors.white),
+                    ),
                   ),
                 ),
-              ),
-              const SizedBox(width: 10),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      username,
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 16.sp,
+                const SizedBox(width: 10),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        username,
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16.sp,
+                        ),
                       ),
-                    ),
-                    Text(
-                      timeAgo,
-                      style: TextStyle(
-                        color: Reclaimcolors.BasicBlack.withOpacity(.3),
-                        fontSize: 12,
-                        fontWeight: FontWeight.bold,
+                      Text(
+                        timeAgo,
+                        style: TextStyle(
+                          color: Reclaimcolors.BasicBlack.withOpacity(.3),
+                          fontSize: 12,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
-              ),
-              IconButton(
-                icon: const Icon(Icons.more_vert),
-                onPressed: () => showReportDialog(context),
-              ),
-            ],
-          ),
+                IconButton(
+                  icon: const Icon(Icons.more_vert),
+                  onPressed: () => showReportDialog(context),
+                ),
+              ],
+            ),
 
-          const SizedBox(height: 8),
+            const SizedBox(height: 8),
 
-          // Tappable area
-          GestureDetector(
-            onTap: onTap,
-            child: Column(
+            // Tappable area
+            Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
@@ -269,56 +269,56 @@ class communityInprog extends StatelessWidget {
                   ),
               ],
             ),
-          ),
 
-          const SizedBox(height: 12),
+            const SizedBox(height: 12),
 
-          // Like and comment
-          Row(
-            children: [
-              SpringWidget(
-                onTap: () => isLiked.value = !isLiked.value,
-                child: Obx(() => Row(
-                      children: [
-                        SvgPicture.asset(
-                          ReclaimIcon.heartIcon,
-                          width: 20.w,
-                          height: 20.h,
-                          color: isLiked.value
-                              ? Reclaimcolors.BasicBlue
-                              : Reclaimcolors.BorderColor,
-                        ),
-                        const SizedBox(width: 5),
-                        Text(
-                          likesCount.toString(),
-                          style: TextStyle(
-                            color: Reclaimcolors.BasicBlue,
-                            fontSize: 14,
-                            fontWeight: FontWeight.bold,
+            // Like and comment
+            Row(
+              children: [
+                SpringWidget(
+                  onTap: () => isLiked.value = !isLiked.value,
+                  child: Obx(() => Row(
+                        children: [
+                          SvgPicture.asset(
+                            ReclaimIcon.heartIcon,
+                            width: 20.w,
+                            height: 20.h,
+                            color: isLiked.value
+                                ? Reclaimcolors.BasicBlue
+                                : Reclaimcolors.BorderColor,
                           ),
-                        ),
-                      ],
-                    )),
-              ),
-              SizedBox(width: 20.w),
-              Row(
-                children: [
-                  SvgPicture.asset(
-                    ReclaimIcon.CommentsIcon,
-                    width: 20.w,
-                    height: 20.h,
-                    color: Reclaimcolors.BasicBlue,
-                  ),
-                  const SizedBox(width: 5),
-                  const Text(
-                    "Comments",
-                    style: TextStyle(color: Colors.blue, fontSize: 14),
-                  ),
-                ],
-              ),
-            ],
-          ),
-        ],
+                          const SizedBox(width: 5),
+                          Text(
+                            likesCount.toString(),
+                            style: TextStyle(
+                              color: Reclaimcolors.BasicBlue,
+                              fontSize: 14,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ],
+                      )),
+                ),
+                SizedBox(width: 20.w),
+                Row(
+                  children: [
+                    SvgPicture.asset(
+                      ReclaimIcon.CommentsIcon,
+                      width: 20.w,
+                      height: 20.h,
+                      color: Reclaimcolors.BasicBlue,
+                    ),
+                    const SizedBox(width: 5),
+                    const Text(
+                      "Comments",
+                      style: TextStyle(color: Colors.blue, fontSize: 14),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }

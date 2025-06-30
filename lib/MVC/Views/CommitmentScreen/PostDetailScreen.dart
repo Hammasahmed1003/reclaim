@@ -353,13 +353,28 @@ class _PostDetailScreenState extends State<PostDetailScreen> {
                     // ),
                     const SizedBox(height: 16),
                     if (postDetail.image != null)
+                      // ClipRRect(
+                      //   borderRadius: BorderRadius.circular(12),
+                      //   child: Image.network(
+                      //     "https://reclaim.hboxdigital.website/${postDetail.user.avatar}",
+                      //     height: 200,
+                      //     width: double.infinity,
+                      //     fit: BoxFit.cover,
+                      //   ),
+                      // ),
                       ClipRRect(
                         borderRadius: BorderRadius.circular(12),
-                        child: Image.network(
-                          "https://reclaim.hboxdigital.website/${postDetail.user.avatar}",
-                          height: 200,
-                          width: double.infinity,
-                          fit: BoxFit.cover,
+                        child: GestureDetector(
+                          onTap: () {
+                            _showFullScreenImage(context,
+                                "https://reclaim.hboxdigital.website/${postDetail.user.avatar}");
+                          },
+                          child: Image.network(
+                            "https://reclaim.hboxdigital.website/${postDetail.user.avatar}",
+                            height: 200,
+                            width: double.infinity,
+                            fit: BoxFit.cover,
+                          ),
                         ),
                       ),
                     const SizedBox(height: 16),
@@ -372,7 +387,7 @@ class _PostDetailScreenState extends State<PostDetailScreen> {
                         ),
                         const SizedBox(width: 8),
                         Text(
-                          postDetail.user.id.toString(),
+                          postDetail.user.name.toString(),
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 14.sp,
@@ -416,7 +431,7 @@ class _PostDetailScreenState extends State<PostDetailScreen> {
                         itemCount: postDetail.comments.length,
                         itemBuilder: (context, index) {
                           final comment = postDetail.comments[index];
-                          // final userName = comment.user.userName;
+                          final userName = comment.user.name;
                           final userComment = comment.comment;
 
                           return Padding(
@@ -437,13 +452,13 @@ class _PostDetailScreenState extends State<PostDetailScreen> {
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: [
-                                      // Text(
-                                      //   userName,
-                                      //   style: TextStyle(
-                                      //     fontWeight: FontWeight.bold,
-                                      //     fontSize: 13.sp,
-                                      //   ),
-                                      // ),
+                                      Text(
+                                        userName,
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 13.sp,
+                                        ),
+                                      ),
                                       const SizedBox(height: 4),
                                       Text(
                                         userComment,
@@ -542,4 +557,35 @@ class _PostDetailScreenState extends State<PostDetailScreen> {
       }),
     );
   }
+}
+
+void _showFullScreenImage(BuildContext context, String imageUrl) {
+  showDialog(
+    context: context,
+    barrierDismissible: true,
+    builder: (BuildContext context) {
+      return Dialog(
+        backgroundColor: Colors.transparent,
+        child: GestureDetector(
+          onTap: () {
+            Navigator.of(context).pop(); // Close the dialog when tapped
+          },
+          child: Center(
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(10),
+              child: Image.network(
+                imageUrl,
+                fit: BoxFit
+                    .contain, // Ensures image scales properly in the dialog
+                height: MediaQuery.of(context).size.height *
+                    0.8, // 80% of screen height
+                width: MediaQuery.of(context).size.width *
+                    0.8, // 80% of screen width
+              ),
+            ),
+          ),
+        ),
+      );
+    },
+  );
 }

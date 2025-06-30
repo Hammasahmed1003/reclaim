@@ -222,7 +222,8 @@ class Editprofilecontroller extends GetxController {
         await SharedPrefService.clearAll(); // Clear shared preferences
 
         Get.snackbar("Success", "Your account has been deleted.");
-        Get.offAllNamed('/login'); // Redirect to login screen
+        Get.toNamed(GetRouteNames.LoginRoute);
+        // Get.offAllNamed('/login'); // Redirect to login screen
       } else {
         Get.snackbar(
             "Error", response?.data['message'] ?? "Failed to delete account.");

@@ -130,7 +130,7 @@ class Signupscreen extends StatelessWidget {
                   hintText: "*******",
                   isPassword: true,
                   hintColor: Reclaimcolors.BasicBlack.withOpacity(0.35),
-                  controller: signupcontroller.passwordController,
+                  controller: signupcontroller.ConfirmPasswordController,
                 ),
                 SizedBox(
                   height: 30.sp,

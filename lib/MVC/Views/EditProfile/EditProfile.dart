@@ -72,7 +72,7 @@ class EditProfile extends StatelessWidget {
                           // Delete Account Button
                           Expanded(
                             child: Obx(() {
-                              if (controller.isLoading.value) {
+                              if (controller.isDeleteLoading.value) {
                                 return const Center(
                                   child:
                                       CircularProgressIndicator(), // Show loader when deleting
@@ -466,29 +466,114 @@ class EditProfile extends StatelessWidget {
   }
 }
 
+// Future<bool?> _showDeleteConfirmationDialog(BuildContext context) {
+//   return showDialog<bool>(
+//     context: context,
+//     barrierDismissible: false, // User has to confirm
+//     builder: (context) {
+//       return AlertDialog(
+//         title: const Text('Confirm Account Deletion'),
+//         content: const Text(
+//           'Are you sure you want to delete your account? This action cannot be undone.',
+//           style: TextStyle(fontSize: 14),
+//         ),
+//         actions: <Widget>[
+//           TextButton(
+//             child: const Text('Cancel'),
+//             onPressed: () {
+//               Navigator.of(context).pop(false); // Do nothing
+//             },
+//           ),
+//           TextButton(
+//             child: const Text('Delete'),
+//             onPressed: () {
+//               Navigator.of(context).pop(true); // Proceed to delete
+//             },
+//           ),
+//         ],
+//       );
+//     },
+//   );
+// }
+
+
+
 Future<bool?> _showDeleteConfirmationDialog(BuildContext context) {
   return showDialog<bool>(
     context: context,
     barrierDismissible: false, // User has to confirm
     builder: (context) {
       return AlertDialog(
-        title: const Text('Confirm Account Deletion'),
-        content: const Text(
-          'Are you sure you want to delete your account? This action cannot be undone.',
-          style: TextStyle(fontSize: 14),
+        backgroundColor: Colors.white,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(12), // Rounded corners
+        ),
+        title: Column(
+          children: [
+            Icon(
+              Icons.warning_amber_rounded,
+              color: Colors.red,
+              size: 30,
+            ),
+            const SizedBox(height: 10),
+            const Text(
+              'Confirm Account Deletion',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+                color: Colors.black,
+              ),
+            ),
+          ],
+        ),
+        content: const Padding(
+          padding: EdgeInsets.symmetric(vertical: 10),
+          child: Text(
+            'Are you sure you want to delete your account? This action cannot be undone.',
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              fontSize: 14,
+              color: Colors.black54,
+            ),
+          ),
         ),
         actions: <Widget>[
-          TextButton(
-            child: const Text('Cancel'),
-            onPressed: () {
-              Navigator.of(context).pop(false); // Do nothing
-            },
-          ),
-          TextButton(
-            child: const Text('Delete'),
-            onPressed: () {
-              Navigator.of(context).pop(true); // Proceed to delete
-            },
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop(false); // Do nothing
+                },
+                child: const Text(
+                  'Cancel',
+                  style: TextStyle(
+                    color: Colors.grey,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.of(context).pop(true); // Proceed to delete
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.red, // Red color for the delete button
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                ),
+                child: const Text(
+                  'Delete',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+            ],
           ),
         ],
       );

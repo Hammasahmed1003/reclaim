@@ -54,21 +54,20 @@ class SplashScreen extends StatelessWidget {
                     child: Column(
                       children: [
                         Image.asset(
-                          Reclaimimages
-                              .SplashWithCircle, // Change path if needed
+                          Reclaimimages.iconTm, // Change path if needed
 
                           width: 200,
                           height: 200,
                         ),
                         const SizedBox(height: 10),
-                        Text(
-                          "Reclaim",
-                          style: TextStyle(
-                            fontSize: 30.sp,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white,
-                          ),
-                        ),
+                        // Text(
+                        //   "Reclaim",
+                        //   style: TextStyle(
+                        //     fontSize: 30.sp,
+                        //     fontWeight: FontWeight.bold,
+                        //     color: Colors.white,
+                        //   ),
+                        // ),
                       ],
                     ),
                   ),
