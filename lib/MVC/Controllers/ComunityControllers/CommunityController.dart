@@ -5,11 +5,6 @@ import 'package:reclaim/MVC/Views/CommitmentScreen/PostDetailScreen.dart';
 import 'package:reclaim/appServices/ApiServices.dart';
 
 class CommunityController extends GetxController {
-//this is my controller which is taking care of Community posts count like, commetn and Report(
-//),
-
-// functions
-
   var posts = <CommunityPostModel>[].obs;
   var isLoading = false.obs;
 
@@ -63,16 +58,23 @@ class CommunityController extends GetxController {
         Get.snackbar("Success", response.data['message']);
 
         // 🔄 Refresh all posts
-        await fetchPosts();
+        // await fetchPosts();
 
-        // Find updated post from the list
-        final updatedPost = posts.firstWhereOrNull(
-          (post) => post.id.toString() == postId,
-        );
+        // // Find updated post from the list
+        // final updatedPost = posts.firstWhereOrNull(
+        //   (post) => post.id.toString() == postId,
+        // );
+
+        // if (updatedPost != null) {
+        //   // 👇 Navigate back to updated Post Detail Screen
+        //   Get.off(() => PostDetailScreen(), arguments: updatedPost);
+
+        final updatedPost = await fetchPostDetail(postId);
 
         if (updatedPost != null) {
-          // 👇 Navigate back to updated Post Detail Screen
-          Get.off(() => PostDetailScreen(), arguments: updatedPost);
+          Get.back(); // Remove current detail screen
+          Get.to(() => PostDetailScreen(),
+              arguments: updatedPost); // Reopen with updated post
         } else {
           Get.snackbar("Error", "Updated post not found");
         }
@@ -113,5 +115,23 @@ class CommunityController extends GetxController {
     } finally {
       isLoading.value = false;
     }
+  }
+
+  Future<CommunityPostModel?> fetchPostDetail(String postId) async {
+    try {
+      final response =
+          await ApiService().getRequestwithtoken("post-detail/$postId");
+
+      if (response != null && response.data['error'] == false) {
+        final json = response.data['data'];
+        return CommunityPostModel.fromJson(json);
+      } else {
+        Get.snackbar("Error",
+            response?.data['message'] ?? "Failed to fetch post detail");
+      }
+    } catch (e) {
+      Get.snackbar("Error", "Something went wrong while fetching post detail");
+    }
+    return null;
   }
 }

@@ -1,0 +1,2 @@
+C:/Users/hamma/OneDrive/Documents/reclaim/android/app/.cxx/RelWithDebInfo/666k6u6s/x86_64/CMakeFiles/edit_cache.dir
+C:/Users/hamma/OneDrive/Documents/reclaim/android/app/.cxx/RelWithDebInfo/666k6u6s/x86_64/CMakeFiles/rebuild_cache.dir

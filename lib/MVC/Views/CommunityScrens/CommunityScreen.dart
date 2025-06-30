@@ -112,6 +112,9 @@ class CommunityScreen extends StatelessWidget {
                                       GetRouteNames.PostDetailScreen,
                                       arguments: post,
                                     );
+
+                                    //   Get.toNamed(GetRouteNames.PostDetailScreen,
+                                    //       arguments: post.id);
                                   },
                                 );
                               },
