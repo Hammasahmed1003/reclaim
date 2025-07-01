@@ -16,9 +16,9 @@ class Loginscreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Logincontroller logincontroller = Get.put(Logincontroller());
+    final LoginController logincontroller = Get.put(LoginController());
     return AnnotatedRegion<SystemUiOverlayStyle>(
-      value: SystemUiOverlayStyle(statusBarColor: Reclaimcolors.BasicWhite),
+      value: const SystemUiOverlayStyle(statusBarColor: Reclaimcolors.BasicWhite),
       child: SafeArea(
         child: Scaffold(
           backgroundColor: Reclaimcolors.BasicWhite,
@@ -201,7 +201,7 @@ class Loginscreen extends StatelessWidget {
                       print("Apple login tapped");
                       // Implement Apple login here
                     },
-                    
+
                     // onFacebookTap: () {
                     //   print("Facebook login tapped");
                     //   // Implement Facebook login here
