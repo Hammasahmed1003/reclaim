@@ -87,6 +87,7 @@ class MyApp extends StatelessWidget {
             debugShowCheckedModeBanner: false,
             theme: ThemeData(
               fontFamily: "Poppins",
+              
               useMaterial3: true,
             ),
             getPages: AppPages.pages,

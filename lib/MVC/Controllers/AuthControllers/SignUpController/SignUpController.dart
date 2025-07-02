@@ -1,4 +1,5 @@
 import 'package:device_info_plus/device_info_plus.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:reclaim/appServices/ApiServices.dart';
@@ -17,6 +18,7 @@ class Signupcontroller extends GetxController {
   void onInit() {
     super.onInit();
     _getDeviceToken();
+    getFCMToken();
   }
 
   Future<void> _getDeviceToken() async {
@@ -24,6 +26,12 @@ class Signupcontroller extends GetxController {
     final androidInfo = await deviceInfo.androidInfo;
     deviceToken = androidInfo.id; // Device ID as a token
     print("📱 Device Token: $deviceToken");
+  }
+
+  Future<String?> getFCMToken() async {
+    String? FCMtoken = await FirebaseMessaging.instance.getToken();
+    print("FCM Token from SignUP: $FCMtoken"); // Log the token for testing
+    return FCMtoken;
   }
 
   // Future<void> signup() async {
@@ -115,11 +123,13 @@ class Signupcontroller extends GetxController {
     }
 
     isLoading.value = true;
+    String? fcmToken = await FirebaseMessaging.instance.getToken();
+
     try {
       final response = await ApiService().postRequest("register", data: {
         "email": email,
         "password": confirmPassword,
-        "device_token": deviceToken,
+        "device_token": fcmToken,
       });
 
       if (response != null) {

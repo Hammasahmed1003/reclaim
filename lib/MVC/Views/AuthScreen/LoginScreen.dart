@@ -18,7 +18,8 @@ class Loginscreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final LoginController logincontroller = Get.put(LoginController());
     return AnnotatedRegion<SystemUiOverlayStyle>(
-      value: const SystemUiOverlayStyle(statusBarColor: Reclaimcolors.BasicWhite),
+      value:
+          const SystemUiOverlayStyle(statusBarColor: Reclaimcolors.BasicWhite),
       child: SafeArea(
         child: Scaffold(
           backgroundColor: Reclaimcolors.BasicWhite,
@@ -194,6 +195,7 @@ class Loginscreen extends StatelessWidget {
                   ),
                   SocialLoginButtons(
                     onGoogleTap: () {
+                      logincontroller.googleSignIn;
                       print("Google login tapped");
                       // Implement Google login here
                     },
@@ -206,6 +208,12 @@ class Loginscreen extends StatelessWidget {
                     //   print("Facebook login tapped");
                     //   // Implement Facebook login here
                     // },
+                  ),
+                  ElevatedButton(
+                    onPressed: () async {
+                      logincontroller.googleSignIn();
+                    },
+                    child: Text("Sign in with Google"),
                   ),
                   SizedBox(
                     height: 50,
