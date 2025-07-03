@@ -7,6 +7,7 @@ import 'package:get/get.dart';
 import 'package:reclaim/Components/HomeComponents/DailyProgressCompo.dart';
 import 'package:reclaim/Components/HomeComponents/weekLessonCompo.dart';
 import 'package:reclaim/Components/SpringWidget.dart';
+import 'package:reclaim/MVC/Controllers/EveningRecollectControllers/EveningRecollectController.dart';
 import 'package:reclaim/MVC/Controllers/HomeControllers/HomeController.dart';
 import 'package:reclaim/MVC/Views/HomeScreens/CustomDrawerScreen.dart';
 import 'package:reclaim/appConstants/ReclaimColors.dart';
@@ -360,6 +361,7 @@ class Homescreen extends StatefulWidget {
 class _HomescreenState extends State<Homescreen>
     with SingleTickerProviderStateMixin {
   final controller = Get.put(HomeController());
+  final Eveningcontroller = Get.put(EveningRecollectController());
 
   late AnimationController _animationController;
   late Animation<double> _scaleAnimation;
@@ -474,13 +476,16 @@ class _HomescreenState extends State<Homescreen>
                                 _weeklyLessonSection(),
                                 const SizedBox(height: 20),
                                 Obx(
-                                  () => controller.showEveningButton.value
-                                      ? Padding(
-                                          padding: const EdgeInsets.symmetric(
-                                              horizontal: 10),
-                                          child: _bouncingButton(controller),
-                                        )
-                                      : const SizedBox.shrink(),
+                                  () =>
+                                      Eveningcontroller.showEveningButton.value
+                                          ? Padding(
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                      horizontal: 10),
+                                              child: _bouncingButton(
+                                                  Eveningcontroller),
+                                            )
+                                          : const SizedBox.shrink(),
                                 ),
                                 const SizedBox(height: 15),
                               ],
@@ -532,7 +537,7 @@ class _HomescreenState extends State<Homescreen>
             onTap: () => Scaffold.of(context).openDrawer(),
             child: SvgPicture.asset(ReclaimIcon.myAccount),
           ),
-          SvgPicture.asset(ReclaimIcon.ReclaimIcons),
+          // SvgPicture.asset(ReclaimIcon.ReclaimIcons),
           SpringWidget(
             onTap: () => Get.toNamed(GetRouteNames.Notificationscreen),
             child: SvgPicture.asset(ReclaimIcon.Notification),
@@ -598,7 +603,9 @@ class _HomescreenState extends State<Homescreen>
     });
   }
 
-  Widget _bouncingButton(HomeController controller) {
+  Widget _bouncingButton(EveningRecollectController controller) {
+    final isAvailable = controller.showEveningButton.value;
+
     return Container(
       alignment: Alignment.center,
       margin: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
@@ -607,25 +614,35 @@ class _HomescreenState extends State<Homescreen>
         child: SizedBox(
           width: double.infinity,
           child: ElevatedButton(
-            onPressed: () {
-              Get.toNamed(GetRouteNames.Eveningrecollect);
-            },
+            onPressed: isAvailable
+                ? () {
+                    Get.toNamed(GetRouteNames.Eveningrecollect);
+                  }
+                : null, // Disable when not available
             style: ElevatedButton.styleFrom(
-              foregroundColor: Reclaimcolors.BasicBlue,
-              backgroundColor: Reclaimcolors.BasicBlue,
-              side: const BorderSide(color: Reclaimcolors.BasicBlue),
+              foregroundColor: Colors.white,
+              backgroundColor:
+                  isAvailable ? Reclaimcolors.BasicBlue : Colors.grey.shade400,
+              disabledBackgroundColor: Colors.grey.shade400,
+              side: BorderSide(
+                color: isAvailable
+                    ? Reclaimcolors.BasicBlue
+                    : Colors.grey.shade400,
+              ),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(30),
               ),
               padding: const EdgeInsets.symmetric(vertical: 16),
-              elevation: 4,
+              elevation: isAvailable ? 4 : 0,
             ),
-            child: const Text(
-              ' Evening Recollect',
+            child: Text(
+              'Evening Recollect',
               style: TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.bold,
-                color: Reclaimcolors.BasicWhite,
+                color: isAvailable
+                    ? Reclaimcolors.BasicWhite
+                    : Colors.grey.shade200,
               ),
             ),
           ),

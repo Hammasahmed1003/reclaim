@@ -46,7 +46,7 @@ class CreateCommitmentsController extends GetxController {
         response.data["error"] == false) {
       // Get.snackbar("Success", response.data["message"],
       //     backgroundColor: Reclaimcolors.BasicBlue);
-      Get.find<InProgressController>().fetchInProgressCommitments();
+      Get.find<InProgressController>().fetchCommitments();
 
       Get.back();
 

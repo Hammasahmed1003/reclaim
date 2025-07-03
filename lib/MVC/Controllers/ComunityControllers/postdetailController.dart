@@ -10,7 +10,9 @@ class PostDetailController extends GetxController {
   var isLoading = false.obs;
   var isSendingComment = false.obs;
   Rx<PostDetailModel?> postDetail = Rxn<PostDetailModel>();
+  // final RxMap<int, bool> commentLikeLoading = <int, bool>{}.obs;
 
+var commentLikeLoading = <int, bool>{}.obs;
   final TextEditingController commentController = TextEditingController();
 
   @override
@@ -73,4 +75,25 @@ class PostDetailController extends GetxController {
       isSendingComment.value = false;
     }
   }
+Future<void> toggleCommentLike(CommentModel comment) async {
+  final commentId = comment.id;
+  commentLikeLoading[commentId] = true;
+
+  try {
+    final response = await ApiService().postRequestWithToken(
+      "like-comment",
+      {"comment_id": commentId.toString()},
+    );
+
+    if (response != null && response.data['error'] == false) {
+      comment.isLiked.toggle(); // 💙 Toggle like state
+    } else {
+      Get.snackbar("Error", response?.data['message'] ?? "Failed to like");
+    }
+  } catch (_) {
+    Get.snackbar("Error", "Something went wrong");
+  } finally {
+    commentLikeLoading[commentId] = false;
+  }
+}
 }

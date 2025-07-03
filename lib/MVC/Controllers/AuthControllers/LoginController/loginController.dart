@@ -109,49 +109,131 @@ class LoginController extends GetxController {
     return token;
   }
 
+  // Future<void> googleSignIn() async {
+  //   isLoading.value =
+  //       true; // Assuming isLoading is an observable in your controller
+
+  //   try {
+  //     // Initiating Google sign-in
+  //     final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+
+  //     if (googleUser == null) {
+  //       // If user cancels the sign-in process
+  //       print("❌ Sign-in aborted by user.");
+  //       return;
+  //     }
+
+  //     // Get authentication details
+  //     final GoogleSignInAuthentication googleAuth =
+  //         await googleUser.authentication;
+
+  //     // Retrieve Google user details
+  //     final String? email = googleUser.email;
+  //     final String? name = googleUser.displayName ?? "User";
+  //     final String? id = googleUser.id;
+  //     final String? image = googleUser.photoUrl ?? "";
+  //     final String provider = "google";
+
+  //     // Print user details
+  //     print("✅ Name: $name");
+  //     print("📧 Email: $email");
+  //     print("🆔 ID: $id");
+  //     print("🖼️ Picture: $image");
+  //     print("🔌 Provider: $provider");
+
+  //     // Retrieve FCM token for the device
+  //     String? fcmToken = await FirebaseMessaging.instance.getToken();
+
+  //     // Print FCM token
+  //     print("📱 FCM Token: $fcmToken");
+  //   } catch (e) {
+  //     // Handle errors during the sign-in process
+  //     Get.snackbar("Error", "Something went wrong: $e");
+  //     print("🔥 Google Sign-In Error: $e");
+  //   } finally {
+  //     isLoading.value = false;
+  //   }
+  // }
+
   Future<void> googleSignIn() async {
-    isLoading.value =
-        true; // Assuming isLoading is an observable in your controller
+    isLoading.value = true;
 
     try {
-      // Initiating Google sign-in
       final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
 
       if (googleUser == null) {
-        // If user cancels the sign-in process
         print("❌ Sign-in aborted by user.");
+        isLoading.value = false;
         return;
       }
 
-      // Get authentication details
       final GoogleSignInAuthentication googleAuth =
           await googleUser.authentication;
 
-      // Retrieve Google user details
-      final String? email = googleUser.email;
-      final String? name = googleUser.displayName ?? "User";
-      final String? id = googleUser.id;
-      final String? image = googleUser.photoUrl ?? "";
+      final String email = googleUser.email;
+      final String name = googleUser.displayName ?? "User";
+      final String googleId = googleUser.id;
+      final String image = googleUser.photoUrl ?? "";
       final String provider = "google";
 
-      // Print user details
-      print("✅ Name: $name");
-      print("📧 Email: $email");
-      print("🆔 ID: $id");
-      print("🖼️ Picture: $image");
-      print("🔌 Provider: $provider");
-
-      // Retrieve FCM token for the device
+      // Get FCM token
       String? fcmToken = await FirebaseMessaging.instance.getToken();
 
-      // Print FCM token
-      print("📱 FCM Token: $fcmToken");
+      // Call your backend
+      final response = await ApiService().postRequest("google-login", data: {
+        "provider": provider,
+        "email": email,
+        "name": name,
+        "google_id": googleId,
+        "device_token": fcmToken ?? "",
+      });
+
+      isLoading.value = false;
+
+      if (response != null && response.data["error"] == false) {
+        final data = response.data["data"];
+        final user = data["user"];
+        final token = data["token"];
+        final userId = user["id"].toString();
+
+        // ✅ If onboarding completed (profile_status exists)
+        if (user.containsKey("profile_status")) {
+          final email = user["email"] ?? "";
+          final image = user["profile_image"] ?? "";
+          final name = user["profile_name"] ?? "";
+          final gender = user["profile_gender"] ?? "";
+          final deviceToken = user["device_token"] ?? "";
+
+          // Save to local storage
+          await SharedPrefService.saveUserData(
+            id: userId,
+            email: email,
+            token: token,
+            image: image,
+            Name: name,
+            gender: gender,
+            deviceToken: deviceToken,
+          );
+
+          Get.find<UserController>().updateUserProfile(
+            name: name,
+            gender: gender,
+            image: image,
+          );
+
+          Get.toNamed(GetRouteNames.BottomnavbarView);
+        } else {
+          // ❌ Onboarding NOT completed
+          Get.find<UserController>().setUserId(userId);
+          Get.offNamed(GetRouteNames.Profilesetup);
+        }
+      } else {
+        Get.snackbar("Error", response?.data["message"] ?? "Login failed");
+      }
     } catch (e) {
-      // Handle errors during the sign-in process
+      isLoading.value = false;
       Get.snackbar("Error", "Something went wrong: $e");
       print("🔥 Google Sign-In Error: $e");
-    } finally {
-      isLoading.value = false;
     }
   }
 

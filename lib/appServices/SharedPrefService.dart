@@ -83,4 +83,17 @@ class SharedPrefService {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setString(_keyImage, image);
   }
+
+  // for evening reclaim button
+
+ static Future<void> saveLastRecollectDate(String date) async {
+  final prefs = await SharedPreferences.getInstance();
+  await prefs.setString('lastRecollectDate', date);
+}
+
+static Future<String?> getLastRecollectDate() async {
+  final prefs = await SharedPreferences.getInstance();
+  return prefs.getString('lastRecollectDate');
+}
+  
 }

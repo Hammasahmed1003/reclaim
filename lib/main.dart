@@ -60,12 +60,16 @@ import 'package:reclaim/appServices/NotificationServices.dart';
 import 'package:reclaim/appServices/getRouteNames.dart';
 import 'package:reclaim/appServices/getRoutes.dart';
 import 'package:reclaim/firebase_options.dart';
+import 'package:timezone/data/latest.dart' as tz;
+import 'package:timezone/timezone.dart' as tz;
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+   tz.initializeTimeZones(); // 👈 Important
+  tz.setLocalLocation(tz.getLocation('Asia/Karachi'));
   await Get.put(NotificationService()).init(); // Initialize NotificationService
   runApp(const MyApp());
 }
@@ -87,7 +91,7 @@ class MyApp extends StatelessWidget {
             debugShowCheckedModeBanner: false,
             theme: ThemeData(
               fontFamily: "Poppins",
-              
+
               useMaterial3: true,
             ),
             getPages: AppPages.pages,

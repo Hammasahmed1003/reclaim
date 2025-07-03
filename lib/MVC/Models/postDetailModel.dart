@@ -1,3 +1,5 @@
+import 'package:get/get_rx/src/rx_types/rx_types.dart';
+
 class PostDetailModel {
   final int id;
   final String? title;
@@ -58,19 +60,68 @@ class UserModel {
   }
 }
 
+// class CommentModel {
+//   final String comment;
+//   final UserModel user;
+
+//   CommentModel({
+//     required this.comment,
+//     required this.user,
+//   });
+
+//   factory CommentModel.fromJson(Map<String, dynamic> json) {
+//     return CommentModel(
+//       comment: json['comment'],
+//       user: UserModel.fromJson(json['user']),
+//     );
+//   }
+// class CommentModel {
+//   final int id;
+//   final String comment;
+//   final UserModel user;
+//   // final int likesCount;
+//   final bool isLiked;
+
+//   CommentModel({
+//     required this.id,
+//     required this.comment,
+//     required this.user,
+//     // required this.likesCount,
+//     required this.isLiked,
+//   });
+
+//   factory CommentModel.fromJson(Map<String, dynamic> json) {
+//     return CommentModel(
+//       id: json['id'],
+//       comment: json['comment'],
+//       user: UserModel.fromJson(json['user']),
+//       // likesCount: json['likes_count'] ?? 0,
+//       isLiked: json['is_liked'] ?? false,
+//     );
+//   }
+// }
 class CommentModel {
+  final int id;
   final String comment;
   final UserModel user;
+  final RxBool isLiked;
 
   CommentModel({
+    required this.id,
     required this.comment,
     required this.user,
-  });
+    required bool isLiked,
+  }) : isLiked = isLiked.obs;
 
   factory CommentModel.fromJson(Map<String, dynamic> json) {
     return CommentModel(
+      id: json['id'],
       comment: json['comment'],
       user: UserModel.fromJson(json['user']),
+      isLiked: json['is_liked'] ?? false,
     );
   }
 }
+
+
+

@@ -1,15 +1,49 @@
 import 'package:get/get.dart';
 import 'package:reclaim/appServices/ApiServices.dart';
 import 'package:flutter/material.dart';
+import 'package:reclaim/appServices/SharedPrefService.dart';
 
 enum QuestionType { yesNo, slider, multiChoice, multiSelect, finalText }
 
 class EveningRecollectController extends GetxController {
   var currentQuestionIndex = 0.obs;
+  var showEveningButton = false.obs;
   var selectedAnswer = ''.obs;
   var sliderValue = 0.0.obs;
   var multiSelectAnswers = <String>[].obs;
   var isLoading = false.obs;
+
+  @override
+  void onInit() {
+    super.onInit();
+    checkRecollectAvailability();
+  }
+
+  void checkRecollectAvailability() async {
+    final now = DateTime.now();
+    final currentHour = now.hour;
+    final todayStr = "${now.year}-${now.month}-${now.day}";
+
+    print("🕒 Current Device Time: $now");
+    print("📆 Today: $todayStr");
+
+    final lastDateStr = await SharedPrefService.getLastRecollectDate();
+    print("📝 Last Submitted Recollect Date: $lastDateStr");
+
+    if (currentHour < 19) {
+      print("⏳ It's before 7 PM. Button should remain HIDDEN.");
+      showEveningButton.value = false;
+      return;
+    }
+
+    if (lastDateStr == todayStr) {
+      print("🚫 Already submitted recollect today. Button should be HIDDEN.");
+      showEveningButton.value = false;
+    } else {
+      print("✅ Eligible to show recollect button. Showing the button.");
+      showEveningButton.value = true;
+    }
+  }
 
   final ApiService apiService = ApiService();
 
@@ -104,28 +138,6 @@ class EveningRecollectController extends GetxController {
     }
   }
 
-  // void submitFinalAnswers() async {
-  //   isLoading.value = true;
-  //   responses['temptation_label'] = getTemptationLabel();
-
-  //   final body = {
-  //     "is_victory": responses['is_victory'],
-  //     "temptation_level": responses['temptation_level'],
-  //     "temptation_label": responses['temptation_label'],
-  //     "time_of_day": responses['time_of_day'],
-  //     "triggers": responses['triggers']
-  //   };
-
-  //   final res = await apiService.postRequestWithToken("evening-recollect", body);
-  //   isLoading.value = false;
-
-  //   if (res != null && res.statusCode == 200) {
-  //     Get.snackbar("Success", "Recollection submitted successfully.");
-  //   } else {
-  //     Get.snackbar("Error", "Submission failed. Please try again.");
-  //   }
-  // }
-
   void submitFinalAnswers() async {
     isLoading.value = true;
 
@@ -147,12 +159,24 @@ class EveningRecollectController extends GetxController {
         await apiService.postRequestWithToken("evening-recollect", body);
     isLoading.value = false;
 
+    // if (res != null && res.statusCode == 200) {
+    //   Get.back();
+    //   Get.snackbar("✅ Success", "Recollection submitted successfully.");
+    // } else {
+    //   print("❌ API Error Response: ${res?.statusCode}, ${res?.data}");
+    //   Get.snackbar("❌ Error", "Submission failed. Please try again.");
+    // }
+
     if (res != null && res.statusCode == 200) {
+      final todayStr =
+          "${DateTime.now().year}-${DateTime.now().month}-${DateTime.now().day}";
+      await SharedPrefService.saveLastRecollectDate(todayStr);
+
+      // Refresh UI button state
+      // Get.find<HomeController>().checkRecollectAvailability();
+      checkRecollectAvailability();
       Get.back();
       Get.snackbar("✅ Success", "Recollection submitted successfully.");
-    } else {
-      print("❌ API Error Response: ${res?.statusCode}, ${res?.data}");
-      Get.snackbar("❌ Error", "Submission failed. Please try again.");
     }
   }
 

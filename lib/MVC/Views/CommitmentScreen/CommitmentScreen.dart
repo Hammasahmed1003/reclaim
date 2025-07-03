@@ -5,6 +5,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:reclaim/Components/SpringWidget.dart';
 import 'package:reclaim/MVC/Controllers/Commitments/ComitmentsController.dart';
+import 'package:reclaim/MVC/Controllers/Commitments/InprogressController.dart';
 import 'package:reclaim/MVC/Views/CommunityScrens/FullFilledScreen.dart';
 import 'package:reclaim/MVC/Views/CommunityScrens/InProgressScreen.dart';
 import 'package:reclaim/appConstants/ReclaimColors.dart';
@@ -17,6 +18,9 @@ class Commitmentscreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final Comitmentscontroller controller = Get.put(Comitmentscontroller());
+    final InProgressController Controller = Get.put(InProgressController());
+
+    // final InProgressController  = Get.find();
 
     return AnnotatedRegion<SystemUiOverlayStyle>(
       value: const SystemUiOverlayStyle(
@@ -25,7 +29,7 @@ class Commitmentscreen extends StatelessWidget {
       ),
       child: Scaffold(
         floatingActionButton: FloatingActionButton(
-            child:  Icon(
+            child: Icon(
               Icons.add,
               color: Reclaimcolors.BasicBlue,
               size: 25,

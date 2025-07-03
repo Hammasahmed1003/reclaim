@@ -3,9 +3,11 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:reclaim/Components/SpringWidget.dart';
+import 'package:reclaim/MVC/Controllers/ComunityControllers/CommunityController.dart';
 import 'package:reclaim/appConstants/ReclaimColors.dart';
 import 'package:reclaim/appConstants/ReclaimIcons.dart';
 import 'package:reclaim/appServices/ApiServices.dart';
@@ -37,135 +39,117 @@ class communityInprog extends StatelessWidget {
 
   final RxBool isReporting = false.obs;
 
-  void showReportDialog(BuildContext context) {
+  void showReportDialog(BuildContext context, String postId) {
     final TextEditingController reasonController = TextEditingController();
     final RxBool isLoading = false.obs;
 
-    if (Platform.isIOS) {
-      showCupertinoDialog(
-        context: context,
-        builder: (_) => Obx(() => CupertinoAlertDialog(
-              title: const Text("Report Post"),
-              content: Column(
-                children: [
-                  const SizedBox(height: 10),
-                  CupertinoTextField(
-                    controller: reasonController,
-                    placeholder: "Enter reason",
-                    maxLines: 3,
-                  ),
-                  if (isLoading.value)
-                    const Padding(
-                      padding: EdgeInsets.only(top: 10),
-                      child: CupertinoActivityIndicator(),
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (_) {
+        return StatefulBuilder(builder: (context, setState) {
+          return AlertDialog(
+            title: const Text("Report Post"),
+            backgroundColor: Colors.white,
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+            content: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Text(
+                  "Why are you reporting this post?",
+                  style: TextStyle(fontWeight: FontWeight.w600, fontSize: 16),
+                ),
+                const SizedBox(height: 12),
+                TextField(
+                  controller: reasonController,
+                  maxLines: 4,
+                  decoration: InputDecoration(
+                    hintText: "Enter your reason",
+                    filled: true,
+                    fillColor: Colors.white,
+                    contentPadding: const EdgeInsets.symmetric(
+                        horizontal: 12, vertical: 10),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12),
+                      borderSide: const BorderSide(color: Colors.grey),
                     ),
-                ],
-              ),
-              actions: [
-                CupertinoDialogAction(
-                  child: const Text("Cancel"),
-                  onPressed: () => Navigator.pop(context),
-                ),
-                CupertinoDialogAction(
-                  child: const Text("Submit"),
-                  onPressed: () async {
-                    final reason = reasonController.text.trim();
-                    if (reason.isEmpty) {
-                      Get.snackbar("Required", "Please enter a reason");
-                      return;
-                    }
-
-                    isLoading.value = true;
-
-                    try {
-                      final response = await ApiService().postRequestWithToken(
-                        "report-post",
-                        {
-                          "post_id": postId.toString(),
-                          "reason": reason,
-                        },
-                      );
-
-                      if (response != null && response.data['error'] == false) {
-                        Navigator.pop(context);
-                        Get.snackbar("Success", response.data['message']);
-                      } else {
-                        Get.snackbar("Error",
-                            response?.data['message'] ?? "Failed to report");
-                      }
-                    } catch (_) {
-                      Get.snackbar("Error", "Something went wrong");
-                    } finally {
-                      isLoading.value = false;
-                    }
-                  },
-                ),
-              ],
-            )),
-      );
-    } else {
-      showDialog(
-        context: context,
-        builder: (_) => Obx(() => AlertDialog(
-              title: const Text("Report Post"),
-              content: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  TextField(
-                    controller: reasonController,
-                    decoration: const InputDecoration(hintText: "Enter reason"),
-                    maxLines: 3,
-                  ),
-                  if (isLoading.value)
-                    const Padding(
-                      padding: EdgeInsets.only(top: 10),
-                      child: CircularProgressIndicator(),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12),
+                      borderSide: const BorderSide(color: Colors.grey),
                     ),
-                ],
-              ),
-              actions: [
-                TextButton(
-                  onPressed: () => Navigator.pop(context),
-                  child: const Text("Cancel"),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12),
+                      borderSide: const BorderSide(color: Colors.blue),
+                    ),
+                  ),
                 ),
-                TextButton(
-                  onPressed: () async {
-                    final reason = reasonController.text.trim();
-                    if (reason.isEmpty) {
-                      Get.snackbar("Required", "Please enter a reason");
-                      return;
-                    }
-
-                    isLoading.value = true;
-
-                    try {
-                      final response = await ApiService().postRequestWithToken(
-                        "report-post",
-                        {
-                          "post_id": postId.toString(),
-                          "reason": reason,
-                        },
-                      );
-
-                      if (response != null && response.data['error'] == false) {
-                        Navigator.pop(context);
-                        Get.snackbar("Success", response.data['message']);
-                      } else {
-                        Get.snackbar("Error",
-                            response?.data['message'] ?? "Failed to report");
-                      }
-                    } catch (_) {
-                      Get.snackbar("Error", "Something went wrong");
-                    } finally {
-                      isLoading.value = false;
-                    }
-                  },
-                  child: const Text("Submit"),
-                ),
+                const SizedBox(height: 16),
+                if (isLoading.value)
+                  // const Center(child: CircularProgressIndicator()),
+                  const SpinKitDoubleBounce(
+                    color: Reclaimcolors.BasicWhite,
+                    size: 20.0,
+                  ),
               ],
-            )),
-      );
-    }
+            ),
+            actionsPadding: const EdgeInsets.only(right: 12, bottom: 10),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.pop(context),
+                child: const Text("Cancel"),
+              ),
+              ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.redAccent,
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8)),
+                ),
+                onPressed: () async {
+                  final reason = reasonController.text.trim();
+                  if (reason.isEmpty) {
+                    Get.snackbar("Required", "Please enter a reason");
+                    return;
+                  }
+
+                  setState(() {
+                    isLoading.value = true;
+                  });
+
+                  try {
+                    final response = await ApiService().postRequestWithToken(
+                      "report-post",
+                      {
+                        "post_id": postId,
+                        "reason": reason,
+                      },
+                    );
+
+                    if (response != null && response.data['error'] == false) {
+                      Navigator.pop(context);
+                      Get.snackbar("Success", response.data['message']);
+                    } else {
+                      Get.snackbar("Error",
+                          response?.data['message'] ?? "Failed to report");
+                    }
+                  } catch (_) {
+                    Get.snackbar("Error", "Something went wrong");
+                  } finally {
+                    setState(() {
+                      isLoading.value = false;
+                    });
+                  }
+                },
+                child: const Text("Submit",
+                    style: TextStyle(
+                        color: Colors.white, fontWeight: FontWeight.bold)),
+              ),
+            ],
+          );
+        });
+      },
+    );
   }
 
   @override
@@ -236,9 +220,11 @@ class communityInprog extends StatelessWidget {
                   ),
                 ),
                 IconButton(
-                  icon: const Icon(Icons.more_vert),
-                  onPressed: () => showReportDialog(context),
-                ),
+                    icon: const Icon(Icons.more_vert),
+                    onPressed: () => showReportDialog(
+                          context,
+                          postId.toString(),
+                        )),
               ],
             ),
 
@@ -275,30 +261,85 @@ class communityInprog extends StatelessWidget {
             // Like and comment
             Row(
               children: [
-                SpringWidget(
-                  onTap: () => isLiked.value = !isLiked.value,
-                  child: Obx(() => Row(
-                        children: [
-                          SvgPicture.asset(
-                            ReclaimIcon.heartIcon,
-                            width: 20.w,
-                            height: 20.h,
-                            color: isLiked.value
-                                ? Reclaimcolors.BasicBlue
-                                : Reclaimcolors.BorderColor,
-                          ),
-                          const SizedBox(width: 5),
-                          Text(
-                            likesCount.toString(),
-                            style: TextStyle(
-                              color: Reclaimcolors.BasicBlue,
-                              fontSize: 14,
-                              fontWeight: FontWeight.bold,
+                // SpringWidget(
+                //   onTap: () => isLiked.value = !isLiked.value,
+                //   child: Obx(() => Row(
+                //         children: [
+                //           SvgPicture.asset(
+                //             ReclaimIcon.heartIcon,
+                //             width: 20.w,
+                //             height: 20.h,
+                //             color: isLiked.value
+                //                 ? Reclaimcolors.BasicBlue
+                //                 : Reclaimcolors.BorderColor,
+                //           ),
+                //           const SizedBox(width: 5),
+                //           Text(
+                //             likesCount.toString(),
+                //             style: TextStyle(
+                //               color: Reclaimcolors.BasicBlue,
+                //               fontSize: 14,
+                //               fontWeight: FontWeight.bold,
+                //             ),
+                //           ),
+                //         ],
+                //       )),
+                // ),
+
+                Obx(() {
+                  final controller = Get.find<CommunityController>();
+
+                  final isLoading = controller.likeLoading[postId] ?? false;
+
+                  final post =
+                      controller.posts.firstWhere((p) => p.id == postId);
+
+                  return InkWell(
+                    onTap: () {
+                      if (!isLoading) {
+                        controller.toggleLike(postId);
+                      }
+                    },
+                    child: AnimatedSwitcher(
+                      duration: const Duration(milliseconds: 300),
+                      transitionBuilder: (child, animation) =>
+                          ScaleTransition(scale: animation, child: child),
+                      child: isLoading
+                          ? const SizedBox(
+                              key: ValueKey('loader'),
+                              height: 20,
+                              width: 20,
+                              child: SpinKitDoubleBounce(
+                                color: Reclaimcolors.BasicBlue,
+                                size: 20.0,
+                              ),
+                            )
+                          : Row(
+                              key: ValueKey('like_icon_${post.isLiked}'),
+                              children: [
+                                SvgPicture.asset(
+                                  ReclaimIcon.heartIcon,
+                                  width: 20.w,
+                                  height: 20.h,
+                                  color: post.isLiked
+                                      ? Reclaimcolors.BasicBlue
+                                      : Reclaimcolors.BorderColor,
+                                ),
+                                const SizedBox(width: 5),
+                                Text(
+                                  post.likesCount.toString(),
+                                  style: TextStyle(
+                                    color: Reclaimcolors.BasicBlue,
+                                    fontSize: 14,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ],
                             ),
-                          ),
-                        ],
-                      )),
-                ),
+                    ),
+                  );
+                }),
+
                 SizedBox(width: 20.w),
                 Row(
                   children: [

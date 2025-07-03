@@ -55,11 +55,11 @@ class SocialLoginButtons extends StatelessWidget {
                 // SvgPicture.asset(ReclaimIcon.AppleIcon, height: 30), // Replace with your Apple icon
                 ),
             const SizedBox(width: 20),
-            Container(
-              height: 30,
-              width: 1.5,
-              color: Colors.grey,
-            ),
+            // Container(
+            //   height: 30,
+            //   width: 1.5,
+            //   color: Colors.grey,
+            // ),
             const SizedBox(width: 30),
             // GestureDetector(
             //   onTap: onFacebookTap,

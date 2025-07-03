@@ -23,7 +23,7 @@ class InProgressComponent extends StatelessWidget {
     required this.timeAgo,
     required this.description,
     this.isFulfilled = false,
-      this.onFulfill,
+    this.onFulfill,
   }) : isLiked = false.obs;
 
   @override
@@ -113,126 +113,82 @@ class InProgressComponent extends StatelessWidget {
                 fontWeight: FontWeight.w400),
           ),
 
-        
-
           const SizedBox(height: 12),
 
-          // Buttons Row
-          // Row(
-          //   mainAxisAlignment: MainAxisAlignment.end,
-          //   children: [
-          //     // Fulfilled Button (Static)
-          //     Container(
-          //       padding:
-          //           const EdgeInsets.symmetric(vertical: 10, horizontal: 16),
-          //       decoration: BoxDecoration(
-          //         color: isFulfilled
-          //             ? Reclaimcolors.BasicBlue.withOpacity(0.15)
-          //             : Reclaimcolors.BasicBlue, // Background color
-          //         borderRadius:
-          //             BorderRadius.circular(20), // More rounded corners
-          //         border: Border.all(
-          //             color: isFulfilled
-          //                 ? Colors.white
-          //                 : Reclaimcolors.BlueSecondary,
-          //             width: 2), // Blue border
-          //         boxShadow: [
-          //           BoxShadow(
-          //             color: isFulfilled
-          //                 ? Colors.white
-          //                 : Reclaimcolors.BlueSecondary, // Glowing effect
-          //             blurRadius: 2, // Soft glow
-          //             spreadRadius: 0,
-          //             offset: const Offset(0, 1), // Slight bottom shadow
-          //           ),
-          //         ],
-          //       ),
-          //       child: Row(
-          //         children: [
-          //           SvgPicture.asset(
-          //             isFulfilled ? ReclaimIcon.tic : ReclaimIcon.time,
-          //             color: isFulfilled
-          //                 ? Colors.green
-          //                 : Reclaimcolors.BlueSecondary,
-          //             width: 15,
-          //             height: 10,
-          //           ),
-          //           SizedBox(
-          //             width: 16,
-          //           ),
-          //           Text(
-          //             isFulfilled ? "Fulfilled" : "InProgress",
-          //             style: TextStyle(
-          //               color: isFulfilled
-          //                   ? Reclaimcolors.BasicBlack
-          //                   : Reclaimcolors
-          //                       .BasicWhite, // Blue text when unselected
-          //               fontWeight: FontWeight.bold,
-          //               fontSize: 18,
-          //             ),
-          //           ),
-          //         ],
-          //       ),
-          //     ),
-          //   ],
-          // ),
           if (!isFulfilled)
-  GestureDetector(
-    onTap: onFulfill,
-    child: Container(
-      padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 16),
-      decoration: BoxDecoration(
-        color: Reclaimcolors.BasicBlue,
-        borderRadius: BorderRadius.circular(20),
-        border: Border.all(color: Reclaimcolors.BlueSecondary, width: 2),
-        boxShadow: [
-          BoxShadow(
-            color: Reclaimcolors.BlueSecondary,
-            blurRadius: 2,
-            offset: const Offset(0, 1),
-          ),
-        ],
-      ),
-      child: Row(
-        children: [
-          SvgPicture.asset(ReclaimIcon.time,
-              color: Reclaimcolors.BasicWhite, width: 15, height: 10),
-          const SizedBox(width: 16),
-          const Text(
-            "Mark Fulfilled",
-            style: TextStyle(
-              color: Reclaimcolors.BasicWhite,
-              fontWeight: FontWeight.bold,
-              fontSize: 18,
-            ),
-          ),
-        ],
-      ),
-    ),
-  )
-else
-  Container(
-    padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 16),
-    decoration: BoxDecoration(
-      color: Reclaimcolors.BasicBlue.withOpacity(0.15),
-      borderRadius: BorderRadius.circular(20),
-      border: Border.all(color: Colors.white, width: 2),
-    ),
-    child: Row(
-      children: [
-        SvgPicture.asset(ReclaimIcon.tic, color: Colors.green, width: 15, height: 10),
-        const SizedBox(width: 16),
-        const Text(
-          "Fulfilled",
-          style: TextStyle(
-            color: Reclaimcolors.BasicBlack,
-            fontWeight: FontWeight.bold,
-            fontSize: 18,
-          ),
-        ),
-      ],
-    ),
-  ),
+            isFulfilled
+                ? Container(
+                    padding:
+                        const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
+                    decoration: BoxDecoration(
+                      color: Reclaimcolors.BasicBlue.withOpacity(0.1),
+                      borderRadius: BorderRadius.circular(12),
+                      border: Border.all(
+                          color: Colors.green.withOpacity(0.3), width: 1.5),
+                    ),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        SvgPicture.asset(
+                          ReclaimIcon.tic,
+                          color: Colors.green,
+                          width: 16,
+                          height: 16,
+                        ),
+                        const SizedBox(width: 8),
+                        Text(
+                          "Fulfilled",
+                          style: TextStyle(
+                            color: Colors.green.shade700,
+                            fontWeight: FontWeight.w600,
+                            fontSize: 14,
+                          ),
+                        ),
+                      ],
+                    ),
+                  )
+                : GestureDetector(
+                    onTap: onFulfill,
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 8, horizontal: 12),
+                      decoration: BoxDecoration(
+                        color: Reclaimcolors.BasicBlue,
+                        borderRadius: BorderRadius.circular(12),
+                        border: Border.all(
+                          color: Reclaimcolors.BlueSecondary.withOpacity(0.4),
+                          width: 1.5,
+                        ),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Reclaimcolors.BlueSecondary.withOpacity(0.3),
+                            blurRadius: 4,
+                            offset: const Offset(0, 2),
+                          ),
+                        ],
+                      ),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          SvgPicture.asset(
+                            ReclaimIcon.time,
+                            color: Colors.white,
+                            width: 16,
+                            height: 16,
+                          ),
+                          const SizedBox(width: 8),
+                          const Text(
+                            "Mark Fulfilled",
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.w600,
+                              fontSize: 14,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
         ],
       ),
     );

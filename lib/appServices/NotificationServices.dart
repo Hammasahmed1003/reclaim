@@ -1,88 +1,147 @@
-// import 'package:firebase_messaging/firebase_messaging.dart';
-// import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-// import 'package:get/get.dart';
-// import 'package:reclaim/appServices/getRouteNames.dart';
-// import 'package:flutter/material.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:get/get.dart';
+import 'package:reclaim/appServices/getRouteNames.dart';
+import 'package:timezone/data/latest.dart' as tz;
+import 'package:timezone/timezone.dart' as tz;
 
 // class NotificationService extends GetxService {
 //   final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
 //       FlutterLocalNotificationsPlugin();
 
-//   // FCM Messaging instance
-//   FirebaseMessaging firebaseMessaging = FirebaseMessaging.instance;
+//   final FirebaseMessaging firebaseMessaging = FirebaseMessaging.instance;
 
-//   // Initialize notifications and FCM
 //   Future<void> init() async {
-//     // Initialize local notifications
+//     print("🔧 Initializing NotificationService...");
+
+//     // Local notification init
 //     const AndroidInitializationSettings androidInitializationSettings =
-//         AndroidInitializationSettings('@mipmap/ic_launcher'); // App icon
+//         AndroidInitializationSettings('@mipmap/ic_launcher');
 
 //     final InitializationSettings initializationSettings =
 //         InitializationSettings(
 //       android: androidInitializationSettings,
-//       // iOS: IOSInitializationSettings(),
-//       // iOS Initialization Settings
+//       // Add iOS if needed
 //     );
 
 //     await flutterLocalNotificationsPlugin.initialize(
 //       initializationSettings,
+//       // onSelectNotification: onSelectNotification,
 //     );
 
-//     // Request permission for iOS
-//     await requestNotificationPermission();
+//     print("🔔 Local notifications initialized.");
 
-//     // Get the FCM token
+//     await requestNotificationPermission();
 //     await getFCMToken();
 
-//     // Handle foreground messages
+//     // Foreground message
 //     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-//       print('Foreground message received: ${message.notification}');
-//       _showNotification(message.notification);
+//       print("📲 Foreground FCM message received:");
+//       print("🧾 Full Message: ${message.toMap()}");
+
+//       RemoteNotification? notification = message.notification;
+
+//       // If backend sent only data message
+//       if (notification == null && message.data.isNotEmpty) {
+//         print(
+//             "📝 Data-only message in foreground. Constructing manual notification.");
+//         notification = RemoteNotification(
+//           title: message.data['title'],
+//           body: message.data['body'],
+//         );
+//       }
+
+//       _showNotification(notification);
 //     });
 
-//     // Handle background messages
-//     FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
-
-//     // Handle terminated state notifications
+//     // When app is in background and notification is clicked
 //     FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
-//       print('Notification caused app to open: ${message.notification}');
+//       print("📦 App opened from background notification");
+//       print("🧾 Full Message: ${message.toMap()}");
 //       _navigateToPostDetails(message);
 //     });
+
+//     // Register background handler
+//     FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
+
+//     print("✅ NotificationService initialization complete.");
 //   }
 
-//   // Handle background messages
-//   Future<void> _firebaseMessagingBackgroundHandler(
+//   // Background handler (top-level function required!)
+//   static Future<void> _firebaseMessagingBackgroundHandler(
 //       RemoteMessage message) async {
-//     print("Handling background message: ${message.messageId}");
-//     _showNotification(message.notification);
-//   }
+//     print("🌙 Background FCM message received:");
+//     print("🧾 Full Message: ${message.toMap()}");
 
-//   // Show notification on foreground, background, or terminated state
-//   Future<void> _showNotification(RemoteNotification? notification) async {
+//     RemoteNotification? notification = message.notification;
+
+//     if (notification == null && message.data.isNotEmpty) {
+//       print(
+//           "📝 Data-only background message. Constructing manual notification.");
+//       notification = RemoteNotification(
+//         title: message.data['title'],
+//         body: message.data['body'],
+//       );
+//     }
+
+//     final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+//         FlutterLocalNotificationsPlugin();
+
+//     const AndroidNotificationDetails androidDetails =
+//         AndroidNotificationDetails(
+//       'channel_id',
+//       'channel_name',
+//       importance: Importance.max,
+//       priority: Priority.high,
+//       ticker: 'ticker',
+//     );
+
+//     const NotificationDetails details = NotificationDetails(
+//       android: androidDetails,
+//     );
+
 //     if (notification != null) {
-//       const AndroidNotificationDetails androidNotificationDetails =
-//           AndroidNotificationDetails(
-//         'channel_id',
-//         'channel_name',
-//         importance: Importance.max,
-//         priority: Priority.high,
-//         ticker: 'ticker',
-//       );
-
-//       const NotificationDetails notificationDetails = NotificationDetails(
-//         android: androidNotificationDetails,
-//       );
-
 //       await flutterLocalNotificationsPlugin.show(
 //         0,
 //         notification.title,
 //         notification.body,
-//         notificationDetails,
+//         details,
 //       );
 //     }
 //   }
 
-//   // Request permission for notifications (iOS)
+//   // Show notification in foreground
+//   Future<void> _showNotification(RemoteNotification? notification) async {
+//     if (notification == null) {
+//       print("⚠️ No notification to show.");
+//       return;
+//     }
+
+//     print("📤 Showing local notification:");
+//     print("🔸 Title: ${notification.title}");
+//     print("🔹 Body: ${notification.body}");
+
+//     const AndroidNotificationDetails androidDetails =
+//         AndroidNotificationDetails(
+//       'channel_id',
+//       'channel_name',
+//       importance: Importance.max,
+//       priority: Priority.high,
+//       ticker: 'ticker',
+//     );
+
+//     const NotificationDetails details = NotificationDetails(
+//       android: androidDetails,
+//     );
+
+//     await flutterLocalNotificationsPlugin.show(
+//       0,
+//       notification.title,
+//       notification.body,
+//       details,
+//     );
+//   }
+
 //   Future<void> requestNotificationPermission() async {
 //     final NotificationSettings settings =
 //         await firebaseMessaging.requestPermission(
@@ -91,65 +150,143 @@
 //       sound: true,
 //     );
 
+//     print(
+//         "🔐 Notification permissions status: ${settings.authorizationStatus}");
+
 //     if (settings.authorizationStatus == AuthorizationStatus.authorized) {
-//       print("User granted notification permissions");
+//       print("✅ User granted permission.");
+//     } else if (settings.authorizationStatus ==
+//         AuthorizationStatus.provisional) {
+//       print("🔄 User granted provisional permission.");
 //     } else {
-//       print("User denied notification permissions");
+//       print("❌ User declined or has not accepted permission.");
 //     }
 //   }
 
-//   // Get the FCM token
 //   Future<void> getFCMToken() async {
-//     String? token = await firebaseMessaging.getToken();
-//     print("FCM Token: $token");
-//     // You can send this token to your server or store it
+//     try {
+//       String? token = await firebaseMessaging.getToken();
+//       print("📱 FCM Token: $token");
+//       // Save or send to backend here
+//     } catch (e) {
+//       print("❗ Error getting FCM Token: $e");
+//     }
 //   }
 
-//   // Navigate to a specific screen when the user taps on a notification
+//   // Navigate based on postId in notification data
 //   Future<void> _navigateToPostDetails(RemoteMessage message) async {
-//     if (message.data['postId'] != null) {
-//       String postId = message.data['postId'];
-//       Get.toNamed(GetRouteNames.PostDetailScreen, arguments: postId);
+//     try {
+//       final data = message.data;
+//       if (data.containsKey('postId')) {
+//         final postId = data['postId'];
+//         print("➡️ Navigating to post with ID: $postId");
+//         Get.toNamed(GetRouteNames.PostDetailScreen, arguments: postId);
+//       } else {
+//         print("ℹ️ No postId in notification data.");
+//       }
+//     } catch (e) {
+//       print("❗ Error navigating from notification: $e");
 //     }
 //   }
 
-//   // Handle notification click action
+//   // When user taps local notification
 //   Future<void> onSelectNotification(String? payload) async {
+//     print("👆 Notification clicked with payload: $payload");
 //     if (payload != null) {
-//       print('Notification Payload: $payload');
-//       // Here you can implement your redirection logic
-//       // Get.toNamed(GetRouteNames.PostDetailScreen, arguments: payload);
+//       // Optionally navigate based on payload
 //     }
+//   }
+
+//   // for evening Recollect Notification(),
+
+//   Future<void> scheduleEveningRecollectNotification() async {
+//     print("📆 Scheduling Evening Recollect Notification...");
+
+//     final now = DateTime.now();
+//     DateTime scheduledTime = DateTime(
+//       now.year,
+//       now.month,
+//       now.day,
+//       19, // 7 PM
+//       0,
+//       0,
+//     );
+
+//     if (now.isAfter(scheduledTime)) {
+//       // If it's already past 7 PM today, schedule for tomorrow
+//       scheduledTime = scheduledTime.add(const Duration(days: 1));
+//     }
+
+//     print("🔔 Will notify at: $scheduledTime");
+
+//     const androidDetails = AndroidNotificationDetails(
+//       'evening_recollect_channel',
+//       'Evening Recollect',
+//       channelDescription: 'Notify user when Evening Recollect is available',
+//       importance: Importance.max,
+//       priority: Priority.high,
+//       ticker: 'ticker',
+//     );
+
+//     const notificationDetails = NotificationDetails(android: androidDetails);
+
+//     // await flutterLocalNotificationsPlugin.zonedSchedule(
+
+//     //   1,
+//     //   'Evening Recollect Available',
+//     //   'Tap to reflect on your day!',
+//     //   tz.TZDateTime.from(scheduledTime, tz.local),
+//     //   notificationDetails,
+
+//     //   // androidAllowWhileIdle: true,
+
+//     //   uiLocalNotificationDateInterpretation:
+//     //       UILocalNotificationDateInterpretation.absoluteTime,
+//     //   matchDateTimeComponents: DateTimeComponents.time, // triggers daily
+//     // );
+//     await flutterLocalNotificationsPlugin.zonedSchedule(
+//       1,
+//       'Evening Recollect Available Now',
+//       'Claim Now',
+//       tz.TZDateTime.from(scheduledTime, tz.local),
+//       notificationDetails,
+//       androidScheduleMode:
+//           AndroidScheduleMode.exactAllowWhileIdle, // ✅ Required now
+//       uiLocalNotificationDateInterpretation:
+//           UILocalNotificationDateInterpretation.absoluteTime,
+//       matchDateTimeComponents: DateTimeComponents.time,
+//     );
+
+//     print("✅ Notification scheduled successfully.");
 //   }
 // }
-
-import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:get/get.dart';
-import 'package:reclaim/appServices/getRouteNames.dart';
 
 class NotificationService extends GetxService {
   final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
       FlutterLocalNotificationsPlugin();
-
   final FirebaseMessaging firebaseMessaging = FirebaseMessaging.instance;
 
   Future<void> init() async {
     print("🔧 Initializing NotificationService...");
 
-    // Local notification init
     const AndroidInitializationSettings androidInitializationSettings =
         AndroidInitializationSettings('@mipmap/ic_launcher');
 
     final InitializationSettings initializationSettings =
         InitializationSettings(
       android: androidInitializationSettings,
-      // Add iOS if needed
     );
 
     await flutterLocalNotificationsPlugin.initialize(
       initializationSettings,
-      // onSelectNotification: onSelectNotification,
+      onDidReceiveNotificationResponse: (NotificationResponse response) {
+        print("👆 Local notification tapped: ${response.payload}");
+        if (response.payload != null) {
+          final postId = response.payload;
+          print("➡️ Navigating to post with ID (payload): $postId");
+          Get.toNamed(GetRouteNames.PostDetailScreen, arguments: postId);
+        }
+      },
     );
 
     print("🔔 Local notifications initialized.");
@@ -157,40 +294,45 @@ class NotificationService extends GetxService {
     await requestNotificationPermission();
     await getFCMToken();
 
-    // Foreground message
+    // Foreground
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
       print("📲 Foreground FCM message received:");
       print("🧾 Full Message: ${message.toMap()}");
 
       RemoteNotification? notification = message.notification;
 
-      // If backend sent only data message
       if (notification == null && message.data.isNotEmpty) {
-        print(
-            "📝 Data-only message in foreground. Constructing manual notification.");
+        print("📝 Data-only message. Creating manual notification.");
         notification = RemoteNotification(
           title: message.data['title'],
           body: message.data['body'],
         );
       }
 
-      _showNotification(notification);
+      final postId = message.data['related_id'];
+      _showNotification(notification, postId);
     });
 
-    // When app is in background and notification is clicked
+    // Background (when tapped)
     FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
       print("📦 App opened from background notification");
       print("🧾 Full Message: ${message.toMap()}");
       _navigateToPostDetails(message);
     });
 
-    // Register background handler
+    // Background handler registration
     FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
+
+    // App launched via terminated notification
+    final initialMessage = await FirebaseMessaging.instance.getInitialMessage();
+    if (initialMessage != null) {
+      print("🚀 App launched from terminated state via notification");
+      _navigateToPostDetails(initialMessage);
+    }
 
     print("✅ NotificationService initialization complete.");
   }
 
-  // Background handler (top-level function required!)
   static Future<void> _firebaseMessagingBackgroundHandler(
       RemoteMessage message) async {
     print("🌙 Background FCM message received:");
@@ -199,8 +341,7 @@ class NotificationService extends GetxService {
     RemoteNotification? notification = message.notification;
 
     if (notification == null && message.data.isNotEmpty) {
-      print(
-          "📝 Data-only background message. Constructing manual notification.");
+      print("📝 Data-only background message. Creating manual notification.");
       notification = RemoteNotification(
         title: message.data['title'],
         body: message.data['body'],
@@ -224,17 +365,19 @@ class NotificationService extends GetxService {
     );
 
     if (notification != null) {
+      final postId = message.data['related_id'];
       await flutterLocalNotificationsPlugin.show(
         0,
         notification.title,
         notification.body,
         details,
+        payload: postId,
       );
     }
   }
 
-  // Show notification in foreground
-  Future<void> _showNotification(RemoteNotification? notification) async {
+  Future<void> _showNotification(
+      RemoteNotification? notification, String? postId) async {
     if (notification == null) {
       print("⚠️ No notification to show.");
       return;
@@ -262,7 +405,23 @@ class NotificationService extends GetxService {
       notification.title,
       notification.body,
       details,
+      payload: postId,
     );
+  }
+
+  Future<void> _navigateToPostDetails(RemoteMessage message) async {
+    try {
+      final data = message.data;
+      if (data.containsKey('related_id') && data['related_type'] == 'Post') {
+        final postId = data['related_id'];
+        print("➡️ Navigating to post with ID: $postId");
+        Get.toNamed(GetRouteNames.PostDetailScreen, arguments: postId);
+      } else {
+        print("ℹ️ Notification doesn't relate to a post.");
+      }
+    } catch (e) {
+      print("❗ Error navigating from notification: $e");
+    }
   }
 
   Future<void> requestNotificationPermission() async {
@@ -290,33 +449,53 @@ class NotificationService extends GetxService {
     try {
       String? token = await firebaseMessaging.getToken();
       print("📱 FCM Token: $token");
-      // Save or send to backend here
     } catch (e) {
       print("❗ Error getting FCM Token: $e");
     }
   }
 
-  // Navigate based on postId in notification data
-  Future<void> _navigateToPostDetails(RemoteMessage message) async {
-    try {
-      final data = message.data;
-      if (data.containsKey('postId')) {
-        final postId = data['postId'];
-        print("➡️ Navigating to post with ID: $postId");
-        Get.toNamed(GetRouteNames.PostDetailScreen, arguments: postId);
-      } else {
-        print("ℹ️ No postId in notification data.");
-      }
-    } catch (e) {
-      print("❗ Error navigating from notification: $e");
-    }
-  }
+  Future<void> scheduleEveningRecollectNotification() async {
+    print("📆 Scheduling Evening Recollect Notification...");
 
-  // When user taps local notification
-  Future<void> onSelectNotification(String? payload) async {
-    print("👆 Notification clicked with payload: $payload");
-    if (payload != null) {
-      // Optionally navigate based on payload
+    final now = DateTime.now();
+    DateTime scheduledTime = DateTime(
+      now.year,
+      now.month,
+      now.day,
+      19, // 7 PM
+      0,
+      0,
+    );
+
+    if (now.isAfter(scheduledTime)) {
+      scheduledTime = scheduledTime.add(const Duration(days: 1));
     }
+
+    print("🔔 Will notify at: $scheduledTime");
+
+    const androidDetails = AndroidNotificationDetails(
+      'evening_recollect_channel',
+      'Evening Recollect',
+      channelDescription: 'Notify user when Evening Recollect is available',
+      importance: Importance.max,
+      priority: Priority.high,
+      ticker: 'ticker',
+    );
+
+    const notificationDetails = NotificationDetails(android: androidDetails);
+
+    await flutterLocalNotificationsPlugin.zonedSchedule(
+      1,
+      'Evening Recollect Available Now',
+      'Claim Now',
+      tz.TZDateTime.from(scheduledTime, tz.local),
+      notificationDetails,
+      androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
+      uiLocalNotificationDateInterpretation:
+          UILocalNotificationDateInterpretation.absoluteTime,
+      matchDateTimeComponents: DateTimeComponents.time,
+    );
+
+    print("✅ Notification scheduled successfully.");
   }
 }

@@ -213,7 +213,7 @@ class ResourcesComponent extends StatelessWidget {
                   SpringWidget(
                     onTap: onBookmarkTap,
                     child: SvgPicture.asset(
-                      isBookmarked ? ReclaimIcon.BookMarked : ReclaimIcon.saved,
+                      isBookmarked ? ReclaimIcon.saved : ReclaimIcon.BookMarked,
                       width: 20,
                       height: 20,
                       color: Reclaimcolors.BasicBlue,
