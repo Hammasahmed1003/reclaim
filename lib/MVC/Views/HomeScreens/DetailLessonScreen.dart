@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:reclaim/Components/SpringWidget.dart';
+import 'package:reclaim/Components/resourceComponent/lessionVideoPlayer.dart';
 import 'package:reclaim/MVC/Models/lessionModel.dart';
 import 'package:reclaim/appConstants/ReclaimColors.dart';
 import 'package:reclaim/appConstants/ReclaimIcons.dart';
@@ -67,45 +68,58 @@ class Detaillessonscreen extends StatelessWidget {
                   ),
                 ),
 
-                // Dynamic Lesson Content
-                Center(
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 20, vertical: 40),
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Text(
-                          lesson.title,
-                          style: const TextStyle(
-                            fontSize: 22,
-                            fontWeight: FontWeight.bold,
+                // Lesson Content
+                Expanded(
+                  child: SingleChildScrollView(
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 20, vertical: 30),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Text(
+                            lesson.title,
+                            style: const TextStyle(
+                              fontSize: 22,
+                              fontWeight: FontWeight.bold,
+                            ),
+                            textAlign: TextAlign.center,
                           ),
-                          textAlign: TextAlign.center,
-                        ),
-                        const SizedBox(height: 15),
-                        ClipRRect(
-                          borderRadius: BorderRadius.circular(12),
-                          child: Image.network(
-                            "https://reclaim.hboxdigital.website${lesson.avatar}",
-                            width: 350,
-                            height: 200,
-                            fit: BoxFit.cover,
-                          ),
-                        ),
-                        const SizedBox(height: 15),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 12),
-                          child: Text(
+                          const SizedBox(height: 20),
+
+                          // Show video if present, otherwise show image
+                          if (lesson.video.isNotEmpty)
+                            LessonVideoPlayer(videoUrl: lesson.video)
+                          else
+                            ClipRRect(
+                              borderRadius: BorderRadius.circular(12),
+                              child: Image.network(
+                                "https://reclaim.hboxdigital.website${lesson.avatar}",
+                                width: double.infinity,
+                                height: 200,
+                                fit: BoxFit.cover,
+                                errorBuilder: (context, error, stackTrace) =>
+                                    const SizedBox(
+                                  height: 200,
+                                  child: Center(
+                                    child: Icon(Icons.broken_image,
+                                        color: Colors.grey),
+                                  ),
+                                ),
+                              ),
+                            ),
+
+                          const SizedBox(height: 20),
+                          Text(
                             lesson.description,
                             style: const TextStyle(
-                                fontSize: 14, color: Colors.black54),
+                              fontSize: 14,
+                              color: Colors.black54,
+                            ),
+                            textAlign: TextAlign.justify,
                           ),
-                        ),
-                        const SizedBox(height: 10),
-                        // You can also show created date, status etc.
-                      ],
+                        ],
+                      ),
                     ),
                   ),
                 ),

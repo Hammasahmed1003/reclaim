@@ -194,8 +194,8 @@ class Loginscreen extends StatelessWidget {
                     height: 20.h,
                   ),
                   SocialLoginButtons(
-                    onGoogleTap: () {
-                      logincontroller.googleSignIn;
+                    onGoogleTap: () async {
+                      logincontroller.googleSignIn();
                       print("Google login tapped");
                       // Implement Google login here
                     },
@@ -209,12 +209,12 @@ class Loginscreen extends StatelessWidget {
                     //   // Implement Facebook login here
                     // },
                   ),
-                  ElevatedButton(
-                    onPressed: () async {
-                      logincontroller.googleSignIn();
-                    },
-                    child: Text("Sign in with Google"),
-                  ),
+                  // ElevatedButton(
+                  //   onPressed: () async {
+                  //     logincontroller.googleSignIn();
+                  //   },
+                  //   child: Text("Sign in with Google"),
+                  // ),
                   SizedBox(
                     height: 50,
                   ),

@@ -17,6 +17,7 @@ import 'package:reclaim/MVC/Views/CommitmentScreen/CreateCommunityScreen.dart';
 import 'package:reclaim/MVC/Views/CommitmentScreen/PostDetailScreen.dart';
 import 'package:reclaim/MVC/Views/EditProfile/EditProfile.dart';
 import 'package:reclaim/MVC/Views/HomeScreens/DetailLessonScreen.dart';
+import 'package:reclaim/MVC/Views/HomeScreens/PanicIntensity.dart';
 import 'package:reclaim/MVC/Views/MessageScreen/MessageScreen.dart';
 import 'package:reclaim/MVC/Views/Notifications/NotificationScreen.dart';
 import 'package:reclaim/MVC/Views/ProgressScreens/progresScreen.dart';
@@ -160,6 +161,12 @@ class AppPages {
       transition: Transition.rightToLeft,
 
       page: () => Forgetpasswordscreen(), // No need to pass model here
+    ),
+    GetPage(
+      name: GetRouteNames.Panicintensity,
+      transition: Transition.rightToLeft,
+
+      page: () => Panicintensity(), // No need to pass model here
     ),
   ];
 }

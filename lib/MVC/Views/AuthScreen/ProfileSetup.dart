@@ -82,8 +82,7 @@ class Profilesetup extends StatelessWidget {
                           ),
                           child:
                               profilesetupcontroller.selectedImage.value == null
-                                  ? 
-                                  Center(
+                                  ? Center(
                                       child: SvgPicture.asset(
                                         ReclaimIcon.userIcon,
                                         color: Reclaimcolors.BasicBlue,
@@ -255,39 +254,91 @@ class Profilesetup extends StatelessWidget {
   }
 }
 
+// void _showGenderPicker(BuildContext context) {
+//   final Profilesetupcontroller profilesetupcontroller =
+//       Get.put(Profilesetupcontroller());
+//   showCupertinoModalPopup(
+//     context: context,
+//     builder: (_) => Container(
+//       height: 250,
+//       color: Colors.white,
+//       child: SingleChildScrollView(
+//         child: Column(
+
+//           children: [
+
+//             SizedBox(
+//               height: 200,
+//               child: CupertinoPicker(
+//                 backgroundColor: Colors.white,
+//                 itemExtent: 32,
+//                 onSelectedItemChanged: (index) {
+//                   final genders = ["male", "female", "other"];
+//                   profilesetupcontroller.updateGender(genders[index]);
+//                 },
+//                 children: const [
+//                   Text("Male"),
+//                   Text("Female"),
+//                   Text("Other"),
+//                 ],
+//               ),
+//             ),
+//             CupertinoButton(
+//               child: Text("Done", style: TextStyle(color: Colors.blue)),
+//               onPressed: () => Navigator.pop(context),
+//             ),
+//           ],
+//         ),
+//       ),
+//     ),
+//   );
+// }
+
 void _showGenderPicker(BuildContext context) {
   final Profilesetupcontroller profilesetupcontroller =
       Get.put(Profilesetupcontroller());
+
   showCupertinoModalPopup(
     context: context,
     builder: (_) => Container(
       height: 250,
       color: Colors.white,
-      child: SingleChildScrollView(
-        child: Column(
-          children: [
-            SizedBox(
-              height: 200,
-              child: CupertinoPicker(
-                backgroundColor: Colors.white,
-                itemExtent: 32,
-                onSelectedItemChanged: (index) {
-                  final genders = ["male", "female", "other"];
-                  profilesetupcontroller.updateGender(genders[index]);
-                },
-                children: const [
-                  Text("Male"),
-                  Text("Female"),
-                  Text("Other"),
-                ],
-              ),
+      child: Column(
+        children: [
+          // Back / Cancel Button
+          Container(
+            padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+            alignment: Alignment.centerLeft,
+            child: GestureDetector(
+              onTap: () => Navigator.pop(context),
+              child: Icon(Icons.close, color: Colors.black),
             ),
-            CupertinoButton(
-              child: Text("Done", style: TextStyle(color: Colors.blue)),
-              onPressed: () => Navigator.pop(context),
+          ),
+
+          // Picker
+          SizedBox(
+            height: 150,
+            child: CupertinoPicker(
+              backgroundColor: Colors.white,
+              itemExtent: 32,
+              onSelectedItemChanged: (index) {
+                final genders = ["male", "female", "other"];
+                profilesetupcontroller.updateGender(genders[index]);
+              },
+              children: const [
+                Text("Male"),
+                Text("Female"),
+                Text("Other"),
+              ],
             ),
-          ],
-        ),
+          ),
+
+          // Done Button
+          CupertinoButton(
+            child: Text("Done", style: TextStyle(color: Colors.blue)),
+            onPressed: () => Navigator.pop(context),
+          ),
+        ],
       ),
     ),
   );

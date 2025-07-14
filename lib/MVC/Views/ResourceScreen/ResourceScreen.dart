@@ -11,8 +11,6 @@ import 'package:reclaim/appConstants/ReclaimColors.dart';
 import 'package:reclaim/appServices/ApiServices.dart';
 import 'package:reclaim/appServices/getRouteNames.dart';
 
-
-
 class ResourceScreen extends StatelessWidget {
   ResourceScreen({super.key});
 
@@ -119,9 +117,28 @@ class ResourceScreen extends StatelessWidget {
                       return Obx(() => Padding(
                             padding: const EdgeInsets.symmetric(
                                 vertical: 10, horizontal: 20),
-                            child: ResourcesComponent(
+                            child:
+                                // ResourcesComponent(
+                                //   imageUrl:
+                                //       "https://reclaim.hboxdigital.website${item.avatar}",
+                                //   title: item.title,
+                                //   description: item.description,
+                                //   isBookmarked: item.isSave.value == 1,
+                                //   onTap: () {
+                                //     Get.toNamed(GetRouteNames.Detaillessonscreen,
+                                //         arguments: item);
+                                //   },
+                                //   onBookmarkTap: () async {
+                                //     await lessonController.saveLesson(
+                                //         item.id, item);
+                                //   },
+                                // ),
+
+                                ResourcesComponent(
                               imageUrl:
                                   "https://reclaim.hboxdigital.website${item.avatar}",
+                              videoUrl:
+                                  item.video.isNotEmpty ? item.video : null,
                               title: item.title,
                               description: item.description,
                               isBookmarked: item.isSave.value == 1,

@@ -25,6 +25,7 @@ class GetRouteNames {
   static const String Eveningrecollect = "/Eveningrecollect";
   static const String PostDetailScreen = "/PostDetailScreen";
   static const String Forgetpasswordscreen = "/Forgetpasswordscreen";
+  static const String Panicintensity = "/Panicintensity";
 
   // static const String Progresscreen = "/Progresscreen";
 

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:reclaim/Components/SpringWidget.dart';
 import 'package:reclaim/appConstants/ReclaimColors.dart';
 import 'package:reclaim/appConstants/ReclaimIcons.dart';
 import 'package:reclaim/appConstants/ReclaimImages.dart';
@@ -21,7 +22,7 @@ class SocialLoginButtons extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        GestureDetector(
+        SpringWidget(
           onTap: onGoogleTap,
           child: Container(
             height: 48.h,

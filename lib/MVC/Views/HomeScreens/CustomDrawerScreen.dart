@@ -8,62 +8,6 @@ import 'package:reclaim/appConstants/ReclaimIcons.dart';
 import 'package:reclaim/appServices/SharedPrefService.dart';
 import 'package:reclaim/appServices/getRouteNames.dart';
 
-// class CustomDrawer extends StatelessWidget {
-//   const CustomDrawer({super.key});
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Drawer(
-//       child: Container(
-//         color: Reclaimcolors.BlueSecondary,
-//         padding: const EdgeInsets.symmetric(vertical: 50, horizontal: 20),
-//         child: SingleChildScrollView(
-//           child: Column(
-//             crossAxisAlignment: CrossAxisAlignment.start,
-//             children: [
-//               Row(
-//                 children: [
-//                   const CircleAvatar(
-//                     radius: 40,
-//                     backgroundColor: Colors.white,
-//                     child: Icon(Icons.person, size: 40),
-//                   ),
-//                   const SizedBox(width: 10),
-//                   const Text("James", style: TextStyle(fontSize: 18, fontWeight: FontWeight.w800)),
-//                 ],
-//               ),
-//               const SizedBox(height: 20),
-//               ..._drawerItems.map((item) => Padding(
-//                     padding: const EdgeInsets.only(bottom: 10),
-//                     child:
-//                      Container(
-//                         decoration: BoxDecoration(
-//                 borderRadius: BorderRadius.circular(33),
-//                 gradient: const LinearGradient(
-//                   colors: [
-//                     Reclaimcolors.BlueSecondary,
-//                     const Color(0xffffffff)
-//                   ],
-//                   stops: [0, 1],
-//                   begin: Alignment.topCenter,
-//                   end: Alignment.bottomCenter,
-//                 )),
-//                        child: ListTile(
-//                         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-//                         tileColor: Colors.white,
-//                         leading: SvgPicture.asset(item['icon']!),
-//                         title: Text(item['title']!, style: const TextStyle(fontWeight: FontWeight.bold)),
-//                         onTap: () => Get.toNamed(item['route']!),
-//                                            ),
-//                      ),
-//                   )),
-//             ],
-//           ),
-//         ),
-//       ),
-//     );
-//   }
-
 import 'package:get/get.dart';
 
 class CustomDrawer extends StatelessWidget {
@@ -83,26 +27,6 @@ class CustomDrawer extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Obx(() {
-              //   final name = controller.userName.value.isNotEmpty
-              //       ? controller.userName.value
-              //       : "Guest";
-              //   return Row(
-              //     children: [
-              //       const CircleAvatar(
-              //         radius: 40,
-              //         backgroundColor: Colors.white,
-              //         child: Icon(Icons.person, size: 40),
-              //       ),
-              //       const SizedBox(width: 10),
-              //       Text(
-              //         name,
-              //         style: const TextStyle(
-              //             fontSize: 18, fontWeight: FontWeight.w800),
-              //       ),
-              //     ],
-              //   );
-              // }),
               Obx(() {
                 final name = controller.userName.value.isNotEmpty
                     ? controller.userName.value
@@ -188,6 +112,11 @@ List<Map<String, String>> get _drawerItems => [
         'icon': ReclaimIcon.handshake,
         'title': 'My Commitments',
         'route': GetRouteNames.Commitmentscreen
+      },
+      {
+        'icon': ReclaimIcon.intensity,
+        'title': 'Panic Intensity',
+        'route': GetRouteNames.Panicintensity
       },
       // {
       //   'icon': ReclaimIcon.Settings,

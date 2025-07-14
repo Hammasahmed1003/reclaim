@@ -65,11 +65,40 @@
 
 import 'package:get/get.dart';
 
+// class LessonModel {
+//   final int id;
+//   final String title;
+//   final String description;
+//   final String avatar;
+//   RxInt isSave;
+
+//   LessonModel({
+//     required this.id,
+//     required this.title,
+//     required this.description,
+//     required this.avatar,
+//     required int isSave,
+//   }) : isSave = isSave.obs;
+
+//   factory LessonModel.fromJson(Map<String, dynamic> json) {
+//     return LessonModel(
+//       id: json['id'],
+//       title: json['title'],
+//       description: json['description'],
+//       avatar: json['avatar'],
+//       isSave: json['is_save'] ?? 0,
+//     );
+//   }
+// }
+
+
+
 class LessonModel {
   final int id;
   final String title;
   final String description;
   final String avatar;
+  final String video;
   RxInt isSave;
 
   LessonModel({
@@ -77,6 +106,7 @@ class LessonModel {
     required this.title,
     required this.description,
     required this.avatar,
+    required this.video,
     required int isSave,
   }) : isSave = isSave.obs;
 
@@ -86,6 +116,7 @@ class LessonModel {
       title: json['title'],
       description: json['description'],
       avatar: json['avatar'],
+      video: json['video'] ?? "",
       isSave: json['is_save'] ?? 0,
     );
   }
