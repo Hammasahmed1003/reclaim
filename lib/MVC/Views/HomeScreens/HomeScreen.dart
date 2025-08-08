@@ -454,7 +454,7 @@ class _HomescreenState extends State<Homescreen>
                                     return const SizedBox(); // fallback UI
                                   }
                                   return SizedBox(
-                                    height: 200.h,
+                                    height: 250.h,
                                     child: ListView.builder(
                                       padding: const EdgeInsets.symmetric(
                                           horizontal: 10),

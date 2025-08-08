@@ -41,7 +41,7 @@ class DailyProgressComponent extends StatelessWidget {
             children: [
               Text(
                 title,
-                style:  TextStyle(
+                style: TextStyle(
                   fontSize: 26.sp,
                   fontWeight: FontWeight.bold,
                   color: Colors.black,
@@ -50,6 +50,29 @@ class DailyProgressComponent extends StatelessWidget {
             ],
           ),
           const SizedBox(height: 10),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Container(
+                decoration: BoxDecoration(
+                    color: Reclaimcolors.BasicBlue.withOpacity(0.2),
+                    borderRadius: BorderRadius.circular(20)),
+                child: Padding(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+                  child: Text(
+                    "Affirmation",
+                    style: TextStyle(
+                      fontSize: 14.sp,
+                      fontWeight: FontWeight.bold,
+                      color: Reclaimcolors.BasicBlue,
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 8),
 
           // Subtitle (e.g., "Daily Affirmation")
           Text(
@@ -60,8 +83,35 @@ class DailyProgressComponent extends StatelessWidget {
               color: Colors.blue,
             ),
           ),
-          const SizedBox(height: 8),
 
+          const SizedBox(
+            height: 10,
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Container(
+                decoration: BoxDecoration(
+                    color: Reclaimcolors.BasicBlue.withOpacity(0.2),
+                    borderRadius: BorderRadius.circular(20)),
+                child: Padding(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+                  child: Text(
+                    "Reflection",
+                    style: TextStyle(
+                      fontSize: 14.sp,
+                      fontWeight: FontWeight.bold,
+                      color: Reclaimcolors.BasicBlue,
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+          SizedBox(
+            height: 10,
+          ),
           // Description (Lorem ipsum text)
           Text(
             description,
