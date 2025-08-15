@@ -81,7 +81,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     Get.put(UserController());
 
-    return ScreenUtilInit(
+    return  ScreenUtilInit(
         designSize: const Size(360, 690),
         minTextAdapt: true,
         splitScreenMode: true,

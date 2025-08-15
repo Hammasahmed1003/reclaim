@@ -153,44 +153,42 @@ class ApiService {
   //   }
   // }
 
-Future<Response?> postRequestWithToken(
-  String endpoint,
-  Map<String, dynamic> data, {
-  Map<String, String>? headers,
-}) async {
-  try {
-    print("\n[API POST Request]");
-    print("Endpoint: ${_dio.options.baseUrl}$endpoint");
+  Future<Response?> postRequestWithToken(
+    String endpoint,
+    Map<String, dynamic> data, {
+    Map<String, String>? headers,
+  }) async {
+    try {
+      print("\n[API POST Request]");
+      print("Endpoint: ${_dio.options.baseUrl}$endpoint");
 
-    // Get token from shared prefs
-    String? token = await SharedPrefService.getUserToken();
-    print("📦 Bearer Token: $token");
+      // Get token from shared prefs
+      String? token = await SharedPrefService.getUserToken();
+      print("📦 Bearer Token: $token");
 
-    // Default headers
-    final defaultHeaders = {
-      'Content-Type': 'application/json',
-      if (token != null) 'Authorization': 'Bearer $token',
-    };
+      // Default headers
+      final defaultHeaders = {
+        'Content-Type': 'application/json',
+        if (token != null) 'Authorization': 'Bearer $token',
+      };
 
-    // Merge any extra headers
-    if (headers != null) {
-      defaultHeaders.addAll(headers);
+      // Merge any extra headers
+      if (headers != null) {
+        defaultHeaders.addAll(headers);
+      }
+
+      final response = await _dio.post(
+        endpoint,
+        data: data,
+        options: Options(headers: defaultHeaders),
+      );
+
+      return response;
+    } catch (error) {
+      print("❌ Error in POST Request with Token: $error");
+      return null;
     }
-
-    final response = await _dio.post(
-      endpoint,
-      data: data,
-      options: Options(headers: defaultHeaders),
-    );
-
-    return response;
-  } catch (error) {
-    print("❌ Error in POST Request with Token: $error");
-    return null;
   }
-}
-
-
 
   Future<Response?> deleteRequest(String endpoint, Map<String, dynamic> data,
       {Map<String, String>? headers}) async {

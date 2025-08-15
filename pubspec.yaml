@@ -77,14 +77,14 @@ icons_launcher:
   platforms:
     android:
       enable: true
-      image_path: "assets/app_icons/reclaimAppIcon.png"
-      notification_image: "assets/app_icons/reclaimAppIcon.png"
-      adaptive_background_image: "assets/app_icons/reclaimAppIcon.png"
-      adaptive_foreground_image: "assets/app_icons/reclaimAppIcon.png"
-      adaptive_round_image: "assets/app_icons/reclaimAppIcon.png"
+      image_path: "assets/app_icons/Rclaim.png"
+      notification_image: "assets/app_icons/Rclaim.png"
+      adaptive_background_image: "assets/app_icons/Rclaim.png"
+      adaptive_foreground_image: "assets/app_icons/Rclaim.png"
+      adaptive_round_image: "assets/app_icons/Rclaim.png"
     ios:
       enable: true
-      image_path: "assets/app_icons/reclaimAppIcon.png"
+      image_path: "assets/app_icons/Rclaim.png"
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

@@ -46,7 +46,7 @@ class EditProfile extends StatelessWidget {
                     SizedBox(height: 5.h),
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 20),
-                      child: _buildInputField("Full Name", "Jon Cena",
+                      child: _buildInputField("Full Name", "Full Name",
                           controller.FullNameController),
                     ),
                     Padding(
@@ -496,8 +496,6 @@ class EditProfile extends StatelessWidget {
 //   );
 // }
 
-
-
 Future<bool?> _showDeleteConfirmationDialog(BuildContext context) {
   return showDialog<bool>(
     context: context,
@@ -559,11 +557,13 @@ Future<bool?> _showDeleteConfirmationDialog(BuildContext context) {
                   Navigator.of(context).pop(true); // Proceed to delete
                 },
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.red, // Red color for the delete button
+                  backgroundColor:
+                      Colors.red, // Red color for the delete button
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(8),
                   ),
-                  padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                 ),
                 child: const Text(
                   'Delete',

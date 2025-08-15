@@ -31,7 +31,7 @@ class CommunityController extends GetxController {
             "Error", response?.data['message'] ?? "Failed to fetch posts");
       }
     } catch (e) {
-      Get.snackbar("Error", "Something went wrong");
+      // Get.snackbar("Error", "Something went wrong");
     } finally {
       isLoading.value = false;
     }
@@ -182,7 +182,4 @@ class CommunityController extends GetxController {
       likeLoading[postId] = false;
     }
   }
-
-
-  
 }
