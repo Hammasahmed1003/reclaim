@@ -42,17 +42,17 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions web = FirebaseOptions(
     apiKey: 'AIzaSyDtylYvL3G49s_yfDMvKlNZsvKKkv4_I8Y',
-    appId: '1:762722484360:web:f2b14077c697af0f889f3d',
+    appId: '1:762722484360:web:2b28b644e2259c1d889f3d',
     messagingSenderId: '762722484360',
     projectId: 'reclaim-d09e4',
     authDomain: 'reclaim-d09e4.firebaseapp.com',
     storageBucket: 'reclaim-d09e4.firebasestorage.app',
-    measurementId: 'G-Z9B0E7LLZF',
+    measurementId: 'G-YD7D8D551R',
   );
 
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyDP6mtuGI96PsZQLJ6PAf8iROn9emwEWnA',
-    appId: '1:762722484360:android:cc09a58cf27e0c83889f3d',
+    appId: '1:762722484360:android:98977e4df077d3ed889f3d',
     messagingSenderId: '762722484360',
     projectId: 'reclaim-d09e4',
     storageBucket: 'reclaim-d09e4.firebasestorage.app',
@@ -60,29 +60,33 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions ios = FirebaseOptions(
     apiKey: 'AIzaSyDqJp7d-cm9jj4JgeKDuo_ByF46HfJu8wY',
-    appId: '1:762722484360:ios:fa89cff95874484c889f3d',
+    appId: '1:762722484360:ios:2d596e085e88eea2889f3d',
     messagingSenderId: '762722484360',
     projectId: 'reclaim-d09e4',
     storageBucket: 'reclaim-d09e4.firebasestorage.app',
-    iosBundleId: 'com.example.reclaim',
+    androidClientId: '762722484360-qr6gi86jcvpvdkp2g1fmmd6h0c5glcpn.apps.googleusercontent.com',
+    iosClientId: '762722484360-bvkm5e2cj767879qhpv8h667g71nqkq8.apps.googleusercontent.com',
+    iosBundleId: 'com.hbox.reclaim',
   );
 
   static const FirebaseOptions macos = FirebaseOptions(
     apiKey: 'AIzaSyDqJp7d-cm9jj4JgeKDuo_ByF46HfJu8wY',
-    appId: '1:762722484360:ios:fa89cff95874484c889f3d',
+    appId: '1:762722484360:ios:2d596e085e88eea2889f3d',
     messagingSenderId: '762722484360',
     projectId: 'reclaim-d09e4',
     storageBucket: 'reclaim-d09e4.firebasestorage.app',
-    iosBundleId: 'com.example.reclaim',
+    androidClientId: '762722484360-qr6gi86jcvpvdkp2g1fmmd6h0c5glcpn.apps.googleusercontent.com',
+    iosClientId: '762722484360-bvkm5e2cj767879qhpv8h667g71nqkq8.apps.googleusercontent.com',
+    iosBundleId: 'com.hbox.reclaim',
   );
 
   static const FirebaseOptions windows = FirebaseOptions(
     apiKey: 'AIzaSyDtylYvL3G49s_yfDMvKlNZsvKKkv4_I8Y',
-    appId: '1:762722484360:web:393769fe2ec2772c889f3d',
+    appId: '1:762722484360:web:678a975e0f06e5cd889f3d',
     messagingSenderId: '762722484360',
     projectId: 'reclaim-d09e4',
     authDomain: 'reclaim-d09e4.firebaseapp.com',
     storageBucket: 'reclaim-d09e4.firebasestorage.app',
-    measurementId: 'G-WTQTQVZY3Q',
+    measurementId: 'G-TF3N2PMKT7',
   );
 }

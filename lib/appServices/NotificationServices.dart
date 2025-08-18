@@ -271,11 +271,16 @@ class NotificationService extends GetxService {
 
     const AndroidInitializationSettings androidInitializationSettings =
         AndroidInitializationSettings('@mipmap/ic_launcher');
-
+    const DarwinInitializationSettings iosInitializationSettings =
+        DarwinInitializationSettings(
+      requestAlertPermission: true,
+      requestBadgePermission: true,
+      requestSoundPermission: true,
+    );
     final InitializationSettings initializationSettings =
         InitializationSettings(
-      android: androidInitializationSettings,
-    );
+            android: androidInitializationSettings,
+            iOS: iosInitializationSettings);
 
     await flutterLocalNotificationsPlugin.initialize(
       initializationSettings,

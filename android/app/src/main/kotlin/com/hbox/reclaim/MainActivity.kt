@@ -1,4 +1,4 @@
-package com.example.reclaim
+package com.hbox.reclaim
 
 import io.flutter.embedding.android.FlutterActivity
 

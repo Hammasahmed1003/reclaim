@@ -8,15 +8,15 @@ import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 
 
-import '../firebase_options.dart'; // Replace with your actual Firebase options file
+
 
 class FirebaseDB {
   static Future<void> init() async {
     try {
       WidgetsFlutterBinding.ensureInitialized();
-      await Firebase.initializeApp(
-        options: DefaultFirebaseOptions.currentPlatform,
-      );
+      // await Firebase.initializeApp(
+      //   options: DefaultFirebaseOptions.currentPlatform,
+      // );
       print("Firebase initialized 🔥✅");
 
       // Subscribe to a topic (optional)
