@@ -33,17 +33,20 @@ class SocialLoginButtons extends StatelessWidget {
               borderRadius: BorderRadius.circular(30),
               border: Border.all(color: Reclaimcolors.BasicBlue, width: 1),
             ),
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Image.asset(Reclaimimages.GoogleImage),
-                const SizedBox(width: 10),
-                const Text(
-                  "Continue With Google",
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                ),
-              ],
+            child: Container(
+              
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Image.asset(Reclaimimages.GoogleImage),
+                  const SizedBox(width: 10),
+                  const Text(
+                    "Continue With Google",
+                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                  ),
+                ],
+              ),
             ),
           ),
         ),
@@ -52,7 +55,13 @@ class SocialLoginButtons extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             GestureDetector(
-                onTap: onAppleTap, child: Image.asset(Reclaimimages.AppleImage)
+                onTap: onAppleTap, child: Row(
+                   mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Image.asset(Reclaimimages.AppleImage),
+                  ],
+                )
                 // SvgPicture.asset(ReclaimIcon.AppleIcon, height: 30), // Replace with your Apple icon
                 ),
             const SizedBox(width: 20),
