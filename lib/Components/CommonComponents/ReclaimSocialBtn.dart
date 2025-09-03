@@ -124,17 +124,23 @@ class SocialLoginButtons extends StatelessWidget {
               //   Reclaimimages.GoogleImage,
               //   height: 20,
               // ),
+
+              const SizedBox(width: 8),
+
+              SvgPicture.asset(
+                ReclaimIcon.g,
+                width: 20,
+              ),
+              const SizedBox(width: 8),
+
               const Text(
-                "Continue With",
+                "Continue With Google",
                 style: TextStyle(
                   fontSize: 14,
                   fontWeight: FontWeight.w600,
                   color: Colors.black,
                 ),
               ),
-              const SizedBox(width: 8),
-
-              SvgPicture.asset(ReclaimIcon.g),
               // const SizedBox(width: 8),
             ],
           ),
