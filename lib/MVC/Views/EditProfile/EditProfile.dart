@@ -21,181 +21,179 @@ class EditProfile extends StatelessWidget {
     final Editprofilecontroller controller = Get.put(Editprofilecontroller());
 
     return AnnotatedRegion<SystemUiOverlayStyle>(
-      value: const SystemUiOverlayStyle(
-        statusBarColor: Reclaimcolors.BasicBlue,
-        systemNavigationBarColor: Reclaimcolors.BasicWhite,
+      value: SystemUiOverlayStyle(
+        systemNavigationBarColor: Reclaimcolors.BasicBlue,
+        statusBarColor: Reclaimcolors.BasicBlue
       ),
       child: Scaffold(
         backgroundColor: Reclaimcolors.BasicWhite,
-        body: SafeArea(
-          child: SingleChildScrollView(
-            child: Container(
-              decoration: const BoxDecoration(
-                gradient: LinearGradient(
-                  colors: [Reclaimcolors.BlueSecondary, Color(0xffffffff)],
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
-                ),
+        body: SingleChildScrollView(
+          child: Container(
+            decoration: const BoxDecoration(
+              gradient: LinearGradient(
+                colors: [Reclaimcolors.BlueSecondary, Color(0xffffffff)],
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
               ),
-              child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    _buildAppBar(context),
-                    SizedBox(height: 5.h),
-                    _buildProfileSection(controller),
-                    SizedBox(height: 5.h),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 20),
-                      child: _buildInputField("Full Name", "Full Name",
-                          controller.FullNameController),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 20),
-                      child: _buildInputField("Email", "email@example.com",
-                          controller.EmailController,
-                          isEnabled: false),
-                    ),
-
-                    SizedBox(
-                      height: 10,
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 20),
-                      child: _buildGenderPicker(context, controller),
-                    ),
-                    SizedBox(height: 5.h),
-                    Padding(
-                      padding: EdgeInsets.symmetric(
-                          horizontal: 20.w, vertical: 20.h),
-                      child: Row(
-                        children: [
-                          // Delete Account Button
-                          Expanded(
-                            child: Obx(() {
-                              if (controller.isDeleteLoading.value) {
-                                return const Center(
-                                  child:
-                                      CircularProgressIndicator(), // Show loader when deleting
-                                );
-                              }
-
-                              return GestureDetector(
-                                onTap: () async {
-                                  // Show confirmation dialog before deleting the account
-                                  bool? deleteConfirmed =
-                                      await _showDeleteConfirmationDialog(
-                                          context);
-
-                                  if (deleteConfirmed == true) {
-                                    // Proceed to delete the account
-                                    controller.deleteAccount(context);
-                                  }
-                                },
-                                child: Container(
-                                  height: 47,
-                                  decoration: BoxDecoration(
-                                    color: Colors.red.withOpacity(0.15),
-                                    borderRadius: BorderRadius.circular(12),
-                                  ),
-                                  padding: const EdgeInsets.symmetric(
-                                      horizontal: 16),
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: const [
-                                      Icon(Icons.delete,
-                                          color: Colors.red, size: 20),
-                                      SizedBox(width: 8),
-                                      Text(
-                                        "Delete",
-                                        style: TextStyle(
-                                          color: Colors.red,
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 14,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
+            ),
+            child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  _buildAppBar(context),
+                  SizedBox(height: 5.h),
+                  _buildProfileSection(controller),
+                  SizedBox(height: 5.h),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    child: _buildInputField("Full Name", "Full Name",
+                        controller.FullNameController),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    child: _buildInputField("Email", "email@example.com",
+                        controller.EmailController,
+                        isEnabled: false),
+                  ),
+            
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    child: _buildGenderPicker(context, controller),
+                  ),
+                  SizedBox(height: 5.h),
+                  Padding(
+                    padding: EdgeInsets.symmetric(
+                        horizontal: 20.w, vertical: 20.h),
+                    child: Row(
+                      children: [
+                        // Delete Account Button
+                        Expanded(
+                          child: Obx(() {
+                            if (controller.isDeleteLoading.value) {
+                              return const Center(
+                                child:
+                                    CircularProgressIndicator(), // Show loader when deleting
                               );
-                            }),
-                          ),
-
-                          SizedBox(width: 16.w),
-
-                          // Logout Button
-                          Expanded(
-                            child: GestureDetector(
-                              onTap: () {
-                                controller.logoutUser(); // Your logout logic
+                            }
+            
+                            return GestureDetector(
+                              onTap: () async {
+                                // Show confirmation dialog before deleting the account
+                                bool? deleteConfirmed =
+                                    await _showDeleteConfirmationDialog(
+                                        context);
+            
+                                if (deleteConfirmed == true) {
+                                  // Proceed to delete the account
+                                  controller.deleteAccount(context);
+                                }
                               },
                               child: Container(
-                                height: 47.h,
+                                height: 47,
                                 decoration: BoxDecoration(
-                                  color:
-                                      Reclaimcolors.BasicBlue.withOpacity(0.15),
+                                  color: Colors.red.withOpacity(0.15),
                                   borderRadius: BorderRadius.circular(12),
                                 ),
-                                padding: EdgeInsets.symmetric(horizontal: 16.w),
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 16),
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Icon(Icons.logout,
-                                        color: Reclaimcolors.BasicBlue,
-                                        size: 20),
-                                    SizedBox(width: 8.w),
+                                  children: const [
+                                    Icon(Icons.delete,
+                                        color: Colors.red, size: 20),
+                                    SizedBox(width: 8),
                                     Text(
-                                      "Logout",
+                                      "Delete",
                                       style: TextStyle(
-                                        color: Reclaimcolors.BasicBlue,
+                                        color: Colors.red,
                                         fontWeight: FontWeight.bold,
-                                        fontSize: 11.sp,
+                                        fontSize: 14,
                                       ),
                                     ),
                                   ],
                                 ),
                               ),
+                            );
+                          }),
+                        ),
+            
+                        SizedBox(width: 16.w),
+            
+                        // Logout Button
+                        Expanded(
+                          child: GestureDetector(
+                            onTap: () {
+                              controller.logoutUser(); // Your logout logic
+                            },
+                            child: Container(
+                              height: 47.h,
+                              decoration: BoxDecoration(
+                                color:
+                                    Reclaimcolors.BasicBlue.withOpacity(0.15),
+                                borderRadius: BorderRadius.circular(12),
+                              ),
+                              padding: EdgeInsets.symmetric(horizontal: 16.w),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Icon(Icons.logout,
+                                      color: Reclaimcolors.BasicBlue,
+                                      size: 20),
+                                  SizedBox(width: 8.w),
+                                  Text(
+                                    "Logout",
+                                    style: TextStyle(
+                                      color: Reclaimcolors.BasicBlue,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 11.sp,
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
-                        ],
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(height: 20),
+                  // Padding(
+                  //   padding: const EdgeInsets.symmetric(horizontal: 15),
+                  //   child: Obx(() => controller.isLoading.value
+                  //       ? const Center(
+                  //           child: SpinKitDoubleBounce(
+                  //             color: Reclaimcolors.BasicWhite,
+                  //             size: 20.0,
+                  //           ),
+                  //         )
+                  //       : ReclaimButton(
+                  //           width: double.infinity,
+                  //           height: 47.h,
+                  //           backgroundColor: Reclaimcolors.BasicBlue,
+                  //           title: "Save",
+                  //           fontWeight: FontWeight.bold,
+                  //           onPressed: () => controller.saveProfile(),
+                  //           titleColor: Reclaimcolors.BasicWhite,
+                  //         )),
+                  // ),
+                  Obx(
+                    () => Center(
+                      child: ReclaimButton(
+                        isLoading: controller.isLoading.value,
+                        width: 320.w,
+                        height: 47.h,
+                        backgroundColor: Reclaimcolors.BasicBlue,
+                        title: "Save",
+                        fontWeight: FontWeight.bold,
+                        onPressed: () => controller.saveProfile(),
+                        titleColor: Reclaimcolors.BasicWhite,
                       ),
                     ),
-                    const SizedBox(height: 20),
-                    // Padding(
-                    //   padding: const EdgeInsets.symmetric(horizontal: 15),
-                    //   child: Obx(() => controller.isLoading.value
-                    //       ? const Center(
-                    //           child: SpinKitDoubleBounce(
-                    //             color: Reclaimcolors.BasicWhite,
-                    //             size: 20.0,
-                    //           ),
-                    //         )
-                    //       : ReclaimButton(
-                    //           width: double.infinity,
-                    //           height: 47.h,
-                    //           backgroundColor: Reclaimcolors.BasicBlue,
-                    //           title: "Save",
-                    //           fontWeight: FontWeight.bold,
-                    //           onPressed: () => controller.saveProfile(),
-                    //           titleColor: Reclaimcolors.BasicWhite,
-                    //         )),
-                    // ),
-                    Obx(
-                      () => Center(
-                        child: ReclaimButton(
-                          isLoading: controller.isLoading.value,
-                          width: 320.w,
-                          height: 47.h,
-                          backgroundColor: Reclaimcolors.BasicBlue,
-                          title: "Save",
-                          fontWeight: FontWeight.bold,
-                          onPressed: () => controller.saveProfile(),
-                          titleColor: Reclaimcolors.BasicWhite,
-                        ),
-                      ),
-                    )
-                  ]),
-              // ],
-            ),
+                  )
+                ]),
+            // ],
           ),
         ),
       ),
@@ -204,7 +202,7 @@ class EditProfile extends StatelessWidget {
 
   Widget _buildAppBar(BuildContext context) {
     return Container(
-      padding: EdgeInsets.symmetric(vertical: 15.h),
+      padding: EdgeInsets.symmetric(vertical: 20.h),
       decoration: const BoxDecoration(
         color: Reclaimcolors.BasicBlue,
         borderRadius: BorderRadius.only(
@@ -212,29 +210,34 @@ class EditProfile extends StatelessWidget {
           bottomRight: Radius.circular(20),
         ),
       ),
-      child: Row(
-        children: [
-          SpringWidget(
-            onTap: () => Get.back(),
-            child: Padding(
-              padding: const EdgeInsets.only(left: 20),
-              child: SvgPicture.asset(
-                ReclaimIcon.Back,
+      child: Padding(
+        padding: const EdgeInsets.only(top: 30),
+        child: Row(
+          children: [
+            SpringWidget(
+              onTap: () => Get.back(),
+              child: Padding(
+                padding: const EdgeInsets.only(left: 20),
+                child: SvgPicture.asset(
+                  ReclaimIcon.Back,
+                  width: 25,
+                  height: 25,
+                  color: Reclaimcolors.BasicWhite,
+                ),
+              ),
+            ),
+            const Spacer(),
+            Text(
+              "Account Details",
+              style: TextStyle(
+                fontSize: 22.sp,
+                fontWeight: FontWeight.w600,
                 color: Reclaimcolors.BasicWhite,
               ),
             ),
-          ),
-          const Spacer(),
-          Text(
-            "Account Details",
-            style: TextStyle(
-              fontSize: 22.sp,
-              fontWeight: FontWeight.w600,
-              color: Reclaimcolors.BasicWhite,
-            ),
-          ),
-          const Spacer(),
-        ],
+            const Spacer(),
+          ],
+        ),
       ),
     );
   }

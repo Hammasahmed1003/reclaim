@@ -137,8 +137,8 @@ class Loginscreen extends StatelessWidget {
                     () => ReclaimButton(
                         isLoading: logincontroller.isLoading.value,
                         titleColor: Reclaimcolors.BasicWhite,
-                        width: 370.w,
-                        height: 48.h,
+                        width: 370,
+                        height: 48,
                         backgroundColor: Reclaimcolors.BasicBlue,
                         title: "Log In",
                         fontWeight: FontWeight.w600,
