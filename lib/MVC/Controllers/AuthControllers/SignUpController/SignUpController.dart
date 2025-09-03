@@ -92,12 +92,76 @@ class Signupcontroller extends GetxController {
   //   }
   // }
 
+//   Future<void> signup() async {
+//     final email = emailController.text.trim();
+//     final password = passwordController.text.trim();
+//     final confirmPassword = ConfirmPasswordController.text.trim();
+
+// // Validation
+//     if (email.isEmpty || password.isEmpty || confirmPassword.isEmpty) {
+//       Get.snackbar("Error", "Please enter all fields",
+//           backgroundColor: Colors.red, colorText: Colors.white);
+//       return;
+//     }
+
+//     if (!GetUtils.isEmail(email)) {
+//       Get.snackbar("Invalid Email", "Please enter a valid email address",
+//           backgroundColor: Colors.red, colorText: Colors.white);
+//       return;
+//     }
+
+//     if (password.length < 6) {
+//       Get.snackbar("Weak Password", "Password must be at least 6 characters",
+//           backgroundColor: Colors.red, colorText: Colors.white);
+//       return;
+//     }
+
+//     if (password != confirmPassword) {
+//       Get.snackbar("Password Mismatch", "Passwords do not match",
+//           backgroundColor: Colors.red, colorText: Colors.white);
+//       return;
+//     }
+
+//     isLoading.value = true;
+//     String? fcmToken = await FirebaseMessaging.instance.getToken();
+
+//     try {
+//       final response = await ApiService().postRequest("register", data: {
+//         "email": email,
+//         "password": confirmPassword,
+//         "device_token": fcmToken,
+//       });
+
+//       if (response != null) {
+//         final data = response.data;
+
+//         if (data["error"] == false && data["data"]?["otp"] != null) {
+//           final otp = data["data"]["otp"];
+//           print("✅ OTP: $otp");
+
+//           Get.toNamed(GetRouteNames.Otpscreen, arguments: {"email": email});
+//           return;
+//         } else {
+//           final message = data["message"] ?? "Signup failed";
+//           Get.snackbar("Signup Failed", message,
+//               backgroundColor: Colors.red, colorText: Colors.white);
+//           return;
+//         }
+//       }
+
+//       Get.snackbar("Error", "Unexpected response from server",
+//           backgroundColor: Colors.red, colorText: Colors.white);
+//     } finally {
+//       isLoading.value = false;
+//     }
+//   }
+
   Future<void> signup() async {
     final email = emailController.text.trim();
     final password = passwordController.text.trim();
     final confirmPassword = ConfirmPasswordController.text.trim();
 
-// Validation
+    // Validation
     if (email.isEmpty || password.isEmpty || confirmPassword.isEmpty) {
       Get.snackbar("Error", "Please enter all fields",
           backgroundColor: Colors.red, colorText: Colors.white);
@@ -123,13 +187,20 @@ class Signupcontroller extends GetxController {
     }
 
     isLoading.value = true;
-    String? fcmToken = await FirebaseMessaging.instance.getToken();
+
+    String? fcmToken;
+    try {
+      fcmToken = await FirebaseMessaging.instance.getToken();
+    } catch (e) {
+      debugPrint("🔴 Failed to get FCM token: $e");
+      fcmToken = null; // proceed without breaking the signup
+    }
 
     try {
       final response = await ApiService().postRequest("register", data: {
         "email": email,
         "password": confirmPassword,
-        "device_token": fcmToken,
+        if (fcmToken != null) "device_token": fcmToken,
       });
 
       if (response != null) {
@@ -149,7 +220,7 @@ class Signupcontroller extends GetxController {
         }
       }
 
-      Get.snackbar("Error", "Unexpected response from server",
+      Get.snackbar("SignIn Failed", "This Email is Already Registered",
           backgroundColor: Colors.red, colorText: Colors.white);
     } finally {
       isLoading.value = false;

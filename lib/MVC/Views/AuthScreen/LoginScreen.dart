@@ -120,7 +120,8 @@ class Loginscreen extends StatelessWidget {
                         onTap: () {
                           Get.toNamed(GetRouteNames.Forgetpasswordscreen);
                         },
-                        child: Text(
+                        child:
+                        const Text(
                           "Forget Password",
                           style: TextStyle(
                               fontSize: 14,
@@ -195,7 +196,7 @@ class Loginscreen extends StatelessWidget {
                   ),
                   SocialLoginButtons(
                     onGoogleTap: () async {
-                      logincontroller.googleSignIn();
+                     logincontroller.googleSignIn();
                       print("Google login tapped");
                       // Implement Google login here
                     },
