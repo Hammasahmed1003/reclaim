@@ -120,8 +120,7 @@ class Loginscreen extends StatelessWidget {
                         onTap: () {
                           Get.toNamed(GetRouteNames.Forgetpasswordscreen);
                         },
-                        child:
-                        const Text(
+                        child: const Text(
                           "Forget Password",
                           style: TextStyle(
                               fontSize: 14,
@@ -138,8 +137,8 @@ class Loginscreen extends StatelessWidget {
                     () => ReclaimButton(
                         isLoading: logincontroller.isLoading.value,
                         titleColor: Reclaimcolors.BasicWhite,
-                        width: 370.w,
-                        height: 48.h,
+                        width: 370,
+                        height: 48,
                         backgroundColor: Reclaimcolors.BasicBlue,
                         title: "Log In",
                         fontWeight: FontWeight.w600,
@@ -196,11 +195,12 @@ class Loginscreen extends StatelessWidget {
                   ),
                   SocialLoginButtons(
                     onGoogleTap: () async {
-                     logincontroller.googleSignIn();
+                      await logincontroller.googleSignIn();
                       print("Google login tapped");
                       // Implement Google login here
                     },
-                    onAppleTap: () {
+                    onAppleTap: () async{
+                      await logincontroller.signInWithApple();
                       print("Apple login tapped");
                       // Implement Apple login here
                     },

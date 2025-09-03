@@ -17,6 +17,7 @@ import 'package:reclaim/appConstants/ReclaimColors.dart';
 import 'package:reclaim/appServices/ApiServices.dart';
 import 'package:reclaim/appServices/SharedPrefService.dart';
 import 'package:reclaim/appServices/getRouteNames.dart';
+import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 
 // class Logincontroller extends GetxController {
 //   final TextEditingController emailController = TextEditingController();
@@ -236,6 +237,199 @@ class LoginController extends GetxController {
       print("🔥 Google Sign-In Error: $e");
     }
   }
+
+//   Future<void> signInWithApple() async {
+//   try {
+//     final credential = await SignInWithApple.getAppleIDCredential(
+//       scopes: [
+//         AppleIDAuthorizationScopes.email,
+//         AppleIDAuthorizationScopes.fullName,
+//       ],
+//     );
+
+//     // Retrieve and print the user's information directly from the credential
+//     final String? email = credential.email;
+//     final String? name = credential.givenName; 
+//     final String? appleToken = credential.identityToken;
+
+//     print('Apple Sign-in successful!');
+//     print('User Email: $email');
+//     print('User Name: $name');
+//     print('Identity Token: $appleToken');
+    
+//   } catch (e) {
+//     print('Error during Apple Sign-in: $e');
+//   }
+// }
+
+
+// Future<void> signInWithApple() async {
+//   isLoading.value = true;
+
+//   try {
+//     // Request Apple credentials
+//     final credential = await SignInWithApple.getAppleIDCredential(
+//       scopes: [
+//         AppleIDAuthorizationScopes.email,
+//         AppleIDAuthorizationScopes.fullName,
+//       ],
+//     );
+
+//     final String email = credential.email ?? ""; // May be null after first login
+//     final String name = credential.givenName ?? credential.familyName ?? "User";
+//     final String appleId = credential.userIdentifier ?? "";
+//     final String provider = "apple";
+
+//     // Apple provides identityToken (JWT)
+//     final String? appleToken = credential.identityToken;
+
+//     // ✅ Get FCM token
+//     String? fcmToken = await FirebaseMessaging.instance.getToken();
+
+//     // ✅ Call your backend
+//     final response = await ApiService().postRequest("auth/apple", data: {
+//       "provider": provider,
+//       "email":"dev.hboxdigital@gmail.com",
+//       //  email,
+//       "name": "HBOX",
+//       // name,
+//       // "apple_id": appleId,
+//       "identity_token": appleToken ?? "",
+//       "device_token": fcmToken ?? "",
+//     });
+
+//     isLoading.value = false;
+
+//     if (response != null && response.data["error"] == false) {
+//       final data = response.data["data"];
+//       final user = data["user"];
+//       final token = data["token"];
+//       final userId = user["id"].toString();
+
+//       // ✅ If onboarding completed (profile_status exists)
+//       if (user.containsKey("profile_status")) {
+//         final email = user["email"] ?? "";
+//         final image = user["profile_image"] ?? "";
+//         final name = user["profile_name"] ?? "";
+//         final gender = user["profile_gender"] ?? "";
+//         final deviceToken = user["device_token"] ?? "";
+
+//         // Save to local storage
+//         await SharedPrefService.saveUserData(
+//           id: userId,
+//           email: email,
+//           token: token,
+//           image: image,
+//           Name: name,
+//           gender: gender,
+//           deviceToken: deviceToken,
+//         );
+
+//         Get.find<UserController>().updateUserProfile(
+//           name: name,
+//           gender: gender,
+//           image: image,
+//         );
+
+//         Get.toNamed(GetRouteNames.BottomnavbarView);
+//       } else {
+//         // ❌ Onboarding NOT completed
+//         Get.find<UserController>().setUserId(userId);
+//         Get.offNamed(GetRouteNames.Profilesetup);
+//       }
+//     } else {
+//       Get.snackbar("Error", response?.data["message"] ?? "Login failed");
+//     }
+//   } catch (e) {
+//     isLoading.value = false;
+//     Get.snackbar("Error", "Something went wrong: $e");
+//     print("🔥 Apple Sign-In Error: $e");
+//   }
+// }
+
+Future<void> signInWithApple() async {
+  isLoading.value = true;
+
+  try {
+    // Request Apple credentials
+    final credential = await SignInWithApple.getAppleIDCredential(
+      scopes: [
+        AppleIDAuthorizationScopes.email,
+        AppleIDAuthorizationScopes.fullName,
+      ],
+    );
+
+    // Always fallback to empty string if null
+    final String email = credential.email ?? "";
+    final String name = credential.givenName ?? credential.familyName ?? "User";
+    final String appleId = credential.userIdentifier ?? "";
+    final String provider = "apple";
+    final String? appleToken = credential.identityToken;
+
+    if (appleToken == null || appleToken.isEmpty) {
+      throw Exception("Apple identity token is missing.");
+    }
+
+    // ✅ Get FCM token
+    String? fcmToken = await FirebaseMessaging.instance.getToken();
+
+    // ✅ Call your backend
+    final response = await ApiService().postRequest("auth/apple", data: {
+      "provider": provider,
+      "apple_id": appleId,
+      "identityToken": appleToken,
+      "email": email, // <-- sends "" if missing
+      "name": name,   // <-- sends "User" if missing
+      "device_token": fcmToken ?? "",
+    });
+
+    isLoading.value = false;
+
+    if (response != null && response.data["error"] == false) {
+      final data = response.data["data"];
+      final user = data["user"];
+      final token = data["token"];
+      final userId = user["id"].toString();
+
+      if (user.containsKey("profile_status")) {
+        final email = user["email"] ?? "";
+        final image = user["profile_image"] ?? "";
+        final name = user["profile_name"] ?? "";
+        final gender = user["profile_gender"] ?? "";
+        final deviceToken = user["device_token"] ?? "";
+
+        await SharedPrefService.saveUserData(
+          id: userId,
+          email: email,
+          token: token,
+          image: image,
+          Name: name,
+          gender: gender,
+          deviceToken: deviceToken,
+        );
+
+        Get.find<UserController>().updateUserProfile(
+          name: name,
+          gender: gender,
+          image: image,
+        );
+
+        Get.toNamed(GetRouteNames.BottomnavbarView);
+      } else {
+        Get.find<UserController>().setUserId(userId);
+        Get.offNamed(GetRouteNames.Profilesetup);
+      }
+    } else {
+      Get.snackbar("Error", response?.data["message"] ?? "Login failed");
+    }
+  } catch (e) {
+    isLoading.value = false;
+    Get.snackbar("Error", "Something went wrong: $e");
+    print("🔥 Apple Sign-In Error: $e");
+  }
+}
+
+
 
   // Future<void> googleSignIn() async {
   //   isLoading.value =

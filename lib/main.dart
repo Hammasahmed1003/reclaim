@@ -87,11 +87,10 @@ class MyApp extends StatelessWidget {
         splitScreenMode: true,
         builder: (_, child) {
           return GetMaterialApp(
-            title: 'Flutter Demo',
+            title: 'Reclaim',
             debugShowCheckedModeBanner: false,
             theme: ThemeData(
               fontFamily: "Poppins",
-
               useMaterial3: true,
             ),
             getPages: AppPages.pages,

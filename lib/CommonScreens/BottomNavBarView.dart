@@ -28,10 +28,9 @@ class BottomnavbarView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return AnnotatedRegion<SystemUiOverlayStyle>(
-      value: const SystemUiOverlayStyle(systemNavigationBarColor: Colors.white),
-      child: PopScope(
-        canPop: true,
+    return PopScope(
+      canPop: true,
+      child: SafeArea(
         child: Scaffold(
           // floatingActionButton: FloatingActionButton(
           //   onPressed: () {
@@ -59,7 +58,7 @@ class BottomnavbarView extends StatelessWidget {
           ),
           floatingActionButtonLocation:
               FloatingActionButtonLocation.centerDocked,
-
+            
           // floatingActionButtonLocation:
           //     FloatingActionButtonLocation.centerDocked,
           body: Obx(() => _pages[controller.currentIndex.value]),
@@ -117,7 +116,7 @@ class BottomnavbarView extends StatelessWidget {
                       width: 20,
                     ),
                   ),
-
+            
                   GButton(
                     padding: EdgeInsets.symmetric(horizontal: 10, vertical: 15),
                     backgroundColor: Reclaimcolors.BlueSecondary,
@@ -133,7 +132,7 @@ class BottomnavbarView extends StatelessWidget {
                   ),
                   // GButton(
                   //   padding:const EdgeInsets.symmetric(horizontal: 10, vertical: 15),
-
+            
                   //   backgroundColor: Reclaimcolors.BlueSecondary,
                   //   icon: Icons.person,
                   //   text: 'Community'.tr,
@@ -145,7 +144,7 @@ class BottomnavbarView extends StatelessWidget {
                   //     width: 20,
                   //   ),
                   // ),
-
+            
                   GButton(
                     padding: const EdgeInsets.symmetric(
                         horizontal: 10, vertical: 15),

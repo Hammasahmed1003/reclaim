@@ -42,7 +42,7 @@ class _ReclaimTextFieldState extends State<ReclaimTextField> {
         hintStyle: TextStyle(fontSize: 14.sp, color: widget.hintColor),
         filled: true,
         fillColor: widget.filledColor,
-        contentPadding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 15.h),
+        contentPadding: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(30.r),
           borderSide: BorderSide.none,
