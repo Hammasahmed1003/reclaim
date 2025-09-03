@@ -68,7 +68,7 @@ Future<void> main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-   tz.initializeTimeZones(); // 👈 Important
+  tz.initializeTimeZones(); // 👈 Important
   tz.setLocalLocation(tz.getLocation('Asia/Karachi'));
   await Get.put(NotificationService()).init(); // Initialize NotificationService
   runApp(const MyApp());
@@ -81,13 +81,13 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     Get.put(UserController());
 
-    return  ScreenUtilInit(
+    return ScreenUtilInit(
         designSize: const Size(360, 690),
         minTextAdapt: true,
         splitScreenMode: true,
         builder: (_, child) {
           return GetMaterialApp(
-            title: 'Reclaim',
+            title: 'Reclaim Freedom',
             debugShowCheckedModeBanner: false,
             theme: ThemeData(
               fontFamily: "Poppins",

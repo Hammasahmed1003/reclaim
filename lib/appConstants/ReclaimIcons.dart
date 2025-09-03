@@ -55,10 +55,6 @@ class ReclaimIcon {
   static const String fire = "assets/icons/fire.svg";
   static const String bheejo = "assets/icons/bheejo.svg";
   static const String intensity = "assets/icons/intensity.svg";
-
-
-
-
-
-  
+  static const String a = "assets/icons/a.svg";
+  static const String g = "assets/icons/g.svg";
 }

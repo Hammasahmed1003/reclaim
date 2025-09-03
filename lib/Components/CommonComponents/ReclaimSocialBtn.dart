@@ -34,7 +34,7 @@ import 'package:reclaim/appConstants/ReclaimImages.dart';
 //               border: Border.all(color: Reclaimcolors.BasicBlue, width: 1),
 //             ),
 //             child: Container(
-              
+
 //               child: Row(
 //                 mainAxisSize: MainAxisSize.min,
 //                 mainAxisAlignment: MainAxisAlignment.center,
@@ -85,7 +85,6 @@ import 'package:reclaim/appConstants/ReclaimImages.dart';
 //   }
 // }
 
-
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -115,24 +114,28 @@ class SocialLoginButtons extends StatelessWidget {
           decoration: BoxDecoration(
             color: Reclaimcolors.BlueSecondary,
             borderRadius: BorderRadius.circular(12),
-            border: Border.all(color: Reclaimcolors.BasicBlue, width: 1),
+            border: Border.all(
+                color: Reclaimcolors.BasicBlue.withOpacity(0.2), width: 1),
           ),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Image.asset(
-                Reclaimimages.GoogleImage,
-                height: 20,
-              ),
-              const SizedBox(width: 8),
+              // Image.asset(
+              //   Reclaimimages.GoogleImage,
+              //   height: 20,
+              // ),
               const Text(
-                "Google",
+                "Continue With",
                 style: TextStyle(
                   fontSize: 14,
                   fontWeight: FontWeight.w600,
                   color: Colors.black,
                 ),
               ),
+              const SizedBox(width: 8),
+
+              SvgPicture.asset(ReclaimIcon.g),
+              // const SizedBox(width: 8),
             ],
           ),
         ),
@@ -153,15 +156,14 @@ class SocialLoginButtons extends StatelessWidget {
                 decoration: BoxDecoration(
                   color: Reclaimcolors.BlueSecondary,
                   borderRadius: BorderRadius.circular(12),
-                  border: Border.all(color: Reclaimcolors.BasicBlue, width: 1),
+                  border: Border.all(
+                      color: Reclaimcolors.BasicBlue.withOpacity(0.2),
+                      width: 1),
                 ),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Image.asset(
-                      Reclaimimages.GoogleImage,
-                      height: 20,
-                    ),
+                    SvgPicture.asset(ReclaimIcon.g),
                     const SizedBox(width: 8),
                     const Text(
                       "Google",
@@ -194,10 +196,7 @@ class SocialLoginButtons extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Image.asset(
-                      Reclaimimages.AppleImage,
-                      height: 20,
-                    ),
+                    SvgPicture.asset(ReclaimIcon.a),
                     const SizedBox(width: 8),
                     const Text(
                       "Apple",
