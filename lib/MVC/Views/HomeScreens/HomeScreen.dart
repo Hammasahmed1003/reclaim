@@ -445,7 +445,7 @@ class _HomescreenState extends State<Homescreen>
                                 Obx(() {
                                   if (controller.isLoading.value) {
                                     return const SpinKitDoubleBounce(
-                                      color: Reclaimcolors.BasicWhite,
+                                      color:  Reclaimcolors.BasicWhite,
                                       size: 20.0,
                                     );
                                   }
