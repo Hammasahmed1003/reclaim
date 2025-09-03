@@ -197,7 +197,7 @@ class SocialLoginButtons extends StatelessWidget {
                 decoration: BoxDecoration(
                   color: Reclaimcolors.BlueSecondary,
                   borderRadius: BorderRadius.circular(12),
-                  border: Border.all(color: Reclaimcolors.BasicBlue, width: 1),
+                  border: Border.all(color: Reclaimcolors.BasicBlue.withOpacity(0.2), width: 1),
                 ),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
